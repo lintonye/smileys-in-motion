@@ -1,4 +1,4 @@
-import { Demo1_Fistful } from "./Demo1_Fistful";
+import { Demo_DragReorder } from "./Demo_DragReorder";
 
 export default function App() {
   return (
@@ -11,7 +11,7 @@ export default function App() {
         height: "100vh",
       }}
     >
-      <Demo1_Fistful />
+      <Demo_DragReorder />
     </div>
   );
 }
