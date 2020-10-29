@@ -5,7 +5,7 @@ import * as React from "react";
 
 export function Demo1_Fistful() {
   return (
-    <div style={{ display: "flex" }}>
+    <div style={{ display: "flex", zIndex: 1 }}>
       <motion.div
         animate={{
           scale: [1, 0.5, 2],
