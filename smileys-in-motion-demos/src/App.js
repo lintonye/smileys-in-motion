@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Demo1_Fistful } from "./Demo1_Fistful";
+import { Demo2_BodyParts } from "./Demo2_BodyParts";
 
 export default function App() {
   return (
@@ -12,7 +13,8 @@ export default function App() {
         height: "100vh",
       }}
     >
-      <Demo1_Fistful />
+      {/* <Demo1_Fistful /> */}
+      <Demo2_BodyParts />
     </div>
   );
 }
