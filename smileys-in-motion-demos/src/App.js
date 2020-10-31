@@ -1,6 +1,7 @@
 import * as React from "react";
 import { BodyParts } from "./BodyParts";
 import { Fistful } from "./Fistful";
+import { Slider } from "./Slider";
 
 export default function App() {
   return (
@@ -14,8 +15,9 @@ export default function App() {
         userSelect: "none",
       }}
     >
-      <BodyParts />
       {/* <Fistful /> */}
+      {/* <BodyParts /> */}
+      <Slider />
     </div>
   );
 }
