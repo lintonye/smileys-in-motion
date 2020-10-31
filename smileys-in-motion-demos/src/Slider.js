@@ -1,34 +1,42 @@
 import * as React from "react";
-import { motion, useMotionValue } from "framer-motion";
+import { motion } from "framer-motion";
+
+/* eslint-disable jsx-a11y/accessible-emoji */
 
 export function Slider() {
-  const valueWidth = useMotionValue(0);
   return (
-    <motion.div style={{ position: "relative" }}>
+    <motion.div
+      style={{
+        position: "relative",
+        width: 350,
+        height: 40,
+        display: "flex",
+        justifyContent: "flex-start",
+        alignItems: "center",
+      }}
+    >
       <motion.div
         style={{
-          width: 350,
-          height: 40,
+          position: "absolute",
+          left: 0,
+          top: 0,
+          right: 0,
+          bottom: 0,
           background: "#444",
           borderRadius: 40,
           overflow: "hidden",
         }}
       >
-        <motion.div
-          style={{ background: "#ffe008", width: valueWidth, height: "100%" }}
-        />
+        <motion.div style={{ background: "#ffe008", height: "100%" }} />
       </motion.div>
+
       <motion.div
-        drag="x"
-        dragConstraints={{ left: 0, right: 310 }}
+        drag
         dragMomentum={false}
-        dragElastic={false}
         style={{
-          position: "absolute",
-          top: -26,
-          left: -20,
-          x: valueWidth,
+          marginLeft: -30,
           fontSize: 80,
+          zIndex: 1,
         }}
       >
         🤨
