@@ -6,11 +6,21 @@ import { motion } from "framer-motion";
 export function Demo2_BodyParts() {
   return (
     <div style={{ display: "flex" }}>
-      <motion.div>🤨</motion.div>
-      <motion.div>👍</motion.div>
-      <motion.div>🦵</motion.div>
-      <motion.div>🦵</motion.div>
-      <motion.div>🖖</motion.div>
+      <motion.div whileHover={{ scale: 1.1 }} drag dragMomentum={false}>
+        🤨
+      </motion.div>
+      <motion.div whileHover={{ scale: 1.1 }} drag dragMomentum={false}>
+        👍
+      </motion.div>
+      <motion.div whileHover={{ scale: 1.1 }} drag dragMomentum={false}>
+        🦵
+      </motion.div>
+      <motion.div whileHover={{ scale: 1.1 }} drag dragMomentum={false}>
+        🦵
+      </motion.div>
+      <motion.div whileHover={{ scale: 1.1 }} drag dragMomentum={false}>
+        🖖
+      </motion.div>
     </div>
   );
 }
