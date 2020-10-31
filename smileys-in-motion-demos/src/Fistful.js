@@ -3,7 +3,7 @@ import * as React from "react";
 
 /* eslint-disable jsx-a11y/accessible-emoji */
 
-export function Demo1_Fistful() {
+export function Fistful() {
   const scaleLeft = useMotionValue(1);
   const scaleRight = useTransform(scaleLeft, (s) => 1 / s);
   const rotateHead = useTransform(scaleLeft, [0.5, 2], [-10, 10]);
