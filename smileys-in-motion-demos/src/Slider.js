@@ -1,4 +1,5 @@
 import * as React from "react";
+import { motion, useMotionValue } from "framer-motion";
 
 export function Slider() {
   const valueWidth = useMotionValue(0);
