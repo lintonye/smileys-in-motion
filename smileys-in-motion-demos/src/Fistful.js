@@ -3,7 +3,7 @@ import * as React from "react";
 
 /* eslint-disable jsx-a11y/accessible-emoji */
 
-export function Demo1_Fistful() {
+export function Fistful() {
   return (
     <div style={{ display: "flex", zIndex: 1 }}>
       <motion.div

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Demo1_Fistful } from "./Demo1_Fistful";
+import { Fistful } from "./Fistful";
 
 export default function App() {
   return (
@@ -12,7 +12,7 @@ export default function App() {
         height: "100vh",
       }}
     >
-      <Demo1_Fistful />
+      <Fistful />
     </div>
   );
 }
