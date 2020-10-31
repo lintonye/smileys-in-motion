@@ -11,6 +11,7 @@ export default function App() {
         alignItems: "center",
         fontSize: 120,
         height: "100vh",
+        userSelect: "none",
       }}
     >
       {/* <Demo1_Fistful /> */}
