@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Demo2_BodyParts } from "./Demo2_BodyParts";
+import { BodyParts } from "./BodyParts";
 import { Fistful } from "./Fistful";
 
 export default function App() {
@@ -14,7 +14,7 @@ export default function App() {
         userSelect: "none",
       }}
     >
-      <Demo2_BodyParts />
+      <BodyParts />
       {/* <Fistful /> */}
     </div>
   );
