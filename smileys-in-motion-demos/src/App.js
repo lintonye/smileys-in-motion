@@ -1,6 +1,7 @@
 import * as React from "react";
 import { BodyParts } from "./BodyParts";
 import { Fistful } from "./Fistful";
+import { MuscleDude } from "./MuscleDude";
 import { Slider } from "./Slider";
 
 export default function App() {
@@ -17,7 +18,8 @@ export default function App() {
     >
       {/* <Fistful /> */}
       {/* <BodyParts /> */}
-      <Slider />
+      {/* <Slider /> */}
+      <MuscleDude />
     </div>
   );
 }
