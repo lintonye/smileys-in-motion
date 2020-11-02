@@ -1,7 +1,9 @@
 import * as React from "react";
-import { motion } from "framer-motion";
+import { motion, useTransform, useMotionValue } from "framer-motion";
 
 /* eslint-disable jsx-a11y/accessible-emoji */
+
+const clamp = (v, min, max) => Math.min(max, Math.max(v, min));
 
 export function MuscleDude() {
   const rotateLeft = useMotionValue(0);
@@ -13,7 +15,6 @@ export function MuscleDude() {
     const a = (Math.atan2(y, x) * 180) / Math.PI;
     return a;
   }
-  const clamp = (v, min, max) => Math.min(max, Math.max(v, min));
   let initialAngle = 0;
   return (
     <div style={{ display: "flex" }}>
