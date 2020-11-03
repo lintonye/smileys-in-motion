@@ -5,7 +5,7 @@ import { motion, useTransform, useMotionValue } from "framer-motion";
 
 export function MuscleDude() {
   return (
-    <div
+    <motion.div
       style={{
         display: "flex",
         padding: 80,
@@ -15,6 +15,6 @@ export function MuscleDude() {
       <motion.div>💪</motion.div>
       <motion.div>🤨</motion.div>
       <motion.div style={{ scaleX: -1 }}>💪</motion.div>
-    </div>
+    </motion.div>
   );
 }
