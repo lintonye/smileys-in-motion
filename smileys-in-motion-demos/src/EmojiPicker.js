@@ -23,14 +23,11 @@ export function EmojiPicker() {
         marginLeft: 60,
         marginBottom: -26,
       }}
-      initial={false}
       animate={mode}
       variants={{
         open: {
           scale: 1,
           transition: {
-            staggerChildren: 0.02,
-            delayChildren: 0.2,
             type: "spring",
             damping: 12,
           },
@@ -39,9 +36,6 @@ export function EmojiPicker() {
           scale: 0,
           transition: {
             duration: 0.2,
-            // when: "afterChildren",
-            // staggerChildren: 0.02,
-            // staggerDirection: -1
           },
         },
       }}
