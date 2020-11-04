@@ -3,7 +3,7 @@ import { motion, useCycle } from "framer-motion";
 
 /* eslint-disable jsx-a11y/accessible-emoji */
 
-function EmojiPicker() {
+export function EmojiPicker() {
   const emojis = "😱 😇 🙂 🙃 😉 😍 🥰 🤪 😎 🤓 😳 😟 😆 😅 😫 😭 🥶 😰 😓 🤗 🤔 🤭 🤫 🥴 😡".split(
     " "
   );
