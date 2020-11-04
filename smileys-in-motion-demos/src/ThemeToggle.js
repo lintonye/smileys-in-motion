@@ -61,6 +61,30 @@ export function ThemeToggle() {
       </motion.div>
     </>
   );
+  const knob = (
+    <>
+      <motion.div
+        style={knobStyle}
+        onClick={cycleMode}
+        variants={{
+          light: { rotate: 0, opacity: 1, x: 0 },
+          dark: { rotate: 180, opacity: 0, x: toggleWidth - knobWidth / 2 },
+        }}
+      >
+        🌞
+      </motion.div>
+      <motion.div
+        style={{ ...knobStyle, scale: 0.9 }}
+        onClick={cycleMode}
+        variants={{
+          light: { rotate: -180, opacity: 0, x: 0 },
+          dark: { rotate: 0, opacity: 1, x: toggleWidth - knobWidth / 2 },
+        }}
+      >
+        🌝
+      </motion.div>
+    </>
+  );
   return (
     <motion.div
       style={{
@@ -82,26 +106,7 @@ export function ThemeToggle() {
     >
       {clouds}
       {stars}
-      <motion.div
-        style={knobStyle}
-        onClick={cycleMode}
-        variants={{
-          light: { rotate: 0, opacity: 1, x: 0 },
-          dark: { rotate: 180, opacity: 0, x: toggleWidth - knobWidth / 2 },
-        }}
-      >
-        🌞
-      </motion.div>
-      <motion.div
-        style={{ ...knobStyle, scale: 0.9 }}
-        onClick={cycleMode}
-        variants={{
-          light: { rotate: -180, opacity: 0, x: 0 },
-          dark: { rotate: 0, opacity: 1, x: toggleWidth - knobWidth / 2 },
-        }}
-      >
-        🌝
-      </motion.div>
+      {knob}
     </motion.div>
   );
 }
