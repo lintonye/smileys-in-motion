@@ -8,10 +8,13 @@ export function Fistful() {
     <div style={{ display: "flex" }}>
       <motion.div
         animate={{
-          scale: [1, 0.5, 2],
+          scale: 2,
           transition: {
-            times: [0, 0.8, 1],
-            yoyo: Infinity,
+            type: "spring",
+            delay: 0,
+            stiffness: 500,
+            damping: 11,
+            mass: 1,
           },
         }}
       >
