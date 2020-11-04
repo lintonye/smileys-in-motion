@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Fistful } from "./Fistful";
 import { SVGSmiley } from "./SVGSmiley";
+import { ThemeToggle } from "./ThemeToggle";
 
 export default function App() {
   return (
@@ -13,8 +14,9 @@ export default function App() {
         height: "100vh",
       }}
     >
-      <Fistful />
+      {/* <Fistful /> */}
       {/* <SVGSmiley /> */}
+      <ThemeToggle />
     </div>
   );
 }
