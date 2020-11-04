@@ -1,6 +1,8 @@
 import * as React from "react";
 import { motion, useCycle } from "framer-motion";
 
+/* eslint-disable jsx-a11y/accessible-emoji */
+
 export function ThemeToggle() {
   const [mode, cycleMode] = useCycle("light", "dark");
   const toggleWidth = 200;
