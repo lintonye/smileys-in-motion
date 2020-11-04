@@ -3,7 +3,6 @@ import { motion, useCycle } from "framer-motion";
 
 export function ThemeToggle() {
   const [mode, cycleMode] = useCycle("light", "dark");
-  const knobStyle = { margin: -30, cursor: "pointer", position: "absolute" };
   const toggleWidth = 200;
   const knobWidth = 110;
   const clouds = (
@@ -15,14 +14,14 @@ export function ThemeToggle() {
         top: -20,
         left: 80,
       }}
-      variants={{
-        light: {
-          opacity: [0.9, 0.5],
-          x: [20, -20],
-          transition: { duration: 2, yoyo: Infinity },
-        },
-        dark: { opacity: 0 },
-      }}
+      // variants={{
+      //   light: {
+      //     opacity: [0.9, 0.5],
+      //     x: [20, -20],
+      //     transition: { duration: 2, yoyo: Infinity },
+      //   },
+      //   dark: { opacity: 0 },
+      // }}
     >
       ☁️
     </motion.div>
@@ -31,13 +30,13 @@ export function ThemeToggle() {
     <>
       <motion.div
         style={{ color: "#fff", position: "absolute", scale: 0.07 }}
-        variants={{
-          light: { opacity: 0 },
-          dark: {
-            opacity: [1, 0.5, 0.8],
-            transition: { duration: 2, yoyo: Infinity },
-          },
-        }}
+        // variants={{
+        //   light: { opacity: 0 },
+        //   dark: {
+        //     opacity: [1, 0.5, 0.8],
+        //     transition: { duration: 2, yoyo: Infinity },
+        //   },
+        // }}
       >
         ✦
       </motion.div>
@@ -49,13 +48,13 @@ export function ThemeToggle() {
           top: -40,
           left: 20,
         }}
-        variants={{
-          light: { opacity: 0 },
-          dark: {
-            opacity: [0.4, 1, 0.5],
-            transition: { duration: 2, yoyo: Infinity },
-          },
-        }}
+        // variants={{
+        //   light: { opacity: 0 },
+        //   dark: {
+        //     opacity: [0.4, 1, 0.5],
+        //     transition: { duration: 2, yoyo: Infinity },
+        //   },
+        // }}
       >
         ✦
       </motion.div>
@@ -64,22 +63,27 @@ export function ThemeToggle() {
   const knob = (
     <>
       <motion.div
-        style={knobStyle}
+        style={{ margin: -30, cursor: "pointer", position: "absolute" }}
         onClick={cycleMode}
-        variants={{
-          light: { rotate: 0, opacity: 1, x: 0 },
-          dark: { rotate: 180, opacity: 0, x: toggleWidth - knobWidth / 2 },
-        }}
+        // variants={{
+        //   light: { rotate: 0, opacity: 1, x: 0 },
+        //   dark: { rotate: 180, opacity: 0, x: toggleWidth - knobWidth / 2 },
+        // }}
       >
         🌞
       </motion.div>
       <motion.div
-        style={{ ...knobStyle, scale: 0.9 }}
-        onClick={cycleMode}
-        variants={{
-          light: { rotate: -180, opacity: 0, x: 0 },
-          dark: { rotate: 0, opacity: 1, x: toggleWidth - knobWidth / 2 },
+        style={{
+          margin: -30,
+          cursor: "pointer",
+          position: "absolute",
+          scale: 0.9,
         }}
+        onClick={cycleMode}
+        // variants={{
+        //   light: { rotate: -180, opacity: 0, x: 0 },
+        //   dark: { rotate: 0, opacity: 1, x: toggleWidth - knobWidth / 2 },
+        // }}
       >
         🌝
       </motion.div>
@@ -96,12 +100,6 @@ export function ThemeToggle() {
         justifyContent: "flex-start",
         border: "1px solid blue",
         position: "relative",
-      }}
-      initial={"light"}
-      animate={mode}
-      variants={{
-        light: { background: "#9fe3f4" },
-        dark: { background: "#000526" },
       }}
     >
       {clouds}
