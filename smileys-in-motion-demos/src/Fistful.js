@@ -6,20 +6,18 @@ import * as React from "react";
 export function Fistful() {
   return (
     <div style={{ display: "flex" }}>
-      <motion.div
+      <motion.span
+        // style={{ display: 'inline-block' }}
         animate={{
-          scale: 2,
+          scale: [null, 0.5, 2],
           transition: {
-            type: "spring",
-            delay: 0,
-            stiffness: 500,
-            damping: 11,
-            mass: 1,
+            times: [0, 0.8, 1],
+            // yoyo: Infinity
           },
         }}
       >
         👊
-      </motion.div>
+      </motion.span>
       <div>🤨</div>
       <div style={{ transform: "scaleX(-1)" }}>👊</div>
     </div>
