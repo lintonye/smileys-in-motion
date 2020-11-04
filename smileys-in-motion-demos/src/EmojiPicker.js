@@ -62,4 +62,27 @@ export function EmojiPicker() {
       ))}
     </motion.div>
   );
+
+  const toolbar = (
+    <motion.ul
+      style={{
+        background: "#444",
+        fontSize: 30,
+        display: "grid",
+        gridTemplateColumns: "repeat(10, auto)",
+        listStyleType: "none",
+      }}
+    >
+      <motion.li onClick={cycleMode} style={{}} whileHover={{ scale: 1.2 }}>
+        🙂
+      </motion.li>
+    </motion.ul>
+  );
+
+  return (
+    <motion.div>
+      {grid}
+      {toolbar}
+    </motion.div>
+  );
 }
