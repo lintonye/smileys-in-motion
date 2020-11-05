@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import produce from "immer";
 
+/* eslint-disable jsx-a11y/accessible-emoji */
+
 function FleeingSmiley() {
   const [visible, setVisible] = useState(false);
   useEffect(() => {
