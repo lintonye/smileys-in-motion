@@ -5,6 +5,8 @@ import { ThemeToggle } from "./ThemeToggle";
 import { EmojiPicker } from "./EmojiPicker";
 import { LayoutExamples } from "./LayoutExamples";
 
+import { MountUnmount } from "./MountUnmount";
+
 export default function App() {
   return (
     <div
@@ -21,7 +23,8 @@ export default function App() {
       {/* <SVGSmiley /> */}
       {/* <ThemeToggle /> */}
       {/* <EmojiPicker /> */}
-      <LayoutExamples />
+      {/* <LayoutExamples /> */}
+      <MountUnmount />
     </div>
   );
 }
