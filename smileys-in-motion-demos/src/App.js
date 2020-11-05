@@ -3,6 +3,7 @@ import { Fistful } from "./Fistful";
 import { SVGSmiley } from "./SVGSmiley";
 import { ThemeToggle } from "./ThemeToggle";
 import { EmojiPicker } from "./EmojiPicker";
+import { LayoutExamples } from "./LayoutExamples";
 
 export default function App() {
   return (
@@ -19,7 +20,8 @@ export default function App() {
       {/* <Fistful /> */}
       {/* <SVGSmiley /> */}
       {/* <ThemeToggle /> */}
-      <EmojiPicker />
+      {/* <EmojiPicker /> */}
+      <LayoutExamples />
     </div>
   );
 }

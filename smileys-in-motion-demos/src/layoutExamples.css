@@ -1,0 +1,17 @@
+.flex {
+  display: flex;
+}
+
+.block {
+  display: block;
+}
+
+.grid3 {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+}
+
+.grid4 {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+}
