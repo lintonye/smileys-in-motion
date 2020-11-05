@@ -21,6 +21,7 @@ function Remove() {
             boxShadow: "1px 1px 8px rgba(0,0,0,0.4)",
           }}
           whileHover={{ scale: 1.2 }}
+          layout
           key={f}
           exit={{ x: 260, opacity: 0, transition: { ease: "easeIn" } }}
           onClick={() => {
@@ -50,7 +51,7 @@ function ParentDisplay() {
   return (
     <motion.div className={className}>
       {faces.map((f) => (
-        <motion.div onClick={cycleClassName} key={f}>
+        <motion.div onClick={cycleClassName} key={f} layout>
           {f}
         </motion.div>
       ))}
@@ -74,7 +75,7 @@ function ScaleCorrection() {
       onClick={cycleWidth}
       layout
     >
-      <motion.div>🤨</motion.div>
+      <motion.div layout>🤨</motion.div>
     </motion.div>
   );
 }
@@ -82,9 +83,9 @@ function ScaleCorrection() {
 export function LayoutExamples() {
   return (
     <>
-      <ParentDisplay />
+      {/* <ParentDisplay /> */}
       {/* <Remove /> */}
-      {/* <ScaleCorrection /> */}
+      <ScaleCorrection />
     </>
   );
 }
