@@ -11,7 +11,7 @@ function FleeingSmiley() {
     setTimeout(() => setVisible(true), 500);
   }, []);
   return (
-    visible && <motion.div onClick={() => setVisible((v) => !v)}>🤨</motion.div>
+    visible && <motion.div onClick={() => setVisible(false)}>🤨</motion.div>
   );
 }
 
