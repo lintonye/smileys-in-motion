@@ -72,6 +72,7 @@ function ScaleCorrection() {
         width,
       }}
       onClick={cycleWidth}
+      layout
     >
       <motion.div>🤨</motion.div>
     </motion.div>
