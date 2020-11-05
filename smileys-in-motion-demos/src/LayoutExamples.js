@@ -4,6 +4,8 @@ import { motion, useCycle } from "framer-motion";
 import "./layoutExamples.css";
 import produce from "immer";
 
+/* eslint-disable jsx-a11y/accessible-emoji */
+
 function Remove() {
   const [faces, setFaces] = useState("😇 😃 🥱 🤩 😢 😎 🤯".split(" "));
   return (
