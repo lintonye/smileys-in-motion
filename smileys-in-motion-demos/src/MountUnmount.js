@@ -175,8 +175,8 @@ function Poker() {
 export function MountUnmount() {
   return (
     <>
-      {/* <FleeingSmiley /> */}
-      <Bars />
+      <FleeingSmiley />
+      {/* <Bars /> */}
       {/* <Poker /> */}
     </>
   );
