@@ -11,7 +11,18 @@ function FleeingSmiley() {
     setTimeout(() => setVisible(true), 500);
   }, []);
   return (
-    visible && <motion.div onClick={() => setVisible(false)}>🤨</motion.div>
+    <AnimatePresence>
+      {visible && (
+        <motion.div
+          initial={{ x: "-60vw" }}
+          animate={{ x: 0 }}
+          exit={{ x: "60vw" }}
+          onClick={() => setVisible(false)}
+        >
+          🤨
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
 
@@ -164,8 +175,8 @@ function Poker() {
 export function MountUnmount() {
   return (
     <>
-      <FleeingSmiley />
-      {/* <Bars /> */}
+      {/* <FleeingSmiley /> */}
+      <Bars />
       {/* <Poker /> */}
     </>
   );
