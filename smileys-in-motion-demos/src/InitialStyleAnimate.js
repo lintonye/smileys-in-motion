@@ -2,6 +2,8 @@ import * as React from "react";
 import { motion, useCycle } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
 
+/* eslint-disable jsx-a11y/accessible-emoji */
+
 const toX = (v) => (typeof v === "number" ? { x: v } : v);
 const initials = [0, 0].map(toX);
 const animates = [200, 400].map(toX);
