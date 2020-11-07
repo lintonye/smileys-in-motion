@@ -3,7 +3,7 @@ import { motion, useCycle } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
 
 const toX = (v) => (typeof v === "number" ? { x: v } : v);
-const initials = [false, 0].map(toX);
+const initials = [0, 0].map(toX);
 const animates = [200, 400].map(toX);
 const styles = [0, 0].map(toX);
 
