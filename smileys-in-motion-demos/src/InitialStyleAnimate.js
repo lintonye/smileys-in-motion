@@ -5,9 +5,33 @@ import { useState, useRef, useEffect } from "react";
 /* eslint-disable jsx-a11y/accessible-emoji */
 
 const toX = (v) => (typeof v === "number" ? { x: v } : v);
+
+/* Experimental values to play with */
 const initials = [0, 0].map(toX);
 const animates = [200, 400].map(toX);
 const styles = [0, 0].map(toX);
+
+const stringifyEqual = (v1, v2) => JSON.stringify(v1) === JSON.stringify(v2);
+
+function Prop({ name, previous, current }) {
+  return (
+    current !== undefined && (
+      <>
+        <div>{name}</div>
+        <div
+          style={{
+            color:
+              previous === undefined || stringifyEqual(previous, current)
+                ? "#000"
+                : "#f00",
+          }}
+        >
+          {JSON.stringify(current)}
+        </div>
+      </>
+    )
+  );
+}
 
 export function InitialStyleAnimate() {
   const [index, setIndex] = useState(0);
@@ -20,7 +44,6 @@ export function InitialStyleAnimate() {
       style: styles[index],
     };
   }, [index]);
-  const stringifyEqual = (v1, v2) => JSON.stringify(v1) === JSON.stringify(v2);
   return (
     <motion.div
       initial={false}
@@ -68,42 +91,21 @@ export function InitialStyleAnimate() {
             smiling: { rotate: -5, y: 0 },
           }}
         >
-          <div>initial</div>
-          <div
-            style={{
-              color:
-                prevValues.current.initial === undefined ||
-                stringifyEqual(prevValues.current.initial, initials[index])
-                  ? "#000"
-                  : "#f00",
-            }}
-          >
-            {JSON.stringify(initials[index])}
-          </div>
-          <div>animate</div>
-          <div
-            style={{
-              color:
-                prevValues.current.animate === undefined ||
-                stringifyEqual(prevValues.current.animate, animates[index])
-                  ? "#000"
-                  : "#f00",
-            }}
-          >
-            {JSON.stringify(animates[index])}
-          </div>
-          <div>style</div>
-          <div
-            style={{
-              color:
-                prevValues.current.style === undefined ||
-                stringifyEqual(prevValues.current.style, styles[index])
-                  ? "#000"
-                  : "#f00",
-            }}
-          >
-            {JSON.stringify(styles[index])}
-          </div>
+          <Prop
+            name="initial"
+            previous={prevValues.current.initial}
+            current={initials[index]}
+          />
+          <Prop
+            name="animate"
+            previous={prevValues.current.animate}
+            current={animates[index]}
+          />
+          <Prop
+            name="style"
+            previous={prevValues.current.style}
+            current={styles[index]}
+          />
         </motion.div>
         <motion.div
           style={{ position: "absolute", top: 20, left: -100 }}
