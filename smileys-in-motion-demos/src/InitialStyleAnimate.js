@@ -1,18 +1,29 @@
 import * as React from "react";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+
+const toX = (v) => (typeof v === "number" ? { x: v } : v);
+const initials = [false, 0].map(toX);
+const animates = [200, 400].map(toX);
+const styles = [0, 0].map(toX);
 
 export function InitialStyleAnimate() {
   const [index, setIndex] = useState(0);
-  const toX = (v) => (typeof v === "number" ? { x: v } : v);
-  const initials = [0, false, 400].map(toX);
-  const animates = [0, 400, 400].map(toX);
-  const styles = [200, 200, 400].map(toX);
+  const prevValues = useRef({});
+  useEffect(() => {
+    prevValues.current = {
+      initial: initials[index],
+      animate: animates[index],
+      style: styles[index],
+    };
+  }, [index]);
+  const stringifyEqual = (v1, v2) => JSON.stringify(v1) === JSON.stringify(v2);
   return (
     <motion.div>
       <motion.div
         style={{
           position: "relative",
+          left: -50,
           width: 500,
           height: 350,
           ...styles[index],
@@ -44,11 +55,41 @@ export function InitialStyleAnimate() {
           }}
         >
           <div>initial</div>
-          <div>{JSON.stringify(initials[index])}</div>
+          <div
+            style={{
+              color:
+                prevValues.current.initial === undefined ||
+                stringifyEqual(prevValues.current.initial, initials[index])
+                  ? "#000"
+                  : "#f00",
+            }}
+          >
+            {JSON.stringify(initials[index])}
+          </div>
           <div>animate</div>
-          <div>{JSON.stringify(animates[index])}</div>
+          <div
+            style={{
+              color:
+                prevValues.current.animate === undefined ||
+                stringifyEqual(prevValues.current.animate, animates[index])
+                  ? "#000"
+                  : "#f00",
+            }}
+          >
+            {JSON.stringify(animates[index])}
+          </div>
           <div>style</div>
-          <div>{JSON.stringify(styles[index])}</div>
+          <div
+            style={{
+              color:
+                prevValues.current.style === undefined ||
+                stringifyEqual(prevValues.current.style, styles[index])
+                  ? "#000"
+                  : "#f00",
+            }}
+          >
+            {JSON.stringify(styles[index])}
+          </div>
         </motion.div>
         <motion.div style={{ position: "absolute", top: 20, left: -100 }}>
           💪
