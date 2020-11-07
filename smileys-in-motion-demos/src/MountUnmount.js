@@ -72,6 +72,8 @@ function Bars() {
                 boxShadow: "1px 1px 8px rgba(0,0,0,0.4)",
               }}
               whileHover={{ scale: 1.2 }}
+              layout
+              key={f}
               initial={{ x: -200, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: 260, opacity: 0, transition: { ease: "easeIn" } }}
@@ -175,8 +177,8 @@ export function MountUnmount() {
   return (
     <>
       {/* <FleeingSmiley /> */}
-      <Bars />
-      {/* <Poker /> */}
+      {/* <Bars /> */}
+      <Poker />
     </>
   );
 }
