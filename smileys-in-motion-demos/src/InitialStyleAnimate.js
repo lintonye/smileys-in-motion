@@ -107,7 +107,7 @@ export function InitialStyleAnimate() {
           style={{ position: "absolute", top: 20, left: -100 }}
           variants={{
             boring: { x: `-100vw` },
-            smiling: { x: 0, transition: { ease: "easeOut" } },
+            smiling: { x: 0, transition: { damping: 14, type: "spring" } },
           }}
         >
           💪
@@ -122,7 +122,7 @@ export function InitialStyleAnimate() {
           }}
           variants={{
             boring: { x: `100vw` },
-            smiling: { x: 0, transition: { ease: "easeOut" } },
+            smiling: { x: 0, transition: { damping: 14, type: "spring" } },
           }}
         >
           💪
@@ -131,7 +131,7 @@ export function InitialStyleAnimate() {
           style={{ position: "absolute", top: 215, left: 40 }}
           variants={{
             boring: { y: `100vh` },
-            smiling: { y: 0, transition: { ease: "easeOut" } },
+            smiling: { y: 0, transition: { damping: 14, type: "spring" } },
           }}
         >
           🦵
@@ -140,7 +140,7 @@ export function InitialStyleAnimate() {
           style={{ position: "absolute", top: 225, left: 10 }}
           variants={{
             boring: { x: `100vw` },
-            smiling: { x: 0, transition: { ease: "easeOut" } },
+            smiling: { x: 0, transition: { damping: 14, type: "spring" } },
           }}
         >
           🦵
