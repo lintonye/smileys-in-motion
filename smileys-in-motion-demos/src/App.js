@@ -7,6 +7,8 @@ import { LayoutExamples } from "./LayoutExamples";
 
 import { MountUnmount } from "./MountUnmount";
 
+import { InitialStyleAnimate } from "./InitialStyleAnimate";
+
 export default function App() {
   return (
     <div
@@ -24,7 +26,8 @@ export default function App() {
       {/* <ThemeToggle /> */}
       {/* <EmojiPicker /> */}
       {/* <LayoutExamples /> */}
-      <MountUnmount />
+      {/* <MountUnmount /> */}
+      <InitialStyleAnimate />
     </div>
   );
 }
