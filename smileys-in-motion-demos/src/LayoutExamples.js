@@ -120,8 +120,8 @@ export function LayoutExamples() {
     <>
       <ParentDisplay />
       {/* <Remove /> */}
-      {/* <ScaleCorrection /> */}
       {/* <ComponentLocalState /> */}
+      {/* <ScaleCorrection /> */}
     </>
   );
 }
