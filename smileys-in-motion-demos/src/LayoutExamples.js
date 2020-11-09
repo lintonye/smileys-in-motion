@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-import { motion, useCycle } from "framer-motion";
+import { AnimateSharedLayout, motion, useCycle } from "framer-motion";
 import "./layoutExamples.css";
 import produce from "immer";
 
@@ -60,6 +60,40 @@ function ParentDisplay() {
   );
 }
 
+function Layer({ dancers }) {
+  const [visible, setVisible] = useState(true);
+  return (
+    visible && (
+      <motion.div
+        style={{ margin: -23 }}
+        layout
+        onClick={() => setVisible(false)}
+      >
+        {dancers}
+      </motion.div>
+    )
+  );
+}
+
+function ComponentLocalState() {
+  return (
+    <motion.div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-end",
+        alignItems: "center",
+        height: "80vh",
+      }}
+    >
+      <Layer dancers="🕺" />
+      <Layer dancers="👯‍♀️" />
+      <Layer dancers="👯‍♀️👯‍♀️" />
+      <Layer dancers="👯‍♂️👯‍♂️👯‍♂️" />
+    </motion.div>
+  );
+}
+
 function ScaleCorrection() {
   const [width, cycleWidth] = useCycle(200, 400, 600);
   return (
@@ -87,6 +121,7 @@ export function LayoutExamples() {
       <ParentDisplay />
       {/* <Remove /> */}
       {/* <ScaleCorrection /> */}
+      {/* <ComponentLocalState /> */}
     </>
   );
 }
