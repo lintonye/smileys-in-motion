@@ -9,12 +9,12 @@ import {
 } from "framer-motion";
 import produce from "immer";
 import { useEffect } from "react";
+import move from "array-move";
 
 /* eslint-disable jsx-a11y/accessible-emoji */
 
-function Item({ title, index, onMove }) {
-  const y = useMotionValue(0);
-  const [isDragged, setDragged] = useState(false);
+function Item({ onMove, index, title }) {
+  const [dragging, setDragging] = useState(false);
   return (
     <motion.li
       style={{
@@ -34,16 +34,26 @@ function Item({ title, index, onMove }) {
       }}
       drag="y"
       layout
-      onDrag={(e, info) => {
-        const { top } = e.target.parentElement.getBoundingClientRect();
-        const targetIndex = Math.floor((info.point.y - top) / 83);
-        onMove(targetIndex);
+      onViewportBoxUpdate={(box, delta) => {
+        if (dragging) {
+          const height = box.y.max - box.y.min;
+          const targetIndex = Math.floor(delta.y.translate / height) + index;
+          if (targetIndex !== index) {
+            // console.log(
+            //   { detaY: delta.y.translate },
+            //   { targetIndex },
+            //   { index },
+            //   { title }
+            // );
+            onMove(index, targetIndex);
+          }
+        }
       }}
       onDragStart={() => {
-        setDragged(true);
+        setDragging(true);
       }}
       onDragEnd={() => {
-        setDragged(false);
+        setDragging(false);
       }}
     >
       {title}
@@ -51,37 +61,22 @@ function Item({ title, index, onMove }) {
   );
 }
 
-function move(array, index, targetIndex) {
-  const x = array[index];
-  if (index > targetIndex)
-    for (let i = index; i > targetIndex; i--) {
-      array[i] = array[i - 1];
-    }
-  else
-    for (let i = index; i < targetIndex; i++) {
-      array[i] = array[i + 1];
-    }
-  array[targetIndex] = x;
-}
+const allFaces = "😇 😃 🥱 🤩 😢 😎 🤯"
+  .split(" ")
+  .map((f, idx) => `${idx} ${f}`);
 
 function DragToReorder() {
-  const [faces, setFaces] = useState(
-    "😇 😃 🥱 🤩 😢 😎 🤯".split(" ").map((f, idx) => `${idx} ${f}`)
-  );
+  const [faces, setFaces] = useState(allFaces);
   return (
     <ul style={{ listStyleType: "none", fontSize: 50 }}>
       {faces.map((f, index) => (
         <Item
-          index={index}
           key={f}
+          index={index}
           title={f}
-          onMove={(targetIndex) => {
+          onMove={(idx, targetIndex) => {
             if (0 <= targetIndex && targetIndex < faces.length) {
-              setFaces(
-                produce(faces, (draft) => {
-                  move(draft, index, targetIndex);
-                })
-              );
+              setFaces((fs) => move(fs, idx, targetIndex));
             }
           }}
         />
@@ -105,8 +100,8 @@ function SimpleDrag() {
 export function DragAndLayoutAnimation() {
   return (
     <>
-      <SimpleDrag />
-      {/* <DragToReorder /> */}
+      {/* <SimpleDrag /> */}
+      <DragToReorder />
     </>
   );
 }
