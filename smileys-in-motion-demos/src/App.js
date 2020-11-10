@@ -1,7 +1,11 @@
 import * as React from "react";
-import { BodyParts } from "./BodyParts";
 import { Fistful } from "./Fistful";
-import { Slider } from "./Slider";
+import { SVGSmiley } from "./SVGSmiley";
+import { ThemeToggle } from "./ThemeToggle";
+import { EmojiPicker } from "./EmojiPicker";
+import { LayoutExamples } from "./LayoutExamples";
+
+import { MountUnmount } from "./MountUnmount";
 
 export default function App() {
   return (
@@ -16,8 +20,11 @@ export default function App() {
       }}
     >
       {/* <Fistful /> */}
-      {/* <BodyParts /> */}
-      <Slider />
+      {/* <SVGSmiley /> */}
+      {/* <ThemeToggle /> */}
+      {/* <EmojiPicker /> */}
+      {/* <LayoutExamples /> */}
+      <MountUnmount />
     </div>
   );
 }
