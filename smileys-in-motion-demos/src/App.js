@@ -5,6 +5,7 @@ import { ThemeToggle } from "./ThemeToggle";
 import { EmojiPicker } from "./EmojiPicker";
 import { LayoutExamples } from "./LayoutExamples";
 import { MountUnmount } from "./MountUnmount";
+import { InitialStyleAnimate } from "./InitialStyleAnimate";
 import { DragAndLayoutAnimation } from "./DragAndLayoutAnimation";
 
 export default function App() {
@@ -25,6 +26,7 @@ export default function App() {
       {/* <EmojiPicker /> */}
       {/* <LayoutExamples /> */}
       {/* <MountUnmount /> */}
+      {/* <InitialStyleAnimate /> */}
       <DragAndLayoutAnimation />
     </div>
   );
