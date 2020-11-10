@@ -10,6 +10,8 @@ import {
 import produce from "immer";
 import { useEffect } from "react";
 
+/* eslint-disable jsx-a11y/accessible-emoji */
+
 function Item({ title, index, onMove }) {
   const y = useMotionValue(0);
   const [isDragged, setDragged] = useState(false);
