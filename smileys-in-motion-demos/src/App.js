@@ -5,7 +5,7 @@ import { ThemeToggle } from "./ThemeToggle";
 import { EmojiPicker } from "./EmojiPicker";
 import { LayoutExamples } from "./LayoutExamples";
 import { MountUnmount } from "./MountUnmount";
-import { DragReorder } from "./DragReorder";
+import { DragAndLayoutAnimation } from "./DragAndLayoutAnimation";
 
 export default function App() {
   return (
@@ -25,7 +25,7 @@ export default function App() {
       {/* <EmojiPicker /> */}
       {/* <LayoutExamples /> */}
       {/* <MountUnmount /> */}
-      <DragReorder />
+      <DragAndLayoutAnimation />
     </div>
   );
 }

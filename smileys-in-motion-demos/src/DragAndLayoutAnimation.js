@@ -40,7 +40,6 @@ function Item({ title, index, onMove }) {
         setDragged(true);
       }}
       onDragEnd={() => {
-        // TODO cancel the offset caused by drag
         setDragged(false);
       }}
     >
@@ -62,7 +61,7 @@ function move(array, index, targetIndex) {
   array[targetIndex] = x;
 }
 
-export function DragReorder() {
+function DragToReorder() {
   const [faces, setFaces] = useState(
     "😇 😃 🥱 🤩 😢 😎 🤯".split(" ").map((f, idx) => `${idx} ${f}`)
   );
@@ -85,5 +84,18 @@ export function DragReorder() {
         />
       ))}
     </ul>
+  );
+}
+
+function SimpleDrag() {
+  return <motion.div drag>🤨</motion.div>;
+}
+
+export function DragAndLayoutAnimation() {
+  return (
+    <>
+      <SimpleDrag />
+      {/* <DragToReorder /> */}
+    </>
   );
 }
