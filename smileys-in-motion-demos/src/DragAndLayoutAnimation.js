@@ -5,6 +5,7 @@ import {
   motion,
   useMotionValue,
   useMotionTemplate,
+  useCycle,
 } from "framer-motion";
 import produce from "immer";
 import { useEffect } from "react";
@@ -88,7 +89,15 @@ function DragToReorder() {
 }
 
 function SimpleDrag() {
-  return <motion.div drag>🤨</motion.div>;
+  const smileyX = useMotionValue(0);
+  return (
+    <div>
+      <motion.div drag style={{ x: smileyX }}>
+        🤨
+      </motion.div>
+      <motion.div>👣</motion.div>
+    </div>
+  );
 }
 
 export function DragAndLayoutAnimation() {
