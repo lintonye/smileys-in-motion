@@ -70,7 +70,7 @@ const allFaces = "😇 😃 🥱 🤩 😢 😎 🤯"
   .split(" ")
   .map((f, idx) => `${idx} ${f}`);
 
-function DragToReorder() {
+export function DragToReorder() {
   const [faces, setFaces] = useState(allFaces);
   return (
     <ul style={{ listStyleType: "none", fontSize: 50 }}>
@@ -87,37 +87,5 @@ function DragToReorder() {
         />
       ))}
     </ul>
-  );
-}
-
-function SimpleDrag() {
-  const smileyX = useMotionValue(0);
-  const [foo, cycleFoo] = useCycle(false, true);
-  return (
-    <div>
-      <motion.div
-        drag
-        // layout
-        // style={{ x: smileyX }}
-        onViewportBoxUpdate={(box, delta) => {
-          console.log({ box }, { delta });
-          smileyX.set(delta.x.translate);
-        }}
-      >
-        🤨
-      </motion.div>
-      <motion.div style={{ x: smileyX }} onTap={cycleFoo}>
-        👣
-      </motion.div>
-    </div>
-  );
-}
-
-export function DragAndLayoutAnimation() {
-  return (
-    <>
-      <SimpleDrag />
-      {/* <DragToReorder /> */}
-    </>
   );
 }

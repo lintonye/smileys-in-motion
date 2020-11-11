@@ -6,7 +6,7 @@ import { EmojiPicker } from "./EmojiPicker";
 import { LayoutExamples } from "./LayoutExamples";
 import { MountUnmount } from "./MountUnmount";
 import { InitialStyleAnimate } from "./InitialStyleAnimate";
-import { DragAndLayoutAnimation } from "./DragAndLayoutAnimation";
+import { DragToReorder } from "./DragToReorder";
 
 export default function App() {
   return (
@@ -27,7 +27,7 @@ export default function App() {
       {/* <LayoutExamples /> */}
       {/* <MountUnmount /> */}
       {/* <InitialStyleAnimate /> */}
-      <DragAndLayoutAnimation />
+      <DragToReorder />
     </div>
   );
 }
