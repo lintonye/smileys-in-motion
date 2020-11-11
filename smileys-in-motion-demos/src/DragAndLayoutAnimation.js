@@ -92,12 +92,23 @@ function DragToReorder() {
 
 function SimpleDrag() {
   const smileyX = useMotionValue(0);
+  const [foo, cycleFoo] = useCycle(false, true);
   return (
     <div>
-      <motion.div drag style={{ x: smileyX }}>
+      <motion.div
+        drag
+        // layout
+        // style={{ x: smileyX }}
+        onViewportBoxUpdate={(box, delta) => {
+          console.log({ box }, { delta });
+          smileyX.set(delta.x.translate);
+        }}
+      >
         🤨
       </motion.div>
-      <motion.div>👣</motion.div>
+      <motion.div style={{ x: smileyX }} onTap={cycleFoo}>
+        👣
+      </motion.div>
     </div>
   );
 }
@@ -105,8 +116,8 @@ function SimpleDrag() {
 export function DragAndLayoutAnimation() {
   return (
     <>
-      {/* <SimpleDrag /> */}
-      <DragToReorder />
+      <SimpleDrag />
+      {/* <DragToReorder /> */}
     </>
   );
 }
