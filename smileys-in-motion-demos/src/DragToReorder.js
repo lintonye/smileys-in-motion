@@ -26,39 +26,7 @@ function Item({ onMove, index, title }) {
         padding: 8,
         position: "relative", // need this to enable z-index
       }}
-      whileHover={{ scale: 1.1, zIndex: 1 }}
-      whileTap={{
-        scale: 1.2,
-        zIndex: 2,
-        boxShadow: "1px 1px 15px rgb(0,0,0,0.25)",
-      }}
       drag="y"
-      layout
-      onViewportBoxUpdate={(box, delta) => {
-        if (dragging) {
-          const height = box.y.max - box.y.min;
-          // Assumption: all items are of the same height.
-          const targetIndex =
-            Math.round(
-              delta.y.translate / height - 0.2 * Math.sign(delta.y.translate)
-            ) + index;
-          if (targetIndex !== index) {
-            // console.log(
-            //   { detaY: delta.y.translate },
-            //   { targetIndex },
-            //   { index },
-            //   { title }
-            // );
-            onMove(index, targetIndex);
-          }
-        }
-      }}
-      onDragStart={() => {
-        setDragging(true);
-      }}
-      onDragEnd={() => {
-        setDragging(false);
-      }}
     >
       {title}
     </motion.li>
