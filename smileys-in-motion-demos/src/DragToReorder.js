@@ -37,12 +37,11 @@ function Item({ onMove, index, title }) {
       onViewportBoxUpdate={(box, delta) => {
         if (dragging) {
           const height = box.y.max - box.y.min;
-          const dragThreshold = 0.3;
           // Assumption: all items are of the same height.
           const targetIndex =
-            (delta.y.translate > 0
-              ? Math.floor(delta.y.translate / height + dragThreshold)
-              : Math.ceil(delta.y.translate / height - dragThreshold)) + index;
+            Math.round(
+              delta.y.translate / height - 0.2 * Math.sign(delta.y.translate)
+            ) + index;
           if (targetIndex !== index) {
             // console.log(
             //   { detaY: delta.y.translate },
