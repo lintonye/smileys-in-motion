@@ -1,6 +1,8 @@
 import * as React from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 
+/* eslint-disable jsx-a11y/accessible-emoji */
+
 function useInitialViewportBBox() {
   const ref = React.useRef();
   const [bbox, setBbox] = React.useState(0);
