@@ -7,6 +7,7 @@ import { LayoutExamples } from "./LayoutExamples";
 import { MountUnmount } from "./MountUnmount";
 import { InitialStyleAnimate } from "./InitialStyleAnimate";
 import { DragAndLayoutAnimation } from "./DragAndLayoutAnimation";
+import { PanMuscleGuy } from "./PanMuscleGuy";
 
 export default function App() {
   return (
@@ -27,7 +28,8 @@ export default function App() {
       {/* <LayoutExamples /> */}
       {/* <MountUnmount /> */}
       {/* <InitialStyleAnimate /> */}
-      <DragAndLayoutAnimation />
+      {/* <DragAndLayoutAnimation /> */}
+      <PanMuscleGuy />
     </div>
   );
 }
