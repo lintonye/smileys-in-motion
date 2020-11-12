@@ -14,7 +14,6 @@ const clamp = (v, min, max) => Math.min(max, Math.max(v, min));
 
 export function PanMuscleGuy() {
   const rotateLeft = useMotionValue(0);
-  const rotateRight = useTransform(rotateLeft, (r) => -r);
   const [leftArmBoundingBox, leftArmRef] = useInitialViewportBBox();
   function getAngleToBottomRight(info) {
     const { bottom, right } = leftArmBoundingBox;
@@ -43,7 +42,7 @@ export function PanMuscleGuy() {
         💪
       </motion.div>
       <motion.div>🤨</motion.div>
-      <motion.div style={{ rotate: rotateRight, originX: 0 }}>
+      <motion.div style={{ rotate: 0, originX: 0 }}>
         <motion.div style={{ scaleX: -1 }}>💪</motion.div>
       </motion.div>
     </div>
