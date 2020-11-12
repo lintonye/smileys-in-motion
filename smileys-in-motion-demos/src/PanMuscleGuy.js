@@ -15,10 +15,10 @@ function useInitialViewportBBox() {
 const clamp = (v, min, max) => Math.min(max, Math.max(v, min));
 
 export function PanMuscleGuy() {
-  const rotateLeft = useMotionValue(0);
+  const rotateArm = useMotionValue(0);
   return (
     <div style={{ display: "flex" }}>
-      <motion.div style={{ rotate: rotateLeft, originX: 1, cursor: "pointer" }}>
+      <motion.div style={{ rotate: rotateArm, originX: 1, cursor: "pointer" }}>
         💪
       </motion.div>
       <motion.div>🤨</motion.div>
