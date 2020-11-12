@@ -15,7 +15,7 @@ function useInitialViewportBBox() {
 const clamp = (v, min, max) => Math.min(max, Math.max(v, min));
 
 export function PanMuscleGuy() {
-  const rotateLeft = useMotionValue(0);
+  const rotateArm = useMotionValue(0);
   const [leftArmBoundingBox, leftArmRef] = useInitialViewportBBox();
   function getAngleToBottomRight(info) {
     const { bottom, right } = leftArmBoundingBox;
@@ -24,21 +24,21 @@ export function PanMuscleGuy() {
     const a = (Math.atan2(y, x) * 180) / Math.PI;
     return a;
   }
-  let initialPointerAngle = 0,
-    initialRotateLeft = 0;
+  let initialPanAngle = 0,
+    initialRotate = 0;
   return (
     <div style={{ display: "flex" }}>
       <motion.div
-        style={{ rotate: rotateLeft, originX: 1, cursor: "pointer" }}
+        style={{ rotate: rotateArm, originX: 1, cursor: "pointer" }}
         ref={leftArmRef}
         onPanStart={(e, info) => {
-          initialPointerAngle = getAngleToBottomRight(info);
-          initialRotateLeft = rotateLeft.get();
+          initialPanAngle = getAngleToBottomRight(info);
+          initialRotate = rotateArm.get();
         }}
         onPan={(e, info) => {
-          const delta = getAngleToBottomRight(info) - initialPointerAngle;
-          const newRotate = clamp(initialRotateLeft + delta, -30, 30);
-          rotateLeft.set(newRotate);
+          const delta = getAngleToBottomRight(info) - initialPanAngle;
+          const newRotate = clamp(initialRotate + delta, -30, 30);
+          rotateArm.set(newRotate);
         }}
       >
         💪
