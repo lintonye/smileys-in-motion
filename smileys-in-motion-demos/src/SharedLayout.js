@@ -92,7 +92,8 @@ function SportModal({ type, onClose }) {
     </motion.div>
   );
 }
-export function SharedElement() {
+
+function DialogTransition() {
   const sports = "🏄‍♂️ 🏊‍♀ ️🚴‍♀️ 🤽‍♀️ 🏇 🏌️‍♀️ 🤾 🤸‍♀️ 🏋️‍ ️⛹ ️🤺 🚣‍♀️".split(" ");
   const [selectedSport, setSelectedSport] = useState(null);
   return (
@@ -133,5 +134,13 @@ export function SharedElement() {
         </AnimatePresence>
       </AnimateSharedLayout>
     </div>
+  );
+}
+
+export function SharedLayout() {
+  return (
+    <>
+      <DialogTransition />
+    </>
   );
 }

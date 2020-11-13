@@ -8,7 +8,7 @@ import { MountUnmount } from "./MountUnmount";
 import { InitialStyleAnimate } from "./InitialStyleAnimate";
 import { DragAndLayoutAnimation } from "./DragAndLayoutAnimation";
 import { PanMuscleGuy } from "./PanMuscleGuy";
-import { SharedElement } from "./SharedElement";
+import { SharedLayout } from "./SharedLayout";
 
 export default function App() {
   return (
@@ -31,7 +31,7 @@ export default function App() {
       {/* <InitialStyleAnimate /> */}
       {/* <DragAndLayoutAnimation /> */}
       {/* <PanMuscleGuy /> */}
-      <SharedElement />
+      <SharedLayout />
     </div>
   );
 }
