@@ -233,9 +233,8 @@ function AspectRatio() {
 export function SharedLayout() {
   return (
     <>
-      {/* <Tabs /> */}
-      <AspectRatio />
-      {/* <DOMReuse /> */}
+      <Tabs />
+      {/* <AspectRatio /> */}
       {/* <DialogTransition /> */}
     </>
   );
