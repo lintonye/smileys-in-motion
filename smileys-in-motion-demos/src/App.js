@@ -9,6 +9,7 @@ import { InitialStyleAnimate } from "./InitialStyleAnimate";
 import { DragAndLayoutAnimation } from "./DragAndLayoutAnimation";
 import { PanMuscleGuy } from "./PanMuscleGuy";
 import { SharedLayout } from "./SharedLayout";
+import { TrackScrollProgress } from "./TrackScrollProgress";
 
 export default function App() {
   return (
@@ -31,7 +32,8 @@ export default function App() {
       {/* <InitialStyleAnimate /> */}
       {/* <DragAndLayoutAnimation /> */}
       {/* <PanMuscleGuy /> */}
-      <SharedLayout />
+      {/* <SharedLayout /> */}
+      <TrackScrollProgress />
     </div>
   );
 }
