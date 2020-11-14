@@ -224,8 +224,14 @@ function DOMReuse() {
 function AspectRatio() {
   return (
     <LayoutSwitcher>
-      <motion.img src={img16x9} layoutId="img" />
-      <motion.img src={imgSquare} style={{ width: 200 }} layoutId="img" />
+      {/* <motion.img src={img16x9} layoutId="img" />
+      <motion.img src={imgSquare} style={{ width: 200 }} layoutId="img" /> */}
+      <motion.div layoutId="text" style={{ fontSize: 40, color: "#eee" }}>
+        Moootion 🐮
+      </motion.div>
+      <motion.div layoutId="text" style={{ fontSize: 100, color: "#eee" }}>
+        Moootion 🐮
+      </motion.div>
     </LayoutSwitcher>
   );
 }
@@ -233,8 +239,8 @@ function AspectRatio() {
 export function SharedLayout() {
   return (
     <>
-      <Tabs />
-      {/* <AspectRatio /> */}
+      {/* <Tabs /> */}
+      <AspectRatio />
       {/* <DialogTransition /> */}
     </>
   );
