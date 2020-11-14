@@ -12,9 +12,9 @@ function Parallax() {
   const rightPlanetX = useTransform(scrollYProgress, [0, 0.1], [0, -50]);
   const rightPlanetScale = useTransform(scrollYProgress, [0, 0.1], [0.5, 0.4]);
 
-  const foregroundY = useTransform(scrollY, (y) => -y);
+  const rocketY = useTransform(scrollY, (y) => -y);
 
-  const foreground = (
+  const rocket = (
     <>
       <motion.div
         style={{
@@ -22,7 +22,7 @@ function Parallax() {
           rotate: -45,
           left: 200,
           top: 250,
-          y: foregroundY,
+          y: rocketY,
           scale: 1.3,
           zIndex: 2,
         }}
@@ -163,10 +163,11 @@ function Parallax() {
     >
       {background}
       {content}
-      {foreground}
+      {rocket}
     </div>
   );
 }
+
 export function TrackScrollProgress() {
   return (
     <>
