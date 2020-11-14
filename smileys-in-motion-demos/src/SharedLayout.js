@@ -1,6 +1,8 @@
 import * as React from "react";
 import { motion, AnimateSharedLayout, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import img16x9 from "./poop-unsplash-640x480.jpg";
+import imgSquare from "./poop-unsplash-480x480.jpg";
 
 /* eslint-disable jsx-a11y/accessible-emoji */
 
@@ -220,14 +222,20 @@ function DOMReuse() {
 }
 
 function AspectRatio() {
-  return;
+  return (
+    <LayoutSwitcher>
+      <motion.img src={img16x9} layoutId="img" />
+      <motion.img src={imgSquare} style={{ width: 200 }} layoutId="img" />
+    </LayoutSwitcher>
+  );
 }
 
 export function SharedLayout() {
   return (
     <>
+      {/* <Tabs /> */}
+      <AspectRatio />
       {/* <DOMReuse /> */}
-      <Tabs />
       {/* <DialogTransition /> */}
     </>
   );
