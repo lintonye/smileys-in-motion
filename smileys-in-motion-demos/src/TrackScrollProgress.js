@@ -2,9 +2,18 @@ import * as React from "react";
 import { motion, useElementScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
-/* eslint-disable jsx-a11y/accessible-emoji */
-
 function Parallax() {
+  const container = useRef();
+  const { scrollY, scrollYProgress } = useElementScroll(container);
+  const backgroundY = useTransform(scrollY, (y) => 1.1 * y);
+  const backgroundOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
+  const leftPlanetX = useTransform(scrollYProgress, [0, 0.1], [0, 40]);
+  const leftPlanetScale = useTransform(scrollYProgress, [0, 0.1], [0.5, 0.4]);
+  const rightPlanetX = useTransform(scrollYProgress, [0, 0.1], [0, -50]);
+  const rightPlanetScale = useTransform(scrollYProgress, [0, 0.1], [0.5, 0.4]);
+
+  const rocketY = useTransform(scrollY, (y) => -y);
+
   const rocket = (
     <>
       <motion.div
@@ -13,6 +22,7 @@ function Parallax() {
           rotate: -45,
           left: 200,
           top: 250,
+          y: rocketY,
           scale: 1.3,
           zIndex: 2,
         }}
@@ -25,14 +35,17 @@ function Parallax() {
   const background = (
     <motion.div
       style={{
+        y: backgroundY,
+        opacity: backgroundOpacity,
         position: "absolute",
       }}
     >
       <motion.div
         style={{
           position: "absolute",
+          scale: leftPlanetScale,
           top: 200,
-          scale: 0.5,
+          x: leftPlanetX,
         }}
       >
         🌘
@@ -41,9 +54,10 @@ function Parallax() {
         style={{
           position: "absolute",
           color: "#fff",
+          scale: rightPlanetScale,
+          x: rightPlanetX,
           left: 350,
           top: 200,
-          scale: 0.5,
         }}
       >
         🪐
@@ -134,6 +148,7 @@ function Parallax() {
   );
   return (
     <div
+      ref={container}
       style={{
         width: 500,
         height: 400,
