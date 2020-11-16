@@ -32,16 +32,7 @@ function SportModal({ sportId, onClose }) {
       }}
     >
       <Link to="/">
-        <motion.div
-          style={{ cursor: "pointer", padding: 8 }}
-          whileHover={{ scale: 1.1 }}
-          initial={{ opacity: 0, y: -20 }}
-          animate={{
-            opacity: 1,
-            y: 0,
-            transition: { delay: 0.3, ease: "easeOut" },
-          }}
-        >
+        <motion.div style={{ cursor: "pointer", padding: 8 }}>
           ╳&nbsp; Close
         </motion.div>
       </Link>
@@ -60,9 +51,6 @@ function SportModal({ sportId, onClose }) {
         justifyContent: "center",
         alignItems: "center",
       }}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
     >
       <motion.div
         style={{
@@ -81,22 +69,10 @@ function SportModal({ sportId, onClose }) {
           justifyContent: "center",
           alignItems: "center",
         }}
-        layoutId={`card-${sport.id}`}
       >
         {toolbar}
-        <motion.div style={{ fontSize: 180 }} layoutId={`emoji-${sport.id}`}>
-          {sport.title}
-        </motion.div>
-        <motion.p
-          style={{ fontSize: 14, lineHeight: 1.5 }}
-          initial={{ opacity: 0, y: 200 }}
-          animate={{
-            opacity: 1,
-            y: 0,
-            transition: { delay: 0.3, ease: "easeOut" },
-          }}
-          exit={{ y: 200 }}
-        >
+        <motion.div style={{ fontSize: 180 }}>{sport.title}</motion.div>
+        <motion.p style={{ fontSize: 14, lineHeight: 1.5 }}>
           Water polo is a competitive team sport played in water between two
           teams. The game consists of four quarters in which the two teams
           attempt to score goals by throwing the ball into the opposing team's
@@ -119,36 +95,30 @@ function Sports() {
   const { activeSportId } = useParams();
   return (
     <div style={{ position: "relative" }}>
-      <AnimateSharedLayout type="crossfade">
-        <motion.div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr 1fr 1fr",
-            gridGap: 8,
-          }}
-        >
-          {sports.map((s) => (
-            <Link to={`/sport/${s.id}`} key={s.id}>
-              <motion.div
-                style={{
-                  padding: 16,
-                  background: "#444",
-                  borderRadius: 8,
-                  cursor: "pointer",
-                  boxShadow: "0 2px 8px rgba(0,0,0,0.4)",
-                }}
-                whileHover={{ scale: 1.1 }}
-                layoutId={`card-${s.id}`}
-              >
-                <motion.div layoutId={`emoji-${s.id}`}>{s.title}</motion.div>
-              </motion.div>
-            </Link>
-          ))}
-        </motion.div>
-        <AnimatePresence>
-          {activeSportId && <SportModal sportId={activeSportId} />}
-        </AnimatePresence>
-      </AnimateSharedLayout>
+      <motion.div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr 1fr 1fr",
+          gridGap: 8,
+        }}
+      >
+        {sports.map((s) => (
+          <Link to={`/sport/${s.id}`} key={s.id}>
+            <motion.div
+              style={{
+                padding: 16,
+                background: "#444",
+                borderRadius: 8,
+                cursor: "pointer",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.4)",
+              }}
+            >
+              <motion.div>{s.title}</motion.div>
+            </motion.div>
+          </Link>
+        ))}
+      </motion.div>
+      {activeSportId && <SportModal sportId={activeSportId} />}
     </div>
   );
 }
