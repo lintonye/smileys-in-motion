@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 /* eslint-disable jsx-a11y/accessible-emoji */
 
-const StyledDiv = styled.div`
+const StyledDiv = styled(motion.div)`
   background: white;
   padding: 16px;
   border-radius: 8px;
@@ -22,8 +22,9 @@ function StyledComponents() {
   );
 }
 
-const MyDiv = (props) => (
+const MyDiv = React.forwardRef((props, ref) => (
   <div
+    ref={ref}
     style={{
       background: "white",
       padding: 16,
@@ -33,15 +34,17 @@ const MyDiv = (props) => (
   >
     {props.children}
   </div>
-);
+));
+
+const MotionMyDiv = motion.custom(MyDiv);
 
 function Custom() {
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-200, 200], [-20, 20]);
   return (
-    <MyDiv whileHover={{ scale: 1.2 }} drag style={{ x, rotate }}>
+    <MotionMyDiv whileHover={{ scale: 1.2 }} drag style={{ x, rotate }}>
       😇
-    </MyDiv>
+    </MotionMyDiv>
   );
 }
 
@@ -49,7 +52,7 @@ export function CustomComponents() {
   return (
     <>
       <StyledComponents />
-      {/* <Custom /> */}
+      <Custom />
     </>
   );
 }
