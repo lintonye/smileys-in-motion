@@ -7,8 +7,8 @@ import { useRef } from "react";
 function AnimationControls() {
   const controls = useAnimation();
   async function dance() {
-    await controls.start({ x: 200 });
-    await controls.start({ x: -200 });
+    await controls.start({ x: -300 });
+    await controls.start({ x: 100 });
     await controls.start({ scaleX: -1 });
     await controls.start({ x: 0 });
     await controls.start({ scaleX: 1 });
