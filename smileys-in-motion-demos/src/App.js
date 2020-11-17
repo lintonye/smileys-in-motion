@@ -11,6 +11,7 @@ import { PanMuscleGuy } from "./PanMuscleGuy";
 import { SharedLayout } from "./SharedLayout";
 import { TrackScrollProgress } from "./TrackScrollProgress";
 import { ImperativeControls } from "./ImperativeControls";
+import { CustomComponents } from "./CustomComponents";
 
 export default function App() {
   return (
@@ -35,7 +36,8 @@ export default function App() {
       {/* <PanMuscleGuy /> */}
       {/* <SharedLayout /> */}
       {/* <TrackScrollProgress /> */}
-      <ImperativeControls />
+      {/* <ImperativeControls /> */}
+      <CustomComponents />
     </div>
   );
 }
