@@ -10,6 +10,7 @@ import { DragAndLayoutAnimation } from "./DragAndLayoutAnimation";
 import { PanMuscleGuy } from "./PanMuscleGuy";
 import { SharedLayout } from "./SharedLayout";
 import { TrackScrollProgress } from "./TrackScrollProgress";
+import { ImperativeControls } from "./ImperativeControls";
 
 export default function App() {
   return (
@@ -33,7 +34,8 @@ export default function App() {
       {/* <DragAndLayoutAnimation /> */}
       {/* <PanMuscleGuy /> */}
       {/* <SharedLayout /> */}
-      <TrackScrollProgress />
+      {/* <TrackScrollProgress /> */}
+      <ImperativeControls />
     </div>
   );
 }
