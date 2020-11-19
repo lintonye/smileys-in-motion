@@ -19,7 +19,8 @@ function Link(props) {
   );
 }
 
-function SportModal({ sportId, onClose }) {
+function SportModal({ history }) {
+  const { sportId } = useParams();
   const idx = sports.findIndex((s) => s.id === sportId);
   const sport = sports[idx];
   const toolbar = (
@@ -31,20 +32,21 @@ function SportModal({ sportId, onClose }) {
         alignSelf: "flex-end",
       }}
     >
-      <Link to="/">
-        <motion.div
-          style={{ cursor: "pointer", padding: 8 }}
-          whileHover={{ scale: 1.1 }}
-          initial={{ opacity: 0, y: -20 }}
-          animate={{
-            opacity: 1,
-            y: 0,
-            transition: { delay: 0.3, ease: "easeOut" },
-          }}
-        >
-          ╳&nbsp; Close
-        </motion.div>
-      </Link>
+      <motion.div
+        style={{ cursor: "pointer", padding: 8 }}
+        whileHover={{ scale: 1.1 }}
+        initial={{ opacity: 0, y: -20 }}
+        animate={{
+          opacity: 1,
+          y: 0,
+          transition: { delay: 0.3, ease: "easeOut" },
+        }}
+        onClick={() => {
+          history.goBack();
+        }}
+      >
+        ╳&nbsp; Close
+      </motion.div>
     </motion.div>
   );
   return (
@@ -66,9 +68,8 @@ function SportModal({ sportId, onClose }) {
     >
       <motion.div
         style={{
-          top: 120,
-          left: 40,
-          right: 40,
+          width: "50vw",
+          minWidth: 400,
           borderRadius: 8,
           padding: `8px 16px 16px 16px`,
           boxShadow: "0 2px 16px rgba(0,0,0,0.4)",
@@ -115,55 +116,45 @@ const sports = "🏄‍♂️ 🏊‍♀ ️🚴‍♀️ 🤽‍♀️ 🏇 �
   .split(" ")
   .map((s, idx) => ({ id: `itm-${idx}`, title: s }));
 
-function Sports() {
-  const { activeSportId } = useParams();
+function List() {
   return (
     <div style={{ position: "relative" }}>
-      <AnimateSharedLayout type="crossfade">
-        <motion.div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr 1fr 1fr",
-            gridGap: 8,
-          }}
-        >
-          {sports.map((s) => (
-            <Link to={`/sport/${s.id}`} key={s.id}>
-              <motion.div
-                style={{
-                  padding: 16,
-                  background: "#444",
-                  borderRadius: 8,
-                  cursor: "pointer",
-                  boxShadow: "0 2px 8px rgba(0,0,0,0.4)",
-                }}
-                whileHover={{ scale: 1.1 }}
-                layoutId={`card-${s.id}`}
-              >
-                <motion.div layoutId={`emoji-${s.id}`}>{s.title}</motion.div>
-              </motion.div>
-            </Link>
-          ))}
-        </motion.div>
-        <AnimatePresence>
-          {activeSportId && <SportModal sportId={activeSportId} />}
-        </AnimatePresence>
-      </AnimateSharedLayout>
+      <motion.div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr 1fr 1fr",
+          gridGap: 8,
+        }}
+      >
+        {sports.map((s) => (
+          <Link to={`/sport/${s.id}`} key={s.id}>
+            <motion.div
+              style={{
+                padding: 16,
+                background: "#444",
+                borderRadius: 8,
+                cursor: "pointer",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.4)",
+              }}
+              whileHover={{ scale: 1.1 }}
+              layoutId={`card-${s.id}`}
+            >
+              <motion.div layoutId={`emoji-${s.id}`}>{s.title}</motion.div>
+            </motion.div>
+          </Link>
+        ))}
+      </motion.div>
     </div>
   );
 }
 
 export function SharedElementWithRouter() {
   return (
-    <Router>
-      <Switch>
-        <Route path="/sport/:activeSportId">
-          <Sports />
-        </Route>
-        <Route path="/">
-          <Sports />
-        </Route>
-      </Switch>
-    </Router>
+    <AnimateSharedLayout>
+      <Router>
+        <Route path="/sport/:sportId" component={SportModal} />
+        <Route path="/" component={List} />
+      </Router>
+    </AnimateSharedLayout>
   );
 }
