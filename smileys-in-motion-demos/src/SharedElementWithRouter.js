@@ -61,6 +61,7 @@ function SportModal({ history }) {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        zIndex: 10,
       }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
