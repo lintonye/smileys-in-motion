@@ -110,6 +110,10 @@ function Dance() {
   );
 }
 
+function Test() {
+  return <motion.span animate={{ scale: 4 }}>🦶</motion.span>;
+}
+
 export function LearnReactDesignMotionPage() {
   const [isMain, setIsMain] = useState(false);
   useEffect(() => {
@@ -122,7 +126,8 @@ export function LearnReactDesignMotionPage() {
       {/* <AnimateSharedLayout>
         {isMain ? <Main /> : <Welcome />}
       </AnimateSharedLayout> */}
-      <Dance />
+      {/* <Dance /> */}
+      <Test />
     </motion.div>
   );
 }
