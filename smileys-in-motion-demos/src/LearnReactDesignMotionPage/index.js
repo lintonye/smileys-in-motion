@@ -43,6 +43,73 @@ function Main() {
   );
 }
 
+function Dance() {
+  const commonTransition = {
+    repeat: Infinity,
+    repeatType: "reverse",
+    duration: 0.3,
+    // repeatDelay: 0.1,
+  };
+  return (
+    <motion.div
+      className="text-6xl relative w-64 h-64"
+      initial="chill"
+      animate={"dance"}
+    >
+      <motion.div
+        className="absolute"
+        style={{ top: 10, left: 60, originX: "center", originY: "bottom" }}
+        variants={{
+          chill: {},
+          dance: { rotate: [-15, 15], transition: commonTransition },
+        }}
+      >
+        🤨
+      </motion.div>
+      <motion.div
+        className="absolute"
+        style={{ top: 120, left: 80, originX: "center", originY: "top" }}
+        variants={{
+          chill: {},
+          dance: { rotate: [-5, 5], transition: commonTransition },
+        }}
+      >
+        🦵
+      </motion.div>
+      <motion.div
+        className="absolute"
+        style={{ top: 130, left: 60, originX: "center", originY: "top" }}
+        variants={{
+          chill: {},
+          dance: { rotate: [5, -5], transition: commonTransition },
+        }}
+      >
+        🦵
+      </motion.div>
+      <motion.div
+        className="absolute text-4xl"
+        style={{ top: 80, left: 30, rotate: -90 }}
+        variants={{
+          chill: {},
+          dance: { y: [-10, 10], transition: commonTransition },
+        }}
+      >
+        👊
+      </motion.div>
+      <motion.div
+        className="absolute text-4xl"
+        style={{ top: 90, left: 120, rotate: -90, scaleX: -1 }}
+        variants={{
+          chill: {},
+          dance: { y: [10, -10], transition: commonTransition },
+        }}
+      >
+        👊
+      </motion.div>
+    </motion.div>
+  );
+}
+
 export function LearnReactDesignMotionPage() {
   const [isMain, setIsMain] = useState(false);
   useEffect(() => {
@@ -52,9 +119,10 @@ export function LearnReactDesignMotionPage() {
   }, []);
   return (
     <motion.div className="bg-gray-900 h-screen text-gray-200">
-      <AnimateSharedLayout>
+      {/* <AnimateSharedLayout>
         {isMain ? <Main /> : <Welcome />}
-      </AnimateSharedLayout>
+      </AnimateSharedLayout> */}
+      <Dance />
     </motion.div>
   );
 }
