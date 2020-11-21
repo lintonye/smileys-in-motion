@@ -67,28 +67,26 @@ function DanceDemo() {
         typingMasks={[
           {
             id: "line1",
-            top: "17%",
+            top: "8%",
             left: "6%",
             chars: 27,
             animateControl: line1,
           },
           {
             id: "line2",
-            top: "75%",
+            top: "82%",
             left: "6%",
             chars: 13,
             animateControl: line2,
           },
         ]}
-      >{`
-<motion.div animate="dance">
+      >{`<motion.div animate="dance">
 
 
 
 
-</motion.div>
- `}</Code>
-      <div className="-mt-80">
+</motion.div>`}</Code>
+      <div className="-mt-72">
         <DancingGuy animate={dancingGuy} />
       </div>
     </div>
