@@ -5,7 +5,7 @@ import "./prism-vscode-dark.scss";
 import { motion, useAnimation } from "framer-motion";
 
 // Variants: block, typing, reveal
-function TypingMask({ top, left, chars, speed = 1, animateControl }) {
+function TypingMask({ top, left, chars, speed = 1, animate }) {
   const xBlock = Array(chars * 2 + 1).fill(`0%`);
   const pixelsPerChar = 18;
   const totalWidth = pixelsPerChar * chars;
@@ -38,7 +38,7 @@ function TypingMask({ top, left, chars, speed = 1, animateControl }) {
     <motion.div
       className="bg-gray-400 absolute"
       initial="block"
-      animate={animateControl}
+      animate={animate}
       variants={{
         block: { x: 0, opacity: 1 },
         typing: {

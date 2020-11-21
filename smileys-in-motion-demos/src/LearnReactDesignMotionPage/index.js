@@ -16,8 +16,16 @@ function Welcome() {
       animate={{ x: 0 }}
       className="h-full flex justify-center items-center text-6xl min-h-screen"
     >
-      <motion.div layoutId="smiley">🤨</motion.div>
+      <MrSmiley />
     </motion.div>
+  );
+}
+
+function MrSmiley() {
+  return (
+    <motion.span layoutId="smiley" className="inline-block m-3 text-6xl">
+      🤨
+    </motion.span>
   );
 }
 
@@ -29,9 +37,6 @@ function Heading() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
-        <motion.span layoutId="smiley" className="inline-block mr-3">
-          🤨
-        </motion.span>
         Master Framer Motion, Build Awesome Animations. Like this page.
       </motion.h1>
       <div
@@ -39,6 +44,7 @@ function Heading() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, transition: { delay: 0.5 } }}
       >
+        <MrSmiley />
         <p>Framer Motion is great.</p>
         <p>So great that it sometimes feels like cheating.</p>
         <p>Framer Motion is great.</p>
@@ -70,14 +76,14 @@ function DanceDemo() {
             top: "8%",
             left: "6%",
             chars: 27,
-            animateControl: line1,
+            animate: line1,
           },
           {
             id: "line2",
             top: "82%",
             left: "6%",
             chars: 13,
-            animateControl: line2,
+            animate: line2,
           },
         ]}
       >{`<motion.div animate="dance">
