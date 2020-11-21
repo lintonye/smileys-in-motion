@@ -12,38 +12,80 @@ function Welcome() {
     <motion.div
       initial={{ x: "-60vw" }}
       animate={{ x: 0 }}
-      className="h-full flex justify-center items-center text-6xl"
+      className="h-full flex justify-center items-center text-6xl min-h-screen"
     >
       <motion.div layoutId="smiley">🤨</motion.div>
     </motion.div>
   );
 }
 
-function Main() {
+function Heading() {
   return (
-    <motion.div>
+    <div className="max-w-5xl mx-auto">
       <motion.h1
-        className="text-5xl"
+        className="text-5xl mt-60 text-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
         <motion.span layoutId="smiley" className="inline-block mr-3">
           🤨
         </motion.span>
-        Smileys In Motion
+        Master Framer Motion, Build Awesome Animations. Like this page.
       </motion.h1>
-      <motion.h2
-        className="text-3xl"
+      <div
+        className="text-2xl mt-40 max-w-lg m-auto"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, transition: { delay: 0.5 } }}
       >
-        A course on Framer Motion, and abusing emojis
-      </motion.h2>
-    </motion.div>
+        <p>Framer Motion is great.</p>
+        <p>So great that it sometimes feels like cheating.</p>
+        <p>Framer Motion is great.</p>
+        <p>So great that it sometimes feels like cheating.</p>
+      </div>
+    </div>
   );
 }
 
-function Dance() {
+function Code({ children }) {
+  return (
+    <pre>
+      <code>{children}</code>
+    </pre>
+  );
+}
+
+function DanceDemo() {
+  return (
+    <div className="m-auto max-w-lg">
+      <Code>{`
+      <motion.div animate="dance">
+
+      </motion.div>
+      `}</Code>
+      <DancingGuy />
+    </div>
+  );
+}
+
+function Quiz() {
+  return (
+    <div>
+      <h1>Quiz</h1>
+    </div>
+  );
+}
+
+function Main() {
+  return (
+    <div className="min-h-screen">
+      <Heading />
+      <DanceDemo />
+      <Quiz />
+    </div>
+  );
+}
+
+function DancingGuy() {
   const commonTransition = {
     repeat: Infinity,
     repeatType: "reverse",
@@ -122,12 +164,12 @@ export function LearnReactDesignMotionPage() {
     }, 1000);
   }, []);
   return (
-    <motion.div className="bg-gray-900 h-screen text-gray-200">
-      {/* <AnimateSharedLayout>
+    <div className="bg-gray-900 text-gray-200 overflow-auto">
+      <AnimateSharedLayout>
         {isMain ? <Main /> : <Welcome />}
-      </AnimateSharedLayout> */}
+      </AnimateSharedLayout>
       {/* <Dance /> */}
       <Test />
-    </motion.div>
+    </div>
   );
 }
