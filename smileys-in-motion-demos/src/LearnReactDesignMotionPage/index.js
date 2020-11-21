@@ -3,9 +3,11 @@ import { useState, useEffect } from "react";
 import {
   AnimateSharedLayout,
   motion,
+  useAnimation,
   useTransform,
   useViewportScroll,
 } from "framer-motion";
+import { Code } from "./Code";
 
 function Welcome() {
   return (
@@ -46,23 +48,49 @@ function Heading() {
   );
 }
 
-function Code({ children }) {
-  return (
-    <pre>
-      <code>{children}</code>
-    </pre>
-  );
-}
-
 function DanceDemo() {
+  const line1 = useAnimation();
+  const line2 = useAnimation();
+  const dancingGuy = useAnimation();
+  useEffect(() => {
+    async function type() {
+      await line1.start("typing");
+      await line1.start("reveal");
+      await line2.start("typing");
+      await dancingGuy.start("dance");
+    }
+    type();
+  }, []);
   return (
-    <div className="m-auto max-w-lg">
-      <Code>{`
-      <motion.div animate="dance">
+    <div className="m-auto max-w-3xl">
+      <Code
+        typingMasks={[
+          {
+            id: "line1",
+            top: "17%",
+            left: "6%",
+            chars: 27,
+            animateControl: line1,
+          },
+          {
+            id: "line2",
+            top: "75%",
+            left: "6%",
+            chars: 13,
+            animateControl: line2,
+          },
+        ]}
+      >{`
+<motion.div animate="dance">
 
-      </motion.div>
-      `}</Code>
-      <DancingGuy />
+
+
+
+</motion.div>
+ `}</Code>
+      <div className="-mt-80">
+        <DancingGuy animate={dancingGuy} />
+      </div>
     </div>
   );
 }
@@ -85,7 +113,7 @@ function Main() {
   );
 }
 
-function DancingGuy() {
+function DancingGuy({ animate }) {
   const commonTransition = {
     repeat: Infinity,
     repeatType: "reverse",
@@ -94,13 +122,13 @@ function DancingGuy() {
   };
   return (
     <motion.div
-      className="text-6xl relative w-64 h-64"
-      initial="chill"
-      animate={"dance"}
+      className="m-auto text-6xl relative w-64 h-64"
+      initial={false}
+      animate={animate}
     >
       <motion.div
         className="absolute"
-        style={{ top: 10, left: 60, originX: "center", originY: "bottom" }}
+        style={{ top: 15, left: 60, originX: "center", originY: "bottom" }}
         variants={{
           chill: {},
           dance: { rotate: [-15, 15], transition: commonTransition },
@@ -168,8 +196,6 @@ export function LearnReactDesignMotionPage() {
       <AnimateSharedLayout>
         {isMain ? <Main /> : <Welcome />}
       </AnimateSharedLayout>
-      {/* <Dance /> */}
-      <Test />
     </div>
   );
 }
