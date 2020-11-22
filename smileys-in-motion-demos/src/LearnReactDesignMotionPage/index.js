@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import {
   AnimateSharedLayout,
   motion,
+  transform,
   useAnimation,
   useTransform,
   useViewportScroll,
@@ -33,7 +34,7 @@ function Heading() {
   return (
     <div className="max-w-5xl mx-auto">
       <motion.h1
-        className="text-5xl mt-60 text-center"
+        className="text-5xl pt-60 text-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
@@ -54,21 +55,40 @@ function Heading() {
   );
 }
 
-function DanceDemo() {
+function DanceDemo({ animate }) {
   const line1 = useAnimation();
   const line2 = useAnimation();
   const dancingGuy = useAnimation();
   useEffect(() => {
-    async function type() {
-      await line1.start("typing");
-      await line1.start("reveal");
-      await line2.start("typing");
-      await dancingGuy.start("dance");
+    async function play() {
+      switch (animate) {
+        case "beforeSeen":
+          break;
+        case "readyToPlay":
+          dancingGuy.start("readyToPlay");
+          break;
+        case "playing":
+          await line1.start("typing");
+          await line1.start("reveal");
+          await line2.start("typing");
+          await dancingGuy.start("playing");
+          break;
+        case "afterSeen":
+          await line2.start("reveal");
+          dancingGuy.start("afterSeen");
+      }
     }
-    type();
-  }, []);
+    play();
+  }, [animate]);
   return (
-    <div className="m-auto max-w-3xl">
+    <motion.div
+      className="m-auto max-w-3xl"
+      animate={animate}
+      variants={{
+        beforeSeen: { filter: "grayscale(0)" },
+        afterSeen: { filter: "grayscale(1)" },
+      }}
+    >
       <Code
         typingMasks={[
           {
@@ -95,23 +115,41 @@ function DanceDemo() {
       <div className="-mt-72">
         <DancingGuy animate={dancingGuy} />
       </div>
-    </div>
+    </motion.div>
   );
 }
 
 function Quiz() {
   return (
     <div>
-      <h1>Quiz</h1>
+      <h1 className="my-96">Quiz</h1>
     </div>
   );
 }
 
 function Main() {
+  const { scrollYProgress } = useViewportScroll();
+  // Variants: beforeSeen =scroll=> readyToPlay =scroll=> playing =scroll=> afterSeen
+  const [danceDemoAnimate, setDanceDemoAnimate] = useState("beforeSeen");
+  useEffect(() => {
+    const unsub = scrollYProgress.onChange((y) => {
+      if (danceDemoAnimate !== "afterSeen") {
+        // Weird that this extra "beforeSeen" is needed here. Bug of transform?
+        const newAnimate = transform(
+          y,
+          [0, 0.4, 0.5, 0.6, 0.9],
+          ["beforeSeen", "beforeSeen", "readyToPlay", "playing", "afterSeen"]
+        );
+        // console.log({ y, newAnimate });
+        setDanceDemoAnimate(newAnimate);
+      }
+    });
+    return unsub;
+  }, []);
   return (
     <div className="min-h-screen">
       <Heading />
-      <DanceDemo />
+      <DanceDemo animate={danceDemoAnimate} />
       <Quiz />
     </div>
   );
@@ -127,15 +165,17 @@ function DancingGuy({ animate }) {
   return (
     <motion.div
       className="m-auto text-6xl relative w-64 h-64"
-      initial={false}
+      initial={"beforeSeen"}
       animate={animate}
     >
       <motion.div
         className="absolute"
         style={{ top: 15, left: 60, originX: "center", originY: "bottom" }}
         variants={{
-          chill: {},
-          dance: { rotate: [-15, 15], transition: commonTransition },
+          beforeSeen: { opacity: 0 },
+          readyToPlay: { opacity: 1 },
+          playing: { rotate: [-15, 15], transition: commonTransition },
+          afterSeen: { rotate: 0 },
         }}
       >
         🤨
@@ -144,8 +184,10 @@ function DancingGuy({ animate }) {
         className="absolute"
         style={{ top: 120, left: 80, originX: "center", originY: "top" }}
         variants={{
-          chill: {},
-          dance: { rotate: [-5, 5], transition: commonTransition },
+          beforeSeen: { opacity: 0 },
+          readyToPlay: { opacity: 1 },
+          playing: { rotate: [-5, 5], transition: commonTransition },
+          afterSeen: { rotate: 0 },
         }}
       >
         🦵
@@ -154,8 +196,10 @@ function DancingGuy({ animate }) {
         className="absolute"
         style={{ top: 130, left: 60, originX: "center", originY: "top" }}
         variants={{
-          chill: {},
-          dance: { rotate: [5, -5], transition: commonTransition },
+          beforeSeen: { opacity: 0 },
+          readyToPlay: { opacity: 1 },
+          playing: { rotate: [5, -5], transition: commonTransition },
+          afterSeen: { rotate: 0 },
         }}
       >
         🦵
@@ -164,8 +208,10 @@ function DancingGuy({ animate }) {
         className="absolute text-4xl"
         style={{ top: 80, left: 30, rotate: -90 }}
         variants={{
-          chill: {},
-          dance: { y: [-10, 10], transition: commonTransition },
+          beforeSeen: { opacity: 0 },
+          readyToPlay: { opacity: 1 },
+          playing: { y: [-10, 10], transition: commonTransition },
+          afterSeen: { y: 0 },
         }}
       >
         👊
@@ -174,8 +220,10 @@ function DancingGuy({ animate }) {
         className="absolute text-4xl"
         style={{ top: 90, left: 120, rotate: -90, scaleX: -1 }}
         variants={{
-          chill: {},
-          dance: { y: [10, -10], transition: commonTransition },
+          beforeSeen: { opacity: 0 },
+          readyToPlay: { opacity: 1 },
+          playing: { y: [10, -10], transition: commonTransition },
+          afterSeen: { y: 0 },
         }}
       >
         👊
@@ -196,7 +244,7 @@ export function LearnReactDesignMotionPage() {
     }, 1000);
   }, []);
   return (
-    <div className="bg-gray-900 text-gray-200 overflow-auto">
+    <div className="bg-gray-900 text-gray-200">
       <AnimateSharedLayout>
         {isMain ? <Main /> : <Welcome />}
       </AnimateSharedLayout>
