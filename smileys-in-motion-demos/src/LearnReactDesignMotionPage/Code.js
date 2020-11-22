@@ -88,17 +88,19 @@ function TypingMask({ top, left, chars, speed = 1, animate }) {
   );
 }
 
-export function Code({ children, typingMasks = [] }) {
+export function Code({ children, inline, lang = "html", typingMasks = [] }) {
   useEffect(() => {
     Prism.highlightAll();
   }, []);
-  return (
-    <div className="text-4xl relative flex justify-center ">
+  return inline ? (
+    <code className={`language-${lang}`}>{children}</code>
+  ) : (
+    <div className="text-3xl relative flex justify-center ">
       <pre
         className="border-gray-400 border-solid border-2 relative"
         style={{ overflow: "hidden" }}
       >
-        <code className="language-html">{children}</code>
+        <code className={`language-${lang}`}>{children}</code>
         {typingMasks.map((mask) => (
           <TypingMask {...mask} key={mask.id} />
         ))}

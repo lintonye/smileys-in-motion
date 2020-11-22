@@ -30,28 +30,64 @@ function MrSmiley() {
   );
 }
 
-function Heading() {
+function ScrollIndicator() {
   return (
-    <div className="max-w-5xl mx-auto">
-      <motion.h1
-        className="text-5xl pt-60 text-center"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+    <div className="absolute bottom-1 left-0 right-0">
+      <div className="text-center text-sm mt-2 -mb-3 text-gray-400">Scroll</div>
+      <motion.div
+        className="text-center"
+        animate={{ y: [0, 5], opacity: [0.5, 1] }}
+        transition={{ repeat: Infinity, repeatType: "reverse" }}
       >
-        Master Framer Motion, Build Awesome Animations. Like this page.
-      </motion.h1>
-      <div
-        className="text-2xl mt-40 max-w-lg m-auto"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, transition: { delay: 0.5 } }}
-      >
-        <MrSmiley />
-        <p>Framer Motion is great.</p>
-        <p>So great that it sometimes feels like cheating.</p>
-        <p>Framer Motion is great.</p>
-        <p>So great that it sometimes feels like cheating.</p>
-      </div>
+        ▿
+      </motion.div>
     </div>
+  );
+}
+
+function Page({ children, className }) {
+  return (
+    <div className={className + " relative m-auto"}>
+      {children}
+      <ScrollIndicator />
+    </div>
+  );
+}
+
+function Heading() {
+  const [danceDemoAnimate, setDanceDemoAnimate] = useState("beforeSeen");
+  useEffect(() => {
+    setTimeout(() => {
+      setDanceDemoAnimate("readyToPlay");
+      setTimeout(() => {
+        setDanceDemoAnimate("playing");
+      }, 300);
+    }, 500);
+  }, []);
+  return (
+    <Page className="max-w-xl mx-auto h-screen flex flex-col justify-center align-middle space-y-8">
+      <h1 className="text-4xl text-center">
+        Build Advanced UI Animations With Framer Motion &amp; React
+      </h1>
+      <div className="text-center mb-6">⭐️⭐️⭐️⭐️⭐️</div>
+      {/* <h2 className="text-center text-lg mb-6">
+        A comprehensive Framer Motion course on{" "}
+        <span className="line-through">abusing emojis</span> the mental model,
+        tips &amp; tricks, and common pitfalls
+      </h2> */}
+      <div className="pb-10">
+        <DanceDemo animate={danceDemoAnimate} />
+      </div>
+      <motion.div className="text-lg space-y-6">
+        <p>
+          This is Framer Motion: add a "motion." prefix, sprinkle some props,
+          animate on! It's THAT easy!
+        </p>
+        <p className="text-sm">
+          PS: Guess what was the "video" above made with?
+        </p>
+      </motion.div>
+    </Page>
   );
 }
 
@@ -75,6 +111,7 @@ function DanceDemo({ animate }) {
           break;
         case "afterSeen":
           await line2.start("reveal");
+          // await dancingGuy.stop();
           dancingGuy.start("afterSeen");
       }
     }
@@ -83,10 +120,12 @@ function DanceDemo({ animate }) {
   return (
     <motion.div
       className="m-auto max-w-3xl"
+      initial={false}
       animate={animate}
       variants={{
-        beforeSeen: { filter: "grayscale(0)" },
-        afterSeen: { filter: "grayscale(1)" },
+        beforeSeen: { filter: "grayscale(0)", opacity: 0 },
+        readyToPlay: { opacity: 1 },
+        afterSeen: { filter: "grayscale(0)" },
       }}
     >
       <Code
@@ -119,11 +158,117 @@ function DanceDemo({ animate }) {
   );
 }
 
+function Foot({ repeatType = null }) {
+  return (
+    <motion.span
+      className="inline-block"
+      initial={{ scale: 1 }}
+      animate={{ scale: 4 }}
+      transition={{
+        ...(repeatType ? { repeat: Infinity, repeatType } : { type: "ease" }),
+        duration: 2,
+      }}
+    >
+      🦶
+    </motion.span>
+  );
+}
+
+function Option({ children }) {
+  return (
+    <motion.div className="border-2 border-solid border-gray-500 rounded-md p-8 cursor-pointer hover:border-blue-500 hover:bg-gray-800">
+      {children}
+    </motion.div>
+  );
+}
+
+function QuizAnswer() {
+  return (
+    <Page className="m-auto max-w-xl pt-10 space-y-6 text-lg">
+      <p>The correct answer is D -- there is no animation at all! </p>
+
+      <p>
+        It's NOT a bug. It's due to{" "}
+        <a href="https://stackoverflow.com/a/14883287">the rules of HTML</a>:
+        <Code inline>span</Code> has{" "}
+        <Code inline lang="css">
+          display: inline
+        </Code>{" "}
+        by default, and CSS transforms (such as
+        <Code inline>scale</Code>) don't work on inline elements. To make it
+        work, we could set its display to either <Code inline>block</Code> or{" "}
+        <Code inline>inline-block</Code>.
+      </p>
+
+      <p>
+        Framer Motion is a great library. But it can be tricky to get it to work
+        in real-world applications. This is not to blame the library. It's
+        because the reality is complex. Web development IS tricky!
+      </p>
+
+      <p>Here are a few more examples:</p>
+      <ul>
+        <li>How would I make Motion work with React Router?</li>
+        <li>Why is the text distorted during the transition?</li>
+        <li>
+          Why doesn't <Code inline>AnimatePresence</Code> work even if you set
+          the element to{" "}
+          <Code inline lang="css">
+            display: none
+          </Code>
+          ?
+        </li>
+        <li>I removed an item from the list, why is it still there?</li>
+        <li>
+          Why does{" "}
+          <Code inline>{`<AnimateSharedLayout type="crossfade">`}</Code> work
+          the same as <Code inline>switch</Code>?
+        </li>
+        <li>...</li>
+      </ul>
+
+      <p>
+        I've been struggling on all these questions since 2019 when Motion V1
+        was launched. You'd likely stumble upon them too!{" "}
+      </p>
+
+      <p>
+        I've spent a lot of time chasing down the why's and solutions. As an
+        example, it took me 3 full days to understand AnimateSharedLayout and
+        its relation to AnimatePresence.
+      </p>
+
+      <h2>Good news: Since I've spent the time, you don't have to!</h2>
+    </Page>
+  );
+}
+
 function Quiz() {
   return (
-    <div>
-      <h1 className="my-96">Quiz</h1>
-    </div>
+    <Page className="max-w-xl space-y-6 text-lg h-screen flex flex-col justify-center align-middle">
+      <p className="">
+        Well, if Framer Motion is so easy to use, what is the point of making a
+        course? Let me ask you a question first.
+      </p>
+
+      <Code>{`<motion.span animate={{ scale: 4 }}>
+🦶
+</motion.span>
+`}</Code>
+      <p className="text-center">What kind of animation would you get?</p>
+      <div className="grid grid-cols-2 gap-2">
+        <Option id="A">
+          <Foot repeatType={null} />
+        </Option>
+        <Option id="B">
+          <Foot repeatType={"loop"} />
+        </Option>
+        <Option id="C">
+          <Foot repeatType={"reverse"} />
+        </Option>
+        <Option id="D">None of the above</Option>
+      </div>
+    </Page>
   );
 }
 
@@ -133,24 +278,24 @@ function Main() {
   const [danceDemoAnimate, setDanceDemoAnimate] = useState("beforeSeen");
   useEffect(() => {
     const unsub = scrollYProgress.onChange((y) => {
-      if (danceDemoAnimate !== "afterSeen") {
-        // Weird that this extra "beforeSeen" is needed here. Bug of transform?
-        const newAnimate = transform(
-          y,
-          [0, 0.4, 0.5, 0.6, 0.9],
-          ["beforeSeen", "beforeSeen", "readyToPlay", "playing", "afterSeen"]
-        );
-        // console.log({ y, newAnimate });
-        setDanceDemoAnimate(newAnimate);
-      }
+      // Weird that this extra "beforeSeen" is needed here. Bug of transform?
+      const newAnimate = transform(
+        y,
+        [0, 0.5, 0.6, 0.7, 0.9],
+        ["beforeSeen", "beforeSeen", "readyToPlay", "playing", "afterSeen"]
+      );
+      // console.log({ y, newAnimate });
+      setDanceDemoAnimate(newAnimate);
     });
     return unsub;
   }, []);
   return (
     <div className="min-h-screen">
       <Heading />
-      <DanceDemo animate={danceDemoAnimate} />
+      {/* <DanceDemo animate={danceDemoAnimate} /> */}
+      {/* <MotionIsGreat /> */}
       <Quiz />
+      <QuizAnswer />
     </div>
   );
 }
@@ -245,9 +390,10 @@ export function LearnReactDesignMotionPage() {
   }, []);
   return (
     <div className="bg-gray-900 text-gray-200">
-      <AnimateSharedLayout>
+      <Main />
+      {/* <AnimateSharedLayout>
         {isMain ? <Main /> : <Welcome />}
-      </AnimateSharedLayout>
+      </AnimateSharedLayout> */}
     </div>
   );
 }
