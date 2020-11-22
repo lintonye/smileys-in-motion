@@ -58,10 +58,7 @@ function Heading() {
   const [danceDemoAnimate, setDanceDemoAnimate] = useState("beforeSeen");
   useEffect(() => {
     setTimeout(() => {
-      setDanceDemoAnimate("readyToPlay");
-      setTimeout(() => {
-        setDanceDemoAnimate("playing");
-      }, 300);
+      setDanceDemoAnimate(["readyToPlay", "playing"]);
     }, 500);
   }, []);
   return (
@@ -78,7 +75,12 @@ function Heading() {
       <div className="pb-10">
         <DanceDemo animate={danceDemoAnimate} />
       </div>
-      <motion.div className="text-lg space-y-6">
+      <motion.div
+        className="text-lg space-y-6"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 3 }}
+      >
         <p>
           This is Framer Motion: add a "motion." prefix, sprinkle some props,
           animate on! It's THAT easy!
@@ -96,12 +98,12 @@ function DanceDemo({ animate }) {
   const line2 = useAnimation();
   const dancingGuy = useAnimation();
   useEffect(() => {
-    async function play() {
-      switch (animate) {
+    async function play(anim) {
+      switch (anim) {
         case "beforeSeen":
           break;
         case "readyToPlay":
-          dancingGuy.start("readyToPlay");
+          await dancingGuy.start("readyToPlay");
           break;
         case "playing":
           await line1.start("typing");
@@ -112,10 +114,17 @@ function DanceDemo({ animate }) {
         case "afterSeen":
           await line2.start("reveal");
           // await dancingGuy.stop();
-          dancingGuy.start("afterSeen");
+          await dancingGuy.start("afterSeen");
       }
     }
-    play();
+    async function playAll(anims) {
+      for (let anim of anims) {
+        // console.log(anim);
+        await play(anim);
+      }
+    }
+    const anims = Array.isArray(animate) ? animate : [animate];
+    playAll(anims);
   }, [animate]);
   return (
     <motion.div
@@ -151,7 +160,7 @@ function DanceDemo({ animate }) {
 
 
 </motion.div>`}</Code>
-      <div className="-mt-72">
+      <div className="-mt-60">
         <DancingGuy animate={dancingGuy} />
       </div>
     </motion.div>
@@ -184,7 +193,7 @@ function Option({ children }) {
 
 function QuizAnswer() {
   return (
-    <Page className="m-auto max-w-xl pt-10 space-y-6 text-lg">
+    <Page className="m-auto max-w-xl pt-10 space-y-8 text-lg">
       <p>The correct answer is D -- there is no animation at all! </p>
 
       <p>
@@ -234,8 +243,9 @@ function QuizAnswer() {
 
       <p>
         I've spent a lot of time chasing down the why's and solutions. As an
-        example, it took me 3 full days to understand AnimateSharedLayout and
-        its relation to AnimatePresence.
+        example, it took me 3 full days to understand{" "}
+        <Code inline>AnimateSharedLayout</Code> and its relationship to{" "}
+        <Code inline>AnimatePresence</Code>.
       </p>
 
       <h2>Good news: Since I've spent the time, you don't have to!</h2>
@@ -273,27 +283,9 @@ function Quiz() {
 }
 
 function Main() {
-  const { scrollYProgress } = useViewportScroll();
-  // Variants: beforeSeen =scroll=> readyToPlay =scroll=> playing =scroll=> afterSeen
-  const [danceDemoAnimate, setDanceDemoAnimate] = useState("beforeSeen");
-  useEffect(() => {
-    const unsub = scrollYProgress.onChange((y) => {
-      // Weird that this extra "beforeSeen" is needed here. Bug of transform?
-      const newAnimate = transform(
-        y,
-        [0, 0.5, 0.6, 0.7, 0.9],
-        ["beforeSeen", "beforeSeen", "readyToPlay", "playing", "afterSeen"]
-      );
-      // console.log({ y, newAnimate });
-      setDanceDemoAnimate(newAnimate);
-    });
-    return unsub;
-  }, []);
   return (
-    <div className="min-h-screen">
+    <div>
       <Heading />
-      {/* <DanceDemo animate={danceDemoAnimate} /> */}
-      {/* <MotionIsGreat /> */}
       <Quiz />
       <QuizAnswer />
     </div>
@@ -309,7 +301,7 @@ function DancingGuy({ animate }) {
   };
   return (
     <motion.div
-      className="m-auto text-6xl relative w-64 h-64"
+      className="m-auto text-6xl relative w-48 h-64"
       initial={"beforeSeen"}
       animate={animate}
     >
@@ -317,7 +309,7 @@ function DancingGuy({ animate }) {
         className="absolute"
         style={{ top: 15, left: 60, originX: "center", originY: "bottom" }}
         variants={{
-          beforeSeen: { opacity: 0 },
+          beforeSeen: { opacity: 0, rotate: -15 },
           readyToPlay: { opacity: 1 },
           playing: { rotate: [-15, 15], transition: commonTransition },
           afterSeen: { rotate: 0 },
@@ -329,7 +321,7 @@ function DancingGuy({ animate }) {
         className="absolute"
         style={{ top: 120, left: 80, originX: "center", originY: "top" }}
         variants={{
-          beforeSeen: { opacity: 0 },
+          beforeSeen: { opacity: 0, rotate: -5 },
           readyToPlay: { opacity: 1 },
           playing: { rotate: [-5, 5], transition: commonTransition },
           afterSeen: { rotate: 0 },
@@ -341,7 +333,7 @@ function DancingGuy({ animate }) {
         className="absolute"
         style={{ top: 130, left: 60, originX: "center", originY: "top" }}
         variants={{
-          beforeSeen: { opacity: 0 },
+          beforeSeen: { opacity: 0, rotate: 5 },
           readyToPlay: { opacity: 1 },
           playing: { rotate: [5, -5], transition: commonTransition },
           afterSeen: { rotate: 0 },
@@ -353,7 +345,7 @@ function DancingGuy({ animate }) {
         className="absolute text-4xl"
         style={{ top: 80, left: 30, rotate: -90 }}
         variants={{
-          beforeSeen: { opacity: 0 },
+          beforeSeen: { opacity: 0, y: -10 },
           readyToPlay: { opacity: 1 },
           playing: { y: [-10, 10], transition: commonTransition },
           afterSeen: { y: 0 },
@@ -365,7 +357,7 @@ function DancingGuy({ animate }) {
         className="absolute text-4xl"
         style={{ top: 90, left: 120, rotate: -90, scaleX: -1 }}
         variants={{
-          beforeSeen: { opacity: 0 },
+          beforeSeen: { opacity: 0, y: 10 },
           readyToPlay: { opacity: 1 },
           playing: { y: [10, -10], transition: commonTransition },
           afterSeen: { y: 0 },

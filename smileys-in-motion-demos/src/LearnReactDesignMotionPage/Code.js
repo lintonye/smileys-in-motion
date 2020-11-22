@@ -7,7 +7,7 @@ import { motion, useAnimation } from "framer-motion";
 // Variants: block, typing, reveal
 function TypingMask({ top, left, chars, speed = 1, animate }) {
   const xBlock = Array(chars * 2 + 1).fill(`0%`);
-  const pixelsPerChar = 18;
+  const pixelsPerChar = 15;
   const totalWidth = pixelsPerChar * chars;
   const x = Array(chars)
     .fill(0)
@@ -54,7 +54,7 @@ function TypingMask({ top, left, chars, speed = 1, animate }) {
       }}
       style={{
         width: `90%`,
-        height: 30,
+        height: 25,
         top,
         left,
         backgroundColor: "#1e1e1e",
