@@ -254,7 +254,7 @@ function Foot({ repeatType = null }) {
 
 function Option({ children }) {
   return (
-    <motion.div className="border-2 border-solid border-gray-500 rounded-md p-8 cursor-pointer hover:border-blue-500 hover:bg-gray-800">
+    <motion.div className="border-2 border-solid border-gray-700 rounded-md p-8 cursor-pointer hover:border-blue-500 hover:bg-gray-800">
       {children}
     </motion.div>
   );
