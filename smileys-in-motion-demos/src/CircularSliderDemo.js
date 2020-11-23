@@ -13,28 +13,27 @@ function useInitialViewportBBox() {
   return [bbox, ref];
 }
 
+const clamp = (v, min, max) => Math.min(max, Math.max(v, min));
+
 function CircularSlider({ initialValue, onChange }) {
+  // Dimensions
   const knobSize = 20;
   const arcWidth = 400;
   const arcStrokeWidth = 4;
-  const arcHeight = (405 / 810) * arcWidth;
-  const arcRadius = arcWidth / 2 - arcStrokeWidth / 2;
-  const knobAngle = useMotionValue(initialValue * Math.PI);
-  const knobAnglePercentage = useTransform(knobAngle, (a) => a / Math.PI);
-  useEffect(() => {
-    const unsub = knobAnglePercentage.onChange(
-      (p) => typeof onChange === "function" && onChange(p)
-    );
-    return unsub;
-  }, [knobAnglePercentage, onChange]);
+  const arcHeight = arcWidth / 2;
+  const arcRadius = arcHeight - arcStrokeWidth;
+  const [containerBBox, ref] = useInitialViewportBBox();
 
+  const knobAngle = useMotionValue(initialValue * Math.PI);
+  const knobAnglePortion = useTransform(knobAngle, (a) => a / Math.PI);
+
+  // Knob coordinates
   const knobX = useTransform(
     knobAngle,
     (a) => arcWidth / 2 - Math.cos(a) * arcRadius
   );
-  const knobY = useTransform(knobAngle, (a) => -Math.sin(a) * arcRadius);
-  const clamp = (v, min, max) => Math.min(max, Math.max(v, min));
-  const [containerBBox, ref] = useInitialViewportBBox();
+  const knobY = useTransform(knobAngle, (a) => Math.sin(a) * arcRadius);
+
   const updateKnobAngle = (point) => {
     const { left, top } = containerBBox;
     const x = point.x - (left + arcWidth / 2);
@@ -43,9 +42,18 @@ function CircularSlider({ initialValue, onChange }) {
      * NOTE: the commented line above causes the angle being set to PI when moving below the X axis. The correct way is to limit y to quadrat 1 and 2 (the line below).
      */
     const y = Math.max(top + arcHeight - point.y, 0);
-    const angle = Math.PI - Math.atan2(y, x);
+    const angle = Math.atan2(y, x);
     knobAngle.set(angle);
   };
+
+  // Dispatch onChange
+  useEffect(() => {
+    const unsub = knobAnglePortion.onChange(
+      (p) => typeof onChange === "function" && onChange(p)
+    );
+    return unsub;
+  }, [knobAnglePortion, onChange]);
+
   return (
     <motion.div
       style={{ position: "relative" }}
@@ -92,7 +100,7 @@ function CircularSlider({ initialValue, onChange }) {
           d="M5,405 C5,184.086 184.086,5 405,5 C625.914,5 805,184.086 805,405"
           stroke="#4876e0"
           strokeWidth={arcStrokeWidth}
-          style={{ pathLength: knobAnglePercentage }}
+          style={{ pathLength: knobAnglePortion }}
         />
       </svg>
     </motion.div>
