@@ -92,7 +92,7 @@ function CircularSlider({ initialValue, onChange }) {
           d="M5,405 C5,184.086 184.086,5 405,5 C625.914,5 805,184.086 805,405"
           stroke="#4876e0"
           strokeWidth={arcStrokeWidth}
-          style={{ pathLength: knobAnglePercentage, pathOffset: 0 }}
+          style={{ pathLength: knobAnglePercentage }}
         />
       </svg>
     </motion.div>
