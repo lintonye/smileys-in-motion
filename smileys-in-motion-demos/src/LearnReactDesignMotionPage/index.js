@@ -53,7 +53,14 @@ function useInitialBoundingBox() {
   useEffect(() => {
     if (ref.current) {
       const b = ref.current.getBoundingClientRect();
-      setBox(b);
+      setBox(
+        DOMRectReadOnly.fromRect({
+          x: b.left + window.scrollX,
+          y: b.top + window.scrollY,
+          width: b.width,
+          height: b.height,
+        })
+      );
     }
   }, [ref]);
   return [ref, box];
@@ -129,7 +136,7 @@ function Heading() {
       <h1 className="text-4xl text-center">
         Build Advanced UI Animations With Framer Motion &amp; React
       </h1>
-      <div className="text-center mb-6 space-x-4">
+      <div className="text-center mb-6 space-x-3">
         {Array(5)
           .fill("⭐️")
           .map((s) => (
@@ -148,7 +155,7 @@ function Heading() {
         className="text-lg space-y-6"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 3 }}
+        transition={{ delay: 4 }}
       >
         <p>
           This is Framer Motion: add a "motion." prefix, sprinkle some props,
@@ -306,8 +313,8 @@ function QuizAnswer() {
       </ul>
 
       <p>
-        I've been struggling on all these questions since 2019 when Motion V1
-        was launched. You'd likely stumble upon them too!{" "}
+        I've struggled on all these questions since 2019 when Motion V1 was
+        launched. You'd likely stumble upon them too!{" "}
       </p>
 
       <p>
