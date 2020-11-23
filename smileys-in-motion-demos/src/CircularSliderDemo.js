@@ -26,7 +26,7 @@ function CircularSlider({ initialValue, onChange }) {
       (p) => typeof onChange === "function" && onChange(p)
     );
     return unsub;
-  }, [knobAngle]);
+  }, [knobAnglePercentage]);
 
   const knobX = useTransform(
     knobAngle,
