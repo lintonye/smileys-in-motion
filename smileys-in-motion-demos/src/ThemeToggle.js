@@ -20,7 +20,7 @@ export function ThemeToggle() {
       //   light: {
       //     opacity: [0.9, 0.5],
       //     x: [20, -20],
-      //     transition: { duration: 2, yoyo: Infinity },
+      //     transition: { duration: 2, repeat: Infinity, repeatType: 'reverse' },
       //   },
       //   dark: { opacity: 0 },
       // }}
@@ -36,7 +36,7 @@ export function ThemeToggle() {
         //   light: { opacity: 0 },
         //   dark: {
         //     opacity: [1, 0.5, 0.8],
-        //     transition: { duration: 2, yoyo: Infinity },
+        //     transition: { duration: 2, repeat: Infinity, repeatType: 'reverse' },
         //   },
         // }}
       >
@@ -54,7 +54,7 @@ export function ThemeToggle() {
         //   light: { opacity: 0 },
         //   dark: {
         //     opacity: [0.4, 1, 0.5],
-        //     transition: { duration: 2, yoyo: Infinity },
+        //     transition: { duration: 2, repeat: Infinity, repeatType: 'reverse' },
         //   },
         // }}
       >
@@ -66,7 +66,7 @@ export function ThemeToggle() {
     <>
       <motion.div
         style={{ margin: -30, cursor: "pointer", position: "absolute" }}
-        onClick={cycleMode}
+        onClick={() => cycleMode()}
         // variants={{
         //   light: { rotate: 0, opacity: 1, x: 0 },
         //   dark: { rotate: 180, opacity: 0, x: toggleWidth - knobWidth / 2 },
@@ -81,7 +81,7 @@ export function ThemeToggle() {
           position: "absolute",
           scale: 0.9,
         }}
-        onClick={cycleMode}
+        onClick={() => cycleMode()}
         // variants={{
         //   light: { rotate: -180, opacity: 0, x: 0 },
         //   dark: { rotate: 0, opacity: 1, x: toggleWidth - knobWidth / 2 },
