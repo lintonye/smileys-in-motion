@@ -35,7 +35,7 @@ function CircularSlider({ initialValue, onChange }) {
   const knobY = useTransform(knobAngle, (a) => -Math.sin(a) * arcRadius);
   const clamp = (v, min, max) => Math.min(max, Math.max(v, min));
   const [containerBBox, ref] = useInitialViewportBBox();
-  const updateKnobXY = (point) => {
+  const updateKnobAngle = (point) => {
     const { left, top } = containerBBox;
     const x = point.x - (left + arcWidth / 2);
     // const angle = clamp(Math.PI - Math.atan2(y, x), 0, Math.PI);
@@ -51,10 +51,10 @@ function CircularSlider({ initialValue, onChange }) {
       style={{ position: "relative" }}
       ref={ref}
       onPan={(e, info) => {
-        updateKnobXY(info.point);
+        updateKnobAngle(info.point);
       }}
       onTap={(e, info) => {
-        updateKnobXY(info.point);
+        updateKnobAngle(info.point);
       }}
     >
       {/* Knob */}
