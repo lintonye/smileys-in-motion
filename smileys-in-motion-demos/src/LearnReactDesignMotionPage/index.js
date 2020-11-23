@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   AnimateSharedLayout,
   motion,
@@ -30,10 +30,12 @@ function MrSmiley() {
   );
 }
 
-function ScrollIndicator() {
+function ScrollIndicator({ title = "Scroll" }) {
   return (
-    <div className="absolute bottom-1 left-0 right-0">
-      <div className="text-center text-sm mt-2 -mb-3 text-gray-400">Scroll</div>
+    <div>
+      <div className="text-center text-sm mt-2 -mb-3 text-gray-400">
+        {title}
+      </div>
       <motion.div
         className="text-center"
         animate={{ y: [0, 5], opacity: [0.5, 1] }}
@@ -45,12 +47,70 @@ function ScrollIndicator() {
   );
 }
 
-function Page({ children, className }) {
+function useInitialBoundingBox() {
+  const ref = useRef();
+  const [box, setBox] = useState({});
+  useEffect(() => {
+    if (ref.current) {
+      const b = ref.current.getBoundingClientRect();
+      setBox(b);
+    }
+  }, [ref]);
+  return [ref, box];
+}
+
+function useViewportDimension() {
+  const [dim, setDim] = useState({});
+  useEffect(() => {
+    function updateDim() {
+      setDim({ width: window.innerWidth, height: window.innerHeight });
+    }
+    updateDim();
+    window.addEventListener("resize", updateDim);
+    return () => window.removeEventListener("resize", updateDim);
+  }, []);
+  return dim;
+}
+
+function Page({ children, className, fullScreen = false }) {
+  const [ref, { top, height }] = useInitialBoundingBox();
+  const { height: vh } = useViewportDimension();
+  const { scrollY } = useViewportScroll();
+  const inputRange = [
+    ...(top >= vh ? [top - vh, top - vh + 20] : [0]),
+    top + height / 3,
+    top + height / 2,
+  ];
+  // console.log({ top, vh, inputRange });
+  const filter = useTransform(scrollY, inputRange, [
+    ...(top >= vh ? ["grayscale(0)", "grayscale(0)"] : ["grayscale(0)"]),
+    "grayscale(0)",
+    "grayscale(1)",
+  ]);
+  const opacity = useTransform(scrollY, inputRange, [
+    ...(top >= vh ? [1, 1] : [1]),
+    1,
+    0.3,
+  ]);
+  const indicatorOpacity = useTransform(scrollY, [top, top + 20], [1, 0]);
   return (
-    <div className={className + " relative m-auto"}>
+    <motion.div
+      style={{ filter, opacity }}
+      className={
+        className + " relative m-auto " + (fullScreen ? "h-screen" : "")
+      }
+      ref={ref}
+    >
       {children}
-      <ScrollIndicator />
-    </div>
+      {fullScreen && (
+        <motion.div
+          className="absolute bottom-1 left-0 right-0"
+          style={{ opacity: indicatorOpacity }}
+        >
+          <ScrollIndicator />
+        </motion.div>
+      )}
+    </motion.div>
   );
 }
 
@@ -62,11 +122,20 @@ function Heading() {
     }, 500);
   }, []);
   return (
-    <Page className="max-w-xl mx-auto h-screen flex flex-col justify-center align-middle space-y-8">
+    <Page
+      className="max-w-xl mx-auto flex flex-col justify-center align-middle space-y-8"
+      fullScreen
+    >
       <h1 className="text-4xl text-center">
         Build Advanced UI Animations With Framer Motion &amp; React
       </h1>
-      <div className="text-center mb-6">⭐️⭐️⭐️⭐️⭐️</div>
+      <div className="text-center mb-6 space-x-4">
+        {Array(5)
+          .fill("⭐️")
+          .map((s) => (
+            <span>{s}</span>
+          ))}
+      </div>
       {/* <h2 className="text-center text-lg mb-6">
         A comprehensive Framer Motion course on{" "}
         <span className="line-through">abusing emojis</span> the mental model,
@@ -86,7 +155,7 @@ function Heading() {
           animate on! It's THAT easy!
         </p>
         <p className="text-sm">
-          PS: Guess what was the "video" above made with?
+          PS: Guess what the "video" above was made with?
         </p>
       </motion.div>
     </Page>
@@ -255,10 +324,10 @@ function QuizAnswer() {
 
 function Quiz() {
   return (
-    <Page className="max-w-xl space-y-6 text-lg h-screen flex flex-col justify-center align-middle">
+    <Page className="max-w-xl space-y-6 text-lg pt-16" fullScreen>
       <p className="">
         Well, if Framer Motion is so easy to use, what is the point of making a
-        course? Let me ask you a question first.
+        course? Let me ask you a question first. 👇
       </p>
 
       <Code>{`<motion.span animate={{ scale: 4 }}>
