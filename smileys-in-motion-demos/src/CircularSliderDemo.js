@@ -120,7 +120,7 @@ export function CircularSliderDemo() {
     >
       <CircularSlider
         initialValue={volume / 100}
-        onChange={(percent) => setVolume(Math.round(percent * 100))}
+        onChange={(portion) => setVolume(Math.round(portion * 100))}
       />
       <motion.div style={{ margin: "-80px auto", color: "#eee", fontSize: 60 }}>
         {volume}
