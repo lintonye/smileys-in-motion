@@ -32,7 +32,7 @@ function CircularSlider({ initialValue, onChange }) {
     knobAngle,
     (a) => arcWidth / 2 - Math.cos(a) * arcRadius
   );
-  const knobY = useTransform(knobAngle, (a) => Math.sin(a) * arcRadius);
+  const knobY = useTransform(knobAngle, (a) => -Math.sin(a) * arcRadius);
 
   const updateKnobAngle = (point) => {
     const { left, top } = containerBBox;
@@ -42,7 +42,7 @@ function CircularSlider({ initialValue, onChange }) {
      * NOTE: the commented line above causes the angle being set to PI when moving below the X axis. The correct way is to limit y to quadrat 1 and 2 (the line below).
      */
     const y = Math.max(top + arcHeight - point.y, 0);
-    const angle = Math.atan2(y, x);
+    const angle = Math.PI - Math.atan2(y, x);
     knobAngle.set(angle);
   };
 
