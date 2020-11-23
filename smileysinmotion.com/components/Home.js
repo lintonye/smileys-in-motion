@@ -259,10 +259,11 @@ function Foot({ repeatType = null }) {
   );
 }
 
-function Option({ children }) {
+function Option({ id, children }) {
   return (
-    <motion.div className="border-2 border-solid border-gray-700 rounded-md p-8 cursor-pointer hover:border-blue-500 hover:bg-gray-800">
-      {children}
+    <motion.div className="border-2 border-solid border-gray-700 rounded-md p-8 cursor-pointer hover:border-blue-500 hover:bg-gray-800 flex space-x-4">
+      <div>{id}.</div>
+      <div>{children}</div>
     </motion.div>
   );
 }
