@@ -244,27 +244,35 @@ function DanceDemo({ animate }) {
   );
 }
 
-function Foot({ repeatType = null }) {
+function Fist({ repeatType = null, duration = undefined, className }) {
   return (
     <motion.span
-      className="inline-block"
+      className={`inline-block ${className}`}
       initial={{ scale: 1 }}
       animate={{ scale: 4 }}
       transition={{
         ...(repeatType ? { repeat: Infinity, repeatType } : { type: "ease" }),
-        duration: 2,
+        duration,
       }}
     >
-      🦶
+      👊
     </motion.span>
   );
 }
 
-function Option({ id, children }) {
+function Option({ id, title, selected, onSelect, children }) {
+  const [hovered, setHovered] = useState(false);
   return (
-    <motion.div className="border-2 border-solid border-gray-700 rounded-md p-8 cursor-pointer hover:border-blue-500 hover:bg-gray-800 flex space-x-4">
-      <div>{id}.</div>
-      <div>{children}</div>
+    <motion.div
+      className={`border-2 border-solid border-gray-700 rounded-md p-8 cursor-pointer hover:border-blue-400 flex space-x-4 ${
+        selected && "border-blue-500 bg-gray-800 hover:bg-gray-800"
+      }`}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onTap={() => typeof onSelect === "function" && onSelect()}
+    >
+      <span className="text-gray-400">{id}.</span>
+      <span>{hovered && children ? children : title}</span>
     </motion.div>
   );
 }
@@ -332,6 +340,28 @@ function QuizAnswer() {
 }
 
 function Quiz() {
+  const [choice, setChoice] = useState(null);
+  const options = [
+    {
+      id: "A",
+      title: "quickly scales 4x",
+      preview: <Fist repeatType={null} className="ml-4" />,
+    },
+
+    {
+      id: "B",
+      title: "quickly scales 4x, loop",
+      preview: <Fist repeatType={"reverse"} className="ml-4" />,
+    },
+
+    {
+      id: "C",
+      title: "slowly scales 4x",
+      preview: <Fist duration={1} className="ml-4" />,
+    },
+
+    { id: "D", title: "none of the above" },
+  ];
   return (
     <Page className="max-w-xl space-y-6 text-lg pt-16" fullScreen>
       <p className="">
@@ -340,21 +370,23 @@ function Quiz() {
       </p>
 
       <Code>{`<motion.span animate={{ scale: 4 }}>
-🦶
+👊
 </motion.span>
 `}</Code>
-      <p className="text-center">What kind of animation would you get?</p>
+      <p className="text-center">
+        What kind of animation would you get (hover to preview)?
+      </p>
       <div className="grid grid-cols-2 gap-2">
-        <Option id="A">
-          <Foot repeatType={null} />
-        </Option>
-        <Option id="B">
-          <Foot repeatType={"loop"} />
-        </Option>
-        <Option id="C">
-          <Foot repeatType={"reverse"} />
-        </Option>
-        <Option id="D">None of the above</Option>
+        {options.map(({ id, title, preview }) => (
+          <Option
+            id={id}
+            title={title}
+            selected={choice === id}
+            onSelect={() => setChoice(id)}
+          >
+            {preview}
+          </Option>
+        ))}
       </div>
     </Page>
   );
@@ -363,7 +395,7 @@ function Quiz() {
 function Main() {
   return (
     <div>
-      <Heading />
+      {/* <Heading /> */}
       <Quiz />
       <QuizAnswer />
     </div>
