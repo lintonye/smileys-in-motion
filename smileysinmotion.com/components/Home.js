@@ -302,7 +302,7 @@ function QuizAnswer() {
       <p>
         Framer Motion is a great library. But it can be tricky to get it to work
         in real-world applications. This is not to blame the library. It's
-        because the reality is complex. Web development IS tricky!
+        because the reality is complex. Web development sometimes IS tricky!
       </p>
 
       <p>Here are a few more examples:</p>
@@ -320,26 +320,29 @@ function QuizAnswer() {
         <li>I removed an item from the list, why is it still there?</li>
         <li>
           Why does{" "}
-          <Code inline>{`<AnimateSharedLayout type="crossfade">`}</Code> work
+          <Code inline>{`<AnimateSharedLayout type="crossfade">`}</Code> behave
           the same as{" "}
-          <Code inline>{`<AnimateSharedLayout type="crossfade">`}</Code>?
+          <Code inline>{`<AnimateSharedLayout type="switch">`}</Code>?
         </li>
         <li>...</li>
       </ul>
 
       <p>
-        I've struggled on all these questions since 2019 when Motion V1 was
-        launched. You'd likely stumble upon them too!{" "}
+        I've struggled on questions like these since 2019 when Motion V1 was
+        launched. You'd likely, if not already, stumble upon them too!
       </p>
 
       <p>
-        I've spent a lot of time chasing down the why's and solutions. As an
-        example, it took me 3 full days to understand{" "}
+        I've spent <strong>hundreds of hours</strong> chasing down the why's and
+        solutions. As an example, it took me 3 days to understand{" "}
         <Code inline>AnimateSharedLayout</Code> and its relationship to{" "}
-        <Code inline>AnimatePresence</Code>.
+        <Code inline>AnimatePresence</Code>. Three full days!
       </p>
 
-      <h2>Good news: Since I've spent the time, you don't have to!</h2>
+      <h2 className="text-2xl">
+        Good news: Now you have a{" "}
+        <span className="font-extrabold">faster solution</span>!
+      </h2>
     </Page>
   );
 }
@@ -408,7 +411,7 @@ function CourseIntro() {
 function Main() {
   return (
     <div>
-      <Heading />
+      {/* <Heading /> */}
       <Quiz />
       <QuizAnswer />
       <CourseIntro />
