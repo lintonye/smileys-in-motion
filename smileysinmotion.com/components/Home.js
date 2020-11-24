@@ -134,7 +134,7 @@ function Heading() {
       className="max-w-xl mx-auto flex flex-col justify-center align-middle space-y-8"
       fullScreen
     >
-      <h1 className="text-4xl text-center">
+      <h1 className="text-4xl text-center font-extrabold">
         Build Advanced UI Animations With Framer Motion &amp; React
       </h1>
       <div className="text-center mb-6 space-x-3">
