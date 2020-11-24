@@ -293,7 +293,7 @@ function QuizAnswer() {
       </p>
 
       <p>Here are a few more examples:</p>
-      <ul>
+      <ul className="list-disc list-inside">
         <li>How would I make Motion work with React Router?</li>
         <li>Why is the text distorted during the transition?</li>
         <li>
