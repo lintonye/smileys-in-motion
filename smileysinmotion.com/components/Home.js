@@ -9,6 +9,7 @@ import {
   useViewportScroll,
 } from "framer-motion";
 import { Code } from "./Code";
+import { Carrousel } from "./Carrousel";
 
 function Welcome() {
   return (
@@ -148,9 +149,10 @@ function Heading() {
         <span className="line-through">abusing emojis</span> the mental model,
         tips &amp; tricks, and common pitfalls
       </h2> */}
-      <div className="pb-10">
+      <Carrousel className="relative mx-auto">
         <DanceDemo animate={danceDemoAnimate} />
-      </div>
+        <DanceDemo animate={danceDemoAnimate} />
+      </Carrousel>
       <motion.div
         className="text-lg space-y-6"
         initial={{ opacity: 0 }}
@@ -204,7 +206,6 @@ function DanceDemo({ animate }) {
   }, [animate]);
   return (
     <motion.div
-      className="m-auto max-w-3xl"
       initial={false}
       animate={animate}
       variants={{
