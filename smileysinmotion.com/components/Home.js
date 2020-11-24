@@ -152,6 +152,10 @@ function Heading() {
       <Carrousel className="relative mx-auto">
         <DanceDemo animate={danceDemoAnimate} />
         <DanceDemo animate={danceDemoAnimate} />
+        <DanceDemo animate={danceDemoAnimate} />
+        <DanceDemo animate={danceDemoAnimate} />
+        <DanceDemo animate={danceDemoAnimate} />
+        <DanceDemo animate={danceDemoAnimate} />
       </Carrousel>
       <motion.div
         className="text-lg space-y-6"
@@ -317,7 +321,8 @@ function QuizAnswer() {
         <li>
           Why does{" "}
           <Code inline>{`<AnimateSharedLayout type="crossfade">`}</Code> work
-          the same as <Code inline>switch</Code>?
+          the same as{" "}
+          <Code inline>{`<AnimateSharedLayout type="crossfade">`}</Code>?
         </li>
         <li>...</li>
       </ul>
@@ -392,12 +397,21 @@ function Quiz() {
   );
 }
 
+function CourseIntro() {
+  return (
+    <Page>
+      <div>Course Intro</div>
+    </Page>
+  );
+}
+
 function Main() {
   return (
     <div>
-      {/* <Heading /> */}
+      <Heading />
       <Quiz />
       <QuizAnswer />
+      <CourseIntro />
     </div>
   );
 }

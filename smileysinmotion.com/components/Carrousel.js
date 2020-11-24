@@ -23,22 +23,18 @@ export function Carrousel({ children, className }) {
         </motion.div>
       </AnimatePresence>
 
-      <div className="flex space-x-3">
+      <div className="flex space-x-2">
         {Array(items.length)
           .fill(0)
           .map((_, i) => (
             <motion.div
-              className="p-3 -mx-6 -my-3"
+              key={i}
+              className={`rounded-full w-2 h-2 hover:bg-gray-400 ${
+                i === index ? "bg-gray-200" : "bg-gray-500"
+              }`}
               whileHover={{ scale: 1.1 }}
               onTap={() => setIndex(i)}
-            >
-              <motion.div
-                key={i}
-                className={`rounded-full w-2 h-2 hover:bg-gray-400 ${
-                  i === index ? "bg-gray-200" : "bg-gray-500"
-                }`}
-              />
-            </motion.div>
+            />
           ))}
       </div>
     </motion.div>
