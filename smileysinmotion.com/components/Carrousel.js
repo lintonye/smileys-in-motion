@@ -10,14 +10,14 @@ export function Carrousel({ children, className }) {
       className={`relative flex flex-col justify-center items-center ${className}`}
     >
       {/* Render it normally to make room */}
-      <div className="invisible">{items[index]}</div>
+      <div className="invisible w-full">{items[index]}</div>
       <AnimatePresence initial={false}>
         <motion.div
           key={index}
           initial={{ x: "100%" }}
           animate={{ x: 0 }}
           exit={{ x: "-50%", opacity: 0 }}
-          className="absolute top-0 left-0" // absolute is needed for the animation
+          className="absolute top-0 left-0 w-full" // absolute is needed for the animation
         >
           {items[index]}
         </motion.div>

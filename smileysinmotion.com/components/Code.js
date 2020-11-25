@@ -109,112 +109,376 @@ export function Code({ children, inline, lang = "html", typingMasks = [] }) {
 
 function createCodes(sequence) {
   return [
-    `<div>
+    {
+      col: 0,
+      row: 0,
+      text: `<div>
 
 
 
 
 
 </div>`,
-    `<mdiv>
+    },
+    {
+      col: 1,
+      row: 0,
+      text: `<mdiv>
 
 
 
 
 
 </div>`,
-    `<modiv>
+    },
+    {
+      col: 2,
+      row: 0,
+      text: `<modiv>
 
 
 
 
 
 </div>`,
-    `<motdiv>
+    },
+    {
+      col: 3,
+      row: 0,
+      text: `<motdiv>
 
 
 
 
 
 </div>`,
-    `<motidiv>
+    },
+    {
+      col: 4,
+      row: 0,
+      text: `<motidiv>
 
 
 
 
 
 </div>`,
-    `<motiodiv>
+    },
+    {
+      col: 5,
+      row: 0,
+      text: `<motiodiv>
 
 
 
 
 
 </div>`,
-    `<motiondiv>
+    },
+    {
+      col: 6,
+      row: 0,
+      text: `<motiondiv>
 
 
 
 
 
 </div>`,
-    `<motion.div>
+    },
+    {
+      col: 7,
+      row: 0,
+      text: `<motion.div>
 
 
 
 
 
 </div>`,
-    `<motion.div>
+    },
+    {
+      col: 3,
+      row: 6,
+      text: `<motion.div>
 
 
 
 
 
 </mdiv>`,
-    `<motion.div>
+    },
+    {
+      col: 4,
+      row: 6,
+      text: `<motion.div>
 
 
 
 
 
 </modiv>`,
-    `<motion.div>
+    },
+    {
+      col: 5,
+      row: 6,
+      text: `<motion.div>
 
 
 
 
 
 </motdiv>`,
-    `<motion.div>
+    },
+    {
+      col: 6,
+      row: 6,
+      text: `<motion.div>
 
 
 
 
 
 </motidiv>`,
-    `<motion.div>
+    },
+    {
+      col: 7,
+      row: 6,
+      text: `<motion.div>
 
 
 
 
 
 </motiodiv>`,
-    `<motion.div>
+    },
+    {
+      col: 8,
+      row: 6,
+      text: `<motion.div>
 
 
 
 
 
 </motiondiv>`,
-    `<motion.div>
+    },
+    {
+      col: 9,
+      row: 6,
+      text: `<motion.div>
 
 
 
 
 
 </motion.div>`,
+    },
+    {
+      col: 12,
+      row: 0,
+      text: `<motion.div >
+
+
+
+
+
+</motion.div>`,
+    },
+    {
+      col: 13,
+      row: 0,
+      text: `<motion.div a>
+
+
+
+
+
+</motion.div>`,
+    },
+    {
+      col: 14,
+      row: 0,
+      text: `<motion.div an>
+
+
+
+
+
+</motion.div>`,
+    },
+    {
+      col: 15,
+      row: 0,
+      text: `<motion.div ani>
+
+
+
+
+
+</motion.div>`,
+    },
+    {
+      col: 16,
+      row: 0,
+      text: `<motion.div anim>
+
+
+
+
+
+</motion.div>`,
+    },
+    {
+      col: 17,
+      row: 0,
+      text: `<motion.div anima>
+
+
+
+
+
+</motion.div>`,
+    },
+    {
+      col: 18,
+      row: 0,
+      text: `<motion.div animat>
+
+
+
+
+
+</motion.div>`,
+    },
+    {
+      col: 19,
+      row: 0,
+      text: `<motion.div animate>
+
+
+
+
+
+</motion.div>`,
+    },
+    {
+      col: 20,
+      row: 0,
+      text: `<motion.div animate=>
+
+
+
+
+
+</motion.div>`,
+    },
+    {
+      col: 21,
+      row: 0,
+      text: `<motion.div animate=">
+
+
+
+
+
+</motion.div>`,
+    },
+    {
+      col: 22,
+      row: 0,
+      text: `<motion.div animate="d>
+
+
+
+
+
+</motion.div>`,
+    },
+    {
+      col: 23,
+      row: 0,
+      text: `<motion.div animate="da>
+
+
+
+
+
+</motion.div>`,
+    },
+    {
+      col: 24,
+      row: 0,
+      text: `<motion.div animate="dan>
+
+
+
+
+
+</motion.div>`,
+    },
+    {
+      col: 25,
+      row: 0,
+      text: `<motion.div animate="danc>
+
+
+
+
+
+</motion.div>`,
+    },
+    {
+      col: 26,
+      row: 0,
+      text: `<motion.div animate="dance>
+
+
+
+
+
+</motion.div>`,
+    },
+    {
+      col: 27,
+      row: 0,
+      text: `<motion.div animate="dance">
+
+
+
+
+
+</motion.div>`,
+    },
   ];
+}
+
+function Cursor({ col, row }) {
+  const charWidth = 14.6;
+  const cursorHeight = 20;
+  const lineHeight = 40;
+  return (
+    <motion.div
+      className="w-1 bg-gray-400 absolute"
+      style={{
+        height: cursorHeight,
+        x: col * charWidth,
+        y: row * lineHeight,
+        left: 24,
+        top: 38,
+      }}
+      animate={{
+        opacity: [1, 1, 0],
+        transition: {
+          repeat: Infinity,
+          repeatType: "loop",
+          repeatDelay: 0.6,
+          duration: 0.5,
+          times: [0, 0.8, 1],
+        },
+      }}
+    />
+  );
 }
 
 export function CodeTyping({ sequence, onTypingComplete }) {
@@ -223,12 +487,18 @@ export function CodeTyping({ sequence, onTypingComplete }) {
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((i) => (i < codes.length - 1 ? i + 1 : i));
-    }, 200);
+    }, 50);
     return () => clearInterval(interval);
   }, [codes]);
   useEffect(() => {
     if (index === codes.length - 1 && typeof onTypingComplete === "function")
       onTypingComplete();
   }, [index, codes]);
-  return <Code>{codes[index]}</Code>;
+  const code = codes[index];
+  return (
+    <div className="relative">
+      <Code>{code.text}</Code>
+      <Cursor col={code.col} row={code.row} />
+    </div>
+  );
 }

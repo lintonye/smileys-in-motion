@@ -177,7 +177,7 @@ function Heading() {
           ))}
       </motion.div>
       <Carrousel className="relative mx-auto w-4/5">
-        <DanceDemo />
+        <DanceDemo className="" />
         {/* <DanceDemo animate={danceDemoAnimate} />
         <DanceDemo animate={danceDemoAnimate} />
         <DanceDemo animate={danceDemoAnimate} />
@@ -240,7 +240,7 @@ function DanceDemo({ className }) {
   // }, [animate]);
   const [danceGuyAnimate, setDanceGuyAnimate] = useState("readyToPlay");
   return (
-    <motion.div
+    <div
       className={className}
       // variants={{
       //   beforeSeen: { filter: "grayscale(0)", opacity: 0 },
@@ -298,10 +298,10 @@ function DanceDemo({ className }) {
         ]}
         onTypingComplete={() => setDanceGuyAnimate("playing")}
       />
-      <div className="-mt-64 ml-32">
+      <div className="-mt-64">
         <DancingGuy animate={danceGuyAnimate} />
       </div>
-    </motion.div>
+    </div>
   );
 }
 
