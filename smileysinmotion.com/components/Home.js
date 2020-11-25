@@ -81,7 +81,7 @@ function useViewportDimension() {
   return dim;
 }
 
-function Page({ children, className = "", fullScreen = false }) {
+function Page({ children, className = "", fullScreen = false, onPageScroll }) {
   const [ref, { top, height }] = useInitialBoundingBox();
   const { height: vh } = useViewportDimension();
   const { scrollY } = useViewportScroll();
@@ -102,16 +102,19 @@ function Page({ children, className = "", fullScreen = false }) {
     0.3,
   ]);
   const indicatorOpacity = useTransform(scrollY, [top, top + 20], [1, 0]);
-  const [animate, setAnimate] = useState("beforeSeen");
   useEffect(() => {
     const unsub = scrollY.onChange((y) => {
       // console.log({ y, y0: top - vh + 20 });
-      if (y > top - vh + 50) {
-        setAnimate("playing");
+      if (
+        typeof onPageScroll === "function" &&
+        top - vh <= y &&
+        y <= top - vh + height
+      ) {
+        onPageScroll({ pageTop: top, scrollY: y });
       }
     });
     return unsub;
-  }, []);
+  }, [onPageScroll, top, vh, height]);
   return (
     <motion.div
       style={{ filter, opacity }}
@@ -120,7 +123,6 @@ function Page({ children, className = "", fullScreen = false }) {
       }
       ref={ref}
       initial={false}
-      animate={animate}
     >
       {children}
       {fullScreen && (
@@ -418,58 +420,91 @@ function Quiz() {
   );
 }
 
-function CourseIntro() {
+function Confetti() {
+  const bits = "🎊  🍇 🍷 🌈".split(" ");
   return (
-    <Page className="max-w-lg space-y-16">
-      <div>
-        <motion.h1
-          className="text-center font-semibold text-5xl mt-32 mb-4"
-          // variants={{
-          //   beforeSeen: { opacity: 1, rotate: 180 },
-          //   playing: { rotate: 0, opacity: 1 },
-          // }}
-        >
-          🤨 Smileys In Motion
-        </motion.h1>
-        <motion.h2
-          className="text-center text-lg"
-          // variants={{
-          //   beforeSeen: { opacity: 0 },
-          //   playing: { opacity: 1, transition: { delay: 0.5 } },
-          // }}
-        >
-          A Framer Motion course on{" "}
-          <span className="line-through">abusing emojis</span> mental models,
-          tips &amp; tricks, and common pitfalls
-        </motion.h2>
-      </div>
-      <div className="text-center text-gray-400">
-        <span className="text-4xl text-white font-extralight">2</span> hours of{" "}
-        <span className="text-4xl text-white font-extralight">24</span>{" "}
-        bite-sized HD videos
-      </div>
-      <motion.div className="space-y-16">
-        <Feature emoji="🧠" title="Focus on mental models">
-          <li>Get started from the fundamentals</li>
-          <li>
-            Build a complete mental model of all the features. Know when to use
-            what.
-          </li>
-        </Feature>
-        <Feature emoji="🌏" title="Real-world examples">
-          <li>Drag to reorder, Circular slider</li>
-          <li>Bottom sheet, Parallax scroll</li>
-          <li>Tabs, Shared element transition (React Router)</li>
-          <li>And... this page!</li>
-        </Feature>
-        <Feature emoji="📃" title="Cheat sheet">
-          <li>A list of pitfalls I've stumbled upon</li>
-        </Feature>
-        <Feature emoji="😉" title="Fun examples">
-          <li>
-            As promised, this course includes tricks about abusing emojis.
-          </li>
-        </Feature>
+    <motion.div className="absolute text-lg">
+      {bits.map((b) => (
+        <span>{b}</span>
+      ))}
+    </motion.div>
+  );
+}
+
+function CourseIntro() {
+  const [animate, setAnimate] = useState("beforeSeen");
+  return (
+    <Page
+      className="max-w-lg"
+      onPageScroll={({ pageTop, scrollY }) => {
+        setAnimate("playing");
+      }}
+    >
+      <motion.div className="space-y-16" initial={false} animate={animate}>
+        <div>
+          <div className="text-center font-semibold text-5xl mt-32 mb-4 flex space-x-4">
+            <motion.div
+              variants={{
+                beforeSeen: { x: -500 },
+                playing: {
+                  x: 0,
+                  transition: { delay: 0.8, damping: 15, type: "spring" },
+                },
+              }}
+            >
+              🤨
+            </motion.div>
+            <motion.h1
+              className=""
+              variants={{
+                beforeSeen: { opacity: 0, scale: 100 },
+                playing: { scale: 1, opacity: 1 },
+              }}
+            >
+              Smileys In Motion
+            </motion.h1>
+          </div>
+          {/* <Confetti /> */}
+          <motion.h2
+            className="text-center text-lg"
+            variants={{
+              beforeSeen: { opacity: 0 },
+              playing: { opacity: 1, transition: { delay: 0.5 } },
+            }}
+          >
+            A Framer Motion course on{" "}
+            <span className="line-through">abusing emojis</span> mental models,
+            tips &amp; tricks, and common pitfalls
+          </motion.h2>
+        </div>
+        <div className="text-center text-gray-400">
+          <span className="text-4xl text-white font-extralight">2</span> hours
+          of <span className="text-4xl text-white font-extralight">24</span>{" "}
+          bite-sized HD videos
+        </div>
+        <motion.div className="space-y-16">
+          <Feature emoji="🧠" title="Focus on mental models">
+            <li>Get started from the fundamentals</li>
+            <li>
+              Build a complete mental model of all the features. Know when to
+              use what.
+            </li>
+          </Feature>
+          <Feature emoji="🌏" title="Real-world examples">
+            <li>Drag to reorder, Circular slider</li>
+            <li>Bottom sheet, Parallax scroll</li>
+            <li>Tabs, Shared element transition (React Router)</li>
+            <li>And... this page!</li>
+          </Feature>
+          <Feature emoji="📃" title="Cheat sheet">
+            <li>A list of pitfalls I've stumbled upon</li>
+          </Feature>
+          <Feature emoji="😉" title="Fun examples">
+            <li>
+              As promised, this course includes tricks about abusing emojis.
+            </li>
+          </Feature>
+        </motion.div>
       </motion.div>
     </Page>
   );
