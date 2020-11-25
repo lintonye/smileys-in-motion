@@ -404,6 +404,15 @@ function Quiz() {
           </Option>
         ))}
       </div>
+      {choice && (
+        <motion.div
+          className="text-center text-gray-400"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+        >
+          Scroll to reveal the answer
+        </motion.div>
+      )}
     </Page>
   );
 }
