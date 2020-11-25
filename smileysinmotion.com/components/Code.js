@@ -393,13 +393,16 @@ function Cursor({ col, row }) {
   );
 }
 
-export function CodeTyping({ sequence, onTypingComplete }) {
+export function CodeTyping({ sequence, onTypingComplete, initialDelay = 0 }) {
   const [index, setIndex] = useState(0);
   const codes = createCodes(sequence);
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      setIndex((i) => (i < codes.length - 1 ? i + 1 : i));
-    }, Math.min(100, Math.random() * 700));
+    const timeout = setTimeout(
+      () => {
+        setIndex((i) => (i < codes.length - 1 ? i + 1 : i));
+      },
+      index === 0 ? initialDelay * 1000 : Math.min(100, Math.random() * 700)
+    );
     return () => clearTimeout(timeout);
   }, [codes, index]);
   useEffect(() => {
@@ -410,7 +413,7 @@ export function CodeTyping({ sequence, onTypingComplete }) {
   return (
     <div className="relative">
       <Code>{code.text}</Code>
-      <Cursor col={code.col} row={code.row} />
+      {index > 0 && <Cursor col={code.col} row={code.row} />}
     </div>
   );
 }

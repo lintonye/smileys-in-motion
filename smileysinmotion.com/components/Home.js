@@ -136,12 +136,6 @@ function Page({ children, className = "", fullScreen = false, onPageScroll }) {
 }
 
 function Heading() {
-  // const [danceDemoAnimate, setDanceDemoAnimate] = useState("beforeSeen");
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setDanceDemoAnimate(["readyToPlay", "playing"]);
-  //   }, 500);
-  // }, []);
   const [textBelowDemoAnimate, setTextBelowDemoAnimate] = useState(
     "beforeSeen"
   );
@@ -160,7 +154,7 @@ function Heading() {
         className="text-4xl text-center font-extrabold"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 3.5 }}
+        transition={{ delay: 4.5 }}
       >
         Build Advanced UI Animations With Framer Motion &amp; React
       </motion.h1>
@@ -168,7 +162,7 @@ function Heading() {
         className="text-center mb-6 space-x-3"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 3.5 }}
+        transition={{ delay: 4.5 }}
       >
         {Array(5)
           .fill("⭐️")
@@ -176,14 +170,12 @@ function Heading() {
             <span key={index}>{s}</span>
           ))}
       </motion.div>
-      <Carrousel className="relative mx-auto w-4/5">
+      <div className="relative mx-auto w-4/5">
         <DanceDemo className="" />
-        {/* <DanceDemo animate={danceDemoAnimate} />
-        <DanceDemo animate={danceDemoAnimate} />
-        <DanceDemo animate={danceDemoAnimate} />
-        <DanceDemo animate={danceDemoAnimate} />
-        <DanceDemo animate={danceDemoAnimate} /> */}
-      </Carrousel>
+      </div>
+      {/* <Carrousel className="relative mx-auto w-4/5">
+        <DanceDemo className="" />
+      </Carrousel> */}
       <motion.div
         className="text-lg space-y-4"
         initial={false}
@@ -209,35 +201,46 @@ function DanceDemo({ className }) {
   const [danceGuyAnimate, setDanceGuyAnimate] = useState("readyToPlay");
   return (
     <div className={className}>
-      <CodeTyping
-        sequence={[
-          `<div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        // transition={{ delay: 0.5 }}
+      >
+        <CodeTyping
+          initialDelay={0.9}
+          sequence={[
+            `<div>
 
 
 
 
 
 </div>`,
-          `<motion.div>
+            `<motion.div>
 
 
 
 
 
 </motion.div>`,
-          `<motion.div animate="dance">
+            `<motion.div animate="dance">
 
 
 
 
 
 </motion.div>`,
-        ]}
-        onTypingComplete={() => setDanceGuyAnimate("playing")}
-      />
-      <div className="-mt-64">
+          ]}
+          onTypingComplete={() => setDanceGuyAnimate("playing")}
+        />
+      </motion.div>
+      <motion.div
+        className="-mt-64"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+      >
         <DancingGuy animate={danceGuyAnimate} />
-      </div>
+      </motion.div>
     </div>
   );
 }
