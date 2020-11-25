@@ -372,11 +372,12 @@ function Quiz() {
   return (
     <Page className="max-w-xl space-y-6 text-lg pt-16" fullScreen>
       <p className="">But let ask you a question. 👇</p>
-
-      <Code>{`<motion.span animate={{ scale: 4 }}>
+      <div className="border-solid border-2 border-gray-500 rounded-2xl ">
+        <Code>{`<motion.span animate={{ scale: 4 }}>
 👊
 </motion.span>
 `}</Code>
+      </div>
       <p className="text-center">
         What kind of animation would you get (hover to preview)?
       </p>
