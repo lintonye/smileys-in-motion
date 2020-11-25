@@ -10,7 +10,7 @@ module.exports = {
       // },
       fontFamily: {
         sans: ["Nunito", ...defaultTheme.fontFamily.sans],
-        mono: ["Courier New", "Courier", "monospace"],
+        mono: ["Courier Prime", ...defaultTheme.fontFamily.mono],
       },
     },
   },
