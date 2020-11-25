@@ -545,17 +545,17 @@ function Quote({ photo, name, company, title, children }) {
 function Pricing() {
   return (
     <Page className="max-w-2xl space-y-16 mt-32">
-      <div className="text-4xl text-center font-semibold">Get The Course</div>
+      <h1 className="text-4xl text-center font-semibold">Get The Course</h1>
       <div className="flex -space-x-3 items-end">
         <PricingCard
-          title="Smileys In Motion"
+          title="Smiley In Motion"
           subtitle="For designers and developers with React experience"
           price={99}
           discountedPrice={59}
           purchaseLink="#"
           className="mb-5"
         >
-          <li>24 HD video lessons, 2 hours</li>
+          <li>24 lessons, 2 hours of HD videos</li>
           <li>All starter and final code for you to follow along</li>
           <li>Pitfall cheat sheet</li>
         </PricingCard>
@@ -597,6 +597,61 @@ function Pricing() {
   );
 }
 
+const content = {
+  Foundation: [
+    "1. Framer Motion mental model",
+    "2. Animate any HTML or SVG tag",
+    "3. Keyframes and animation value types",
+    "4. Spy on animations with MotionValue",
+    "5. Orchestrate animations in a React tree",
+    "6. Stagger children animations",
+    "7. Animate layout changes",
+    "8. Animate mount/unmount transitions",
+    "9. AnimatePresence, key and layout",
+    "10. Understand initial, style, and animate",
+    "11. Drag gesture",
+    "12. Drag & MotionValue",
+    "13. Drag & layout animation",
+    "14. Add custom dragging with pan gesture",
+    "15. Animate shared items across components",
+    "16. Spy on scroll progress",
+    "17. Take control of animations imperatively",
+    "18. Animate custom components",
+  ],
+  "Real-world Examples": [
+    "r1. Drag to reorder",
+    "r2. Circular slider",
+    "r3. Tabs (AnimatePresence and React Router 5)",
+    "r4. Shared element transition (with React Router 5)",
+    "r5. Bottom sheet",
+    "r6. smileyinmotion.com (coming soon)",
+  ],
+  "Cheat sheets": [
+    "All starter and final code",
+    "Cheat sheet: pitfalls & solutions",
+  ],
+};
+
+function Content() {
+  return (
+    <Page className="max-w-md space-y-16 mt-32 text-lg">
+      <h1 className="text-4xl text-center font-semibold">Table Of Contents</h1>
+      <div className="space-y-2 border-solid border-2 border-blue-900">
+        {Object.keys(content).map((section) => (
+          <div key={section} className="space-y-2">
+            <div className="bg-blue-900 py-1 px-3">{section}</div>
+            <ul className="space-y-2 py-1 px-3">
+              {content[section].map((lesson) => (
+                <li key={lesson}>{lesson}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </Page>
+  );
+}
+
 function Main() {
   return (
     <div className="pb-64">
@@ -605,6 +660,7 @@ function Main() {
       <QuizAnswer />
       <CourseIntro />
       <Pricing />
+      <Content />
     </div>
   );
 }
