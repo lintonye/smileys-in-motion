@@ -693,8 +693,8 @@ function Content() {
                 const preview = lesson.preview && (
                   <a
                     href={lesson.preview}
-                    className="text-sm border border-solid border-blue-800 rounded py-1 px-2
-                     text-gray-300 hover:border-blue-600 hover:text-white"
+                    className="text-sm border border-solid border-blue-500 rounded py-1 px-2
+                     text-gray-300 hover:border-blue-400 hover:text-white hover:bg-gray-800"
                   >
                     Preview
                   </a>
