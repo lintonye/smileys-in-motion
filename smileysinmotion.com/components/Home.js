@@ -178,11 +178,11 @@ function Heading() {
       </motion.div>
       <Carrousel className="relative mx-auto">
         <DanceDemo animate={danceDemoAnimate} />
+        {/* <DanceDemo animate={danceDemoAnimate} />
         <DanceDemo animate={danceDemoAnimate} />
         <DanceDemo animate={danceDemoAnimate} />
         <DanceDemo animate={danceDemoAnimate} />
-        <DanceDemo animate={danceDemoAnimate} />
-        <DanceDemo animate={danceDemoAnimate} />
+        <DanceDemo animate={danceDemoAnimate} /> */}
       </Carrousel>
       <motion.div
         className="text-lg space-y-4"
