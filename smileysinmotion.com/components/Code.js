@@ -96,10 +96,7 @@ export function Code({ children, inline, lang = "html", typingMasks = [] }) {
     <code className={`language-${lang}`}>{children}</code>
   ) : (
     <div className="text-3xl relative flex justify-center ">
-      <pre
-        className="border-gray-400 border-solid border-2 relative"
-        style={{ overflow: "hidden" }}
-      >
+      <pre className="relative" style={{ overflow: "hidden" }}>
         <code className={`language-${lang}`}>{children}</code>
         {typingMasks.map((mask) => (
           <TypingMask {...mask} key={mask.id} />
