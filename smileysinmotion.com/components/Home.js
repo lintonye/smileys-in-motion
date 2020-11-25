@@ -461,7 +461,7 @@ function CourseIntro() {
                 playing: { scale: 1, opacity: 1 },
               }}
             >
-              Smileys In Motion
+              Smiley In Motion
             </motion.h1>
           </div>
           {/* <Confetti /> */}
@@ -603,7 +603,7 @@ function Pricing() {
         >
           <li>14 Modules, 50 HD video lessons, 10+ hours</li>
           <li>
-            Includes <strong>Smileys In Motion</strong>
+            Includes <strong>Smiley In Motion</strong>
           </li>
           <li>All starter and final code for you to follow along</li>
           <li>
