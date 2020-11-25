@@ -419,27 +419,33 @@ function Quiz() {
 
 function CourseIntro() {
   return (
-    <Page className="max-w-lg">
-      <motion.h1
-        className="text-center font-semibold text-5xl mt-32 mb-4"
-        // variants={{
-        //   beforeSeen: { opacity: 1, rotate: 180 },
-        //   playing: { rotate: 0, opacity: 1 },
-        // }}
-      >
-        🤨 Smileys In Motion
-      </motion.h1>
-      <motion.h2
-        className="text-center text-lg mb-24"
-        // variants={{
-        //   beforeSeen: { opacity: 0 },
-        //   playing: { opacity: 1, transition: { delay: 0.5 } },
-        // }}
-      >
-        A Framer Motion course on{" "}
-        <span className="line-through">abusing emojis</span> mental models, tips
-        &amp; tricks, and common pitfalls
-      </motion.h2>
+    <Page className="max-w-lg space-y-16">
+      <div>
+        <motion.h1
+          className="text-center font-semibold text-5xl mt-32 mb-4"
+          // variants={{
+          //   beforeSeen: { opacity: 1, rotate: 180 },
+          //   playing: { rotate: 0, opacity: 1 },
+          // }}
+        >
+          🤨 Smileys In Motion
+        </motion.h1>
+        <motion.h2
+          className="text-center text-lg"
+          // variants={{
+          //   beforeSeen: { opacity: 0 },
+          //   playing: { opacity: 1, transition: { delay: 0.5 } },
+          // }}
+        >
+          A Framer Motion course on{" "}
+          <span className="line-through">abusing emojis</span> mental models,
+          tips &amp; tricks, and common pitfalls
+        </motion.h2>
+      </div>
+      <div className="text-center text-gray-400">
+        <span className="text-4xl text-white">2</span> hours of{" "}
+        <span className="text-4xl text-white">24</span> bite-sized HQ videos
+      </div>
       <motion.div className="space-y-16">
         <Feature emoji="🧠" title="Focus on mental models">
           <li>Get started from the fundamentals</li>
@@ -449,9 +455,8 @@ function CourseIntro() {
           </li>
         </Feature>
         <Feature emoji="🌏" title="Real-world examples">
-          <li>
-            Drag to reorder, Circular slider, Bottom sheet, Parallax scroll
-          </li>
+          <li>Drag to reorder, Circular slider</li>
+          <li>Bottom sheet, Parallax scroll</li>
           <li>Tabs, Shared element transition (React Router)</li>
           <li>And... this page!</li>
         </Feature>
@@ -460,8 +465,7 @@ function CourseIntro() {
         </Feature>
         <Feature emoji="😉" title="Fun examples">
           <li>
-            Did I mention that all the "images" used in the course (and on this
-            page) are emojis?
+            As promised, this course includes tricks about abusing emojis.
           </li>
         </Feature>
       </motion.div>
