@@ -544,6 +544,7 @@ function Feature({ emoji, title, children }) {
 function PricingCard({
   title,
   subtitle,
+  footnote,
   price,
   discountedPrice,
   purchaseLink,
@@ -568,10 +569,11 @@ function PricingCard({
       </div>
       <a
         href={purchaseLink}
-        className="rounded-md bg-blue-600 px-3 py-2 hover:bg-blue-500"
+        className="rounded-md bg-blue-600 px-4 py-2 hover:bg-blue-500"
       >
         Buy Now
       </a>
+      <div className="text-sm text-gray-400">{footnote}</div>
     </div>
   );
 }
@@ -604,6 +606,7 @@ function Pricing() {
           subtitle="For designers and developers with React experience"
           price={99}
           discountedPrice={59}
+          footnote="Black Friday deal!"
           purchaseLink="#"
           className="mb-5"
         >
@@ -617,6 +620,7 @@ function Pricing() {
           subtitle="Learn from the start. No JS experience required"
           price={299}
           discountedPrice={199}
+          footnote="Black Friday deal!"
         >
           <li>14 Modules, 50 HD video lessons, 10+ hours</li>
           <li>
