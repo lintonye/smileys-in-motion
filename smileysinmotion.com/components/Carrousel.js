@@ -11,7 +11,7 @@ export function Carrousel({ children, className }) {
     >
       {/* Render it normally to make room */}
       <div className="invisible">{items[index]}</div>
-      <AnimatePresence>
+      <AnimatePresence initial={false}>
         <motion.div
           key={index}
           initial={{ x: "100%" }}

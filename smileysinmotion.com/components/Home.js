@@ -8,7 +8,7 @@ import {
   useTransform,
   useViewportScroll,
 } from "framer-motion";
-import { Code } from "./Code";
+import { Code, CodeTyping } from "./Code";
 import { Carrousel } from "./Carrousel";
 import Image from "next/image";
 
@@ -136,12 +136,12 @@ function Page({ children, className = "", fullScreen = false, onPageScroll }) {
 }
 
 function Heading() {
-  const [danceDemoAnimate, setDanceDemoAnimate] = useState("beforeSeen");
-  useEffect(() => {
-    setTimeout(() => {
-      setDanceDemoAnimate(["readyToPlay", "playing"]);
-    }, 500);
-  }, []);
+  // const [danceDemoAnimate, setDanceDemoAnimate] = useState("beforeSeen");
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setDanceDemoAnimate(["readyToPlay", "playing"]);
+  //   }, 500);
+  // }, []);
   const [textBelowDemoAnimate, setTextBelowDemoAnimate] = useState(
     "beforeSeen"
   );
@@ -176,8 +176,8 @@ function Heading() {
             <span key={index}>{s}</span>
           ))}
       </motion.div>
-      <Carrousel className="relative mx-auto">
-        <DanceDemo animate={danceDemoAnimate} />
+      <Carrousel className="relative mx-auto w-4/5">
+        <DanceDemo />
         {/* <DanceDemo animate={danceDemoAnimate} />
         <DanceDemo animate={danceDemoAnimate} />
         <DanceDemo animate={danceDemoAnimate} />
@@ -205,50 +205,50 @@ function Heading() {
   );
 }
 
-function DanceDemo({ animate }) {
-  const line1 = useAnimation();
-  const line2 = useAnimation();
-  const dancingGuy = useAnimation();
-  useEffect(() => {
-    async function play(anim) {
-      switch (anim) {
-        case "beforeSeen":
-          break;
-        case "readyToPlay":
-          await dancingGuy.start("readyToPlay");
-          break;
-        case "playing":
-          await line1.start("typing");
-          await line1.start("reveal");
-          await line2.start("typing");
-          await dancingGuy.start("playing");
-          break;
-        case "afterSeen":
-          await line2.start("reveal");
-          // await dancingGuy.stop();
-          await dancingGuy.start("afterSeen");
-      }
-    }
-    async function playAll(anims) {
-      for (let anim of anims) {
-        // console.log(anim);
-        await play(anim);
-      }
-    }
-    const anims = Array.isArray(animate) ? animate : [animate];
-    playAll(anims);
-  }, [animate]);
+function DanceDemo({ className }) {
+  // const line1 = useAnimation();
+  // const line2 = useAnimation();
+  // const dancingGuy = useAnimation();
+  // useEffect(() => {
+  //   async function play(anim) {
+  //     switch (anim) {
+  //       case "beforeSeen":
+  //         break;
+  //       case "readyToPlay":
+  //         await dancingGuy.start("readyToPlay");
+  //         break;
+  //       case "playing":
+  //         await line1.start("typing");
+  //         await line1.start("reveal");
+  //         await line2.start("typing");
+  //         await dancingGuy.start("playing");
+  //         break;
+  //       case "afterSeen":
+  //         await line2.start("reveal");
+  //         // await dancingGuy.stop();
+  //         await dancingGuy.start("afterSeen");
+  //     }
+  //   }
+  //   async function playAll(anims) {
+  //     for (let anim of anims) {
+  //       // console.log(anim);
+  //       await play(anim);
+  //     }
+  //   }
+  //   const anims = Array.isArray(animate) ? animate : [animate];
+  //   playAll(anims);
+  // }, [animate]);
+  const [danceGuyAnimate, setDanceGuyAnimate] = useState("readyToPlay");
   return (
     <motion.div
-      initial={false}
-      animate={animate}
-      variants={{
-        beforeSeen: { filter: "grayscale(0)", opacity: 0 },
-        readyToPlay: { opacity: 1 },
-        afterSeen: { filter: "grayscale(0)" },
-      }}
+      className={className}
+      // variants={{
+      //   beforeSeen: { filter: "grayscale(0)", opacity: 0 },
+      //   readyToPlay: { opacity: 1 },
+      //   afterSeen: { filter: "grayscale(0)" },
+      // }}
     >
-      <Code
+      {/* <Code
         typingMasks={[
           {
             id: "line1",
@@ -270,9 +270,36 @@ function DanceDemo({ animate }) {
 
 
 
-</motion.div>`}</Code>
-      <div className="-mt-60">
-        <DancingGuy animate={dancingGuy} />
+</motion.div>`}</Code> */}
+
+      <CodeTyping
+        sequence={[
+          `<div>
+
+
+
+
+
+</div>`,
+          `<motion.div>
+
+
+
+
+
+</motion.div>`,
+          `<motion.div animate="dance">
+
+
+
+
+
+</motion.div>`,
+        ]}
+        onTypingComplete={() => setDanceGuyAnimate("playing")}
+      />
+      <div className="-mt-64 ml-32">
+        <DancingGuy animate={danceGuyAnimate} />
       </div>
     </motion.div>
   );
@@ -622,7 +649,7 @@ function Pricing() {
           discountedPrice={199}
           footnote="Black Friday deal!"
         >
-          <li>14 Modules, 50 HD video lessons, 10+ hours</li>
+          <li>14 Modules, 50 lessons, 10+ hours of HD videos</li>
           <li>
             Includes <strong>Smiley In Motion</strong>
           </li>
@@ -817,17 +844,17 @@ function DancingGuy({ animate }) {
   return (
     <motion.div
       className="m-auto text-6xl relative w-48 h-64"
-      initial={"beforeSeen"}
+      initial={"readyToPlay"}
       animate={animate}
     >
       <motion.div
         className="absolute"
         style={{ top: 15, left: 60, originX: "center", originY: "bottom" }}
         variants={{
-          beforeSeen: { opacity: 0, rotate: -15 },
-          readyToPlay: { opacity: 1 },
+          // beforeSeen: { opacity: 0, rotate: -15 },
+          readyToPlay: { opacity: 1, rotate: -15 },
           playing: { rotate: [-15, 15], transition: commonTransition },
-          afterSeen: { rotate: 0 },
+          // afterSeen: { rotate: 0 },
         }}
       >
         🤨
@@ -836,10 +863,10 @@ function DancingGuy({ animate }) {
         className="absolute"
         style={{ top: 120, left: 80, originX: "center", originY: "top" }}
         variants={{
-          beforeSeen: { opacity: 0, rotate: -5 },
-          readyToPlay: { opacity: 1 },
+          // beforeSeen: { opacity: 0, rotate: -5 },
+          readyToPlay: { opacity: 1, rotate: -5 },
           playing: { rotate: [-5, 5], transition: commonTransition },
-          afterSeen: { rotate: 0 },
+          // afterSeen: { rotate: 0 },
         }}
       >
         🦵
@@ -848,10 +875,10 @@ function DancingGuy({ animate }) {
         className="absolute"
         style={{ top: 130, left: 60, originX: "center", originY: "top" }}
         variants={{
-          beforeSeen: { opacity: 0, rotate: 5 },
-          readyToPlay: { opacity: 1 },
+          // beforeSeen: { opacity: 0, rotate: 5 },
+          readyToPlay: { opacity: 1, rotate: 5 },
           playing: { rotate: [5, -5], transition: commonTransition },
-          afterSeen: { rotate: 0 },
+          // afterSeen: { rotate: 0 },
         }}
       >
         🦵
@@ -860,10 +887,10 @@ function DancingGuy({ animate }) {
         className="absolute text-4xl"
         style={{ top: 80, left: 30, rotate: -90 }}
         variants={{
-          beforeSeen: { opacity: 0, y: -10 },
-          readyToPlay: { opacity: 1 },
+          // beforeSeen: { opacity: 0, y: -10 },
+          readyToPlay: { opacity: 1, y: -10 },
           playing: { y: [-10, 10], transition: commonTransition },
-          afterSeen: { y: 0 },
+          // afterSeen: { y: 0 },
         }}
       >
         👊
@@ -872,10 +899,10 @@ function DancingGuy({ animate }) {
         className="absolute text-4xl"
         style={{ top: 90, left: 120, rotate: -90, scaleX: -1 }}
         variants={{
-          beforeSeen: { opacity: 0, y: 10 },
-          readyToPlay: { opacity: 1 },
+          // beforeSeen: { opacity: 0, y: 10 },
+          readyToPlay: { opacity: 1, y: 10 },
           playing: { y: [10, -10], transition: commonTransition },
-          afterSeen: { y: 0 },
+          // afterSeen: { y: 0 },
         }}
       >
         👊

@@ -1,10 +1,11 @@
 import * as React from "react";
 import Prism from "prismjs";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { motion, useAnimation } from "framer-motion";
 
 // Variants: block, typing, reveal
+// TODO: Remove this
 function TypingMask({ top, left, chars, speed = 1, animate }) {
   const xBlock = Array(chars * 2 + 1).fill(`0%`);
   const pixelsPerChar = 15;
@@ -91,12 +92,12 @@ function TypingMask({ top, left, chars, speed = 1, animate }) {
 export function Code({ children, inline, lang = "html", typingMasks = [] }) {
   useEffect(() => {
     Prism.highlightAll();
-  }, []);
+  }, [children]);
   return inline ? (
     <code className={`language-${lang}`}>{children}</code>
   ) : (
-    <div className="text-3xl relative flex justify-center ">
-      <pre className="relative" style={{ overflow: "hidden" }}>
+    <div className="text-3xl relative flex">
+      <pre className="text-3xl  relative">
         <code className={`language-${lang}`}>{children}</code>
         {typingMasks.map((mask) => (
           <TypingMask {...mask} key={mask.id} />
@@ -104,4 +105,130 @@ export function Code({ children, inline, lang = "html", typingMasks = [] }) {
       </pre>
     </div>
   );
+}
+
+function createCodes(sequence) {
+  return [
+    `<div>
+
+
+
+
+
+</div>`,
+    `<mdiv>
+
+
+
+
+
+</div>`,
+    `<modiv>
+
+
+
+
+
+</div>`,
+    `<motdiv>
+
+
+
+
+
+</div>`,
+    `<motidiv>
+
+
+
+
+
+</div>`,
+    `<motiodiv>
+
+
+
+
+
+</div>`,
+    `<motiondiv>
+
+
+
+
+
+</div>`,
+    `<motion.div>
+
+
+
+
+
+</div>`,
+    `<motion.div>
+
+
+
+
+
+</mdiv>`,
+    `<motion.div>
+
+
+
+
+
+</modiv>`,
+    `<motion.div>
+
+
+
+
+
+</motdiv>`,
+    `<motion.div>
+
+
+
+
+
+</motidiv>`,
+    `<motion.div>
+
+
+
+
+
+</motiodiv>`,
+    `<motion.div>
+
+
+
+
+
+</motiondiv>`,
+    `<motion.div>
+
+
+
+
+
+</motion.div>`,
+  ];
+}
+
+export function CodeTyping({ sequence, onTypingComplete }) {
+  const [index, setIndex] = useState(0);
+  const codes = createCodes(sequence);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((i) => (i < codes.length - 1 ? i + 1 : i));
+    }, 200);
+    return () => clearInterval(interval);
+  }, [codes]);
+  useEffect(() => {
+    if (index === codes.length - 1 && typeof onTypingComplete === "function")
+      onTypingComplete();
+  }, [index, codes]);
+  return <Code>{codes[index]}</Code>;
 }
