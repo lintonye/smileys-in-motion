@@ -104,12 +104,10 @@ function Page({ children, className = "", fullScreen = false, onPageScroll }) {
   const indicatorOpacity = useTransform(scrollY, [top, top + 20], [1, 0]);
   useEffect(() => {
     const unsub = scrollY.onChange((y) => {
-      // console.log({ y, y0: top - vh + 20 });
-      if (
-        typeof onPageScroll === "function" &&
-        top - vh <= y &&
-        y <= top - vh + height
-      ) {
+      const y0 = top - vh > 0 ? top - vh : 0;
+      const y1 = top - vh > 0 ? top - vh + height : height;
+      console.log({ y, y0, y1 });
+      if (typeof onPageScroll === "function" && y0 <= y && y <= y1) {
         onPageScroll({ pageTop: top, scrollY: y });
       }
     });
@@ -144,21 +142,40 @@ function Heading() {
       setDanceDemoAnimate(["readyToPlay", "playing"]);
     }, 500);
   }, []);
+  const [textBelowDemoAnimate, setTextBelowDemoAnimate] = useState(
+    "beforeSeen"
+  );
   return (
     <Page
       className="max-w-xl mx-auto flex flex-col justify-center align-middle space-y-8"
       fullScreen
+      onPageScroll={({ scrollY }) => {
+        if (scrollY > 20) {
+          console.log(textBelowDemoAnimate);
+          setTextBelowDemoAnimate("playing");
+        }
+      }}
     >
-      <h1 className="text-4xl text-center font-extrabold">
+      <motion.h1
+        className="text-4xl text-center font-extrabold"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 3.5 }}
+      >
         Build Advanced UI Animations With Framer Motion &amp; React
-      </h1>
-      <div className="text-center mb-6 space-x-3">
+      </motion.h1>
+      <motion.div
+        className="text-center mb-6 space-x-3"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 3.5 }}
+      >
         {Array(5)
           .fill("⭐️")
           .map((s, index) => (
             <span key={index}>{s}</span>
           ))}
-      </div>
+      </motion.div>
       <Carrousel className="relative mx-auto">
         <DanceDemo animate={danceDemoAnimate} />
         <DanceDemo animate={danceDemoAnimate} />
@@ -168,18 +185,21 @@ function Heading() {
         <DanceDemo animate={danceDemoAnimate} />
       </Carrousel>
       <motion.div
-        className="text-lg space-y-6"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 4 }}
+        className="text-lg space-y-4"
+        initial={false}
+        animate={textBelowDemoAnimate}
+        variants={{
+          beforeSeen: { opacity: 0, y: -100 },
+          playing: { opacity: 1, y: 0 },
+        }}
+        transition={{ type: "spring", damping: 15 }}
       >
-        <p>
-          This is Framer Motion: add a "motion." prefix, sprinkle some props,
-          animate on! It's THAT easy!
-        </p>
-        <p className="text-sm">
+        <p>This is Framer Motion.</p>
+        <p>Add a "motion." prefix. Sprinkle some props. Animate on!</p>
+        <p>It's THAT easy!</p>
+        {/* <p className="text-sm">
           PS: Guess what the "video" above was made with?
-        </p>
+        </p> */}
       </motion.div>
     </Page>
   );
@@ -382,10 +402,7 @@ function Quiz() {
   ];
   return (
     <Page className="max-w-xl space-y-6 text-lg pt-16" fullScreen>
-      <p className="">
-        Well, if Framer Motion is so easy to use, what is the point of making a
-        course? Let me ask you a question first. 👇
-      </p>
+      <p className="">But let ask you a question. 👇</p>
 
       <Code>{`<motion.span animate={{ scale: 4 }}>
 👊
