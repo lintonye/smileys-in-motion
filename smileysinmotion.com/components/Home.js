@@ -87,8 +87,8 @@ function Page({ children, className = "", fullScreen = false, onPageScroll }) {
   const { scrollY } = useViewportScroll();
   const inputRange = [
     ...(top >= vh ? [top - vh, top - vh + 20] : [0]),
-    top + height / 3,
-    top + height / 2,
+    top + (height / 3) * 2,
+    top + (height / 4) * 3,
   ];
   // console.log({ top, vh, inputRange });
   const filter = useTransform(scrollY, inputRange, [
