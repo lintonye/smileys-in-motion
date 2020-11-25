@@ -206,72 +206,9 @@ function Heading() {
 }
 
 function DanceDemo({ className }) {
-  // const line1 = useAnimation();
-  // const line2 = useAnimation();
-  // const dancingGuy = useAnimation();
-  // useEffect(() => {
-  //   async function play(anim) {
-  //     switch (anim) {
-  //       case "beforeSeen":
-  //         break;
-  //       case "readyToPlay":
-  //         await dancingGuy.start("readyToPlay");
-  //         break;
-  //       case "playing":
-  //         await line1.start("typing");
-  //         await line1.start("reveal");
-  //         await line2.start("typing");
-  //         await dancingGuy.start("playing");
-  //         break;
-  //       case "afterSeen":
-  //         await line2.start("reveal");
-  //         // await dancingGuy.stop();
-  //         await dancingGuy.start("afterSeen");
-  //     }
-  //   }
-  //   async function playAll(anims) {
-  //     for (let anim of anims) {
-  //       // console.log(anim);
-  //       await play(anim);
-  //     }
-  //   }
-  //   const anims = Array.isArray(animate) ? animate : [animate];
-  //   playAll(anims);
-  // }, [animate]);
   const [danceGuyAnimate, setDanceGuyAnimate] = useState("readyToPlay");
   return (
-    <div
-      className={className}
-      // variants={{
-      //   beforeSeen: { filter: "grayscale(0)", opacity: 0 },
-      //   readyToPlay: { opacity: 1 },
-      //   afterSeen: { filter: "grayscale(0)" },
-      // }}
-    >
-      {/* <Code
-        typingMasks={[
-          {
-            id: "line1",
-            top: "8%",
-            left: "6%",
-            chars: 27,
-            animate: line1,
-          },
-          {
-            id: "line2",
-            top: "82%",
-            left: "6%",
-            chars: 13,
-            animate: line2,
-          },
-        ]}
-      >{`<motion.div animate="dance">
-
-
-
-
-</motion.div>`}</Code> */}
-
+    <div className={className}>
       <CodeTyping
         sequence={[
           `<div>
