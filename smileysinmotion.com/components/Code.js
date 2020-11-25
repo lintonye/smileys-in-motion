@@ -397,11 +397,11 @@ export function CodeTyping({ sequence, onTypingComplete }) {
   const [index, setIndex] = useState(0);
   const codes = createCodes(sequence);
   useEffect(() => {
-    const interval = setInterval(() => {
+    const timeout = setTimeout(() => {
       setIndex((i) => (i < codes.length - 1 ? i + 1 : i));
-    }, 50);
-    return () => clearInterval(interval);
-  }, [codes]);
+    }, Math.min(100, Math.random() * 700));
+    return () => clearTimeout(timeout);
+  }, [codes, index]);
   useEffect(() => {
     if (index === codes.length - 1 && typeof onTypingComplete === "function")
       onTypingComplete();
