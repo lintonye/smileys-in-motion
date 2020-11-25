@@ -802,7 +802,11 @@ function Leg() {
   const os = useOS();
   console.log(os);
   const shouldFlip = !["iOS", "Mac OS"].includes(os);
-  return <motion.div style={{ scaleX: shouldFlip ? -1 : 1 }}>🦵</motion.div>;
+  return (
+    <motion.div style={shouldFlip ? { scaleX: -1, rotate: 15 } : {}}>
+      🦵
+    </motion.div>
+  );
 }
 
 function DancingGuy({ animate }) {
