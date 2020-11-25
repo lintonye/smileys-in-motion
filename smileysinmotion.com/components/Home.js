@@ -155,7 +155,7 @@ function Heading() {
         className="text-4xl text-center font-extrabold"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 4.5 }}
+        transition={{ delay: 4 }}
       >
         Build Advanced UI Animations With Framer Motion &amp; React
       </motion.h1>
@@ -163,7 +163,7 @@ function Heading() {
         className="text-center mb-6 space-x-3"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 4.5 }}
+        transition={{ delay: 4 }}
       >
         {Array(5)
           .fill("⭐️")
@@ -200,9 +200,16 @@ function Heading() {
 
 function DanceDemo({ className }) {
   const [danceGuyAnimate, setDanceGuyAnimate] = useState("readyToPlay");
+  const [borderAnimate, setBorderAnimate] = useState("borderHidden");
   return (
-    <div
+    <motion.div
       className={`border-solid border-2 border-gray-600 rounded-2xl ${className}`}
+      initial={false}
+      animate={borderAnimate}
+      variants={{
+        borderHidden: { "--tw-border-opacity": 0 },
+        borderVisible: { "--tw-border-opacity": 1 },
+      }}
     >
       <motion.div
         initial={{ opacity: 0 }}
@@ -234,7 +241,10 @@ function DanceDemo({ className }) {
 
 </motion.div>`,
           ]}
-          onTypingComplete={() => setDanceGuyAnimate("playing")}
+          onTypingComplete={() => {
+            setDanceGuyAnimate("playing");
+            setBorderAnimate("borderVisible");
+          }}
         />
       </motion.div>
       <motion.div
@@ -244,7 +254,7 @@ function DanceDemo({ className }) {
       >
         <DancingGuy animate={danceGuyAnimate} />
       </motion.div>
-    </div>
+    </motion.div>
   );
 }
 
