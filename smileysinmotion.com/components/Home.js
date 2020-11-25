@@ -80,7 +80,7 @@ function useViewportDimension() {
   return dim;
 }
 
-function Page({ children, className, fullScreen = false }) {
+function Page({ children, className = "", fullScreen = false }) {
   const [ref, { top, height }] = useInitialBoundingBox();
   const { height: vh } = useViewportDimension();
   const { scrollY } = useViewportScroll();
@@ -101,6 +101,16 @@ function Page({ children, className, fullScreen = false }) {
     0.3,
   ]);
   const indicatorOpacity = useTransform(scrollY, [top, top + 20], [1, 0]);
+  const [animate, setAnimate] = useState("beforeSeen");
+  useEffect(() => {
+    const unsub = scrollY.onChange((y) => {
+      // console.log({ y, y0: top - vh + 20 });
+      if (y > top - vh + 50) {
+        setAnimate("playing");
+      }
+    });
+    return unsub;
+  }, []);
   return (
     <motion.div
       style={{ filter, opacity }}
@@ -108,6 +118,8 @@ function Page({ children, className, fullScreen = false }) {
         className + " relative m-auto " + (fullScreen ? "h-screen" : "")
       }
       ref={ref}
+      initial={false}
+      animate={animate}
     >
       {children}
       {fullScreen && (
@@ -144,11 +156,6 @@ function Heading() {
             <span key={index}>{s}</span>
           ))}
       </div>
-      {/* <h2 className="text-center text-lg mb-6">
-        A comprehensive Framer Motion course on{" "}
-        <span className="line-through">abusing emojis</span> the mental model,
-        tips &amp; tricks, and common pitfalls
-      </h2> */}
       <Carrousel className="relative mx-auto">
         <DanceDemo animate={danceDemoAnimate} />
         <DanceDemo animate={danceDemoAnimate} />
@@ -340,8 +347,8 @@ function QuizAnswer() {
       </p>
 
       <h2 className="text-2xl">
-        Good news: Now you have a{" "}
-        <span className="font-extrabold">faster solution</span>!
+        Good news: I've turned these struggling hours into
+        <span className="font-extrabold"> a faster solution for you</span>! 👇
       </h2>
     </Page>
   );
@@ -388,6 +395,7 @@ function Quiz() {
         {options.map(({ id, title, preview }) => (
           <Option
             id={id}
+            key={id}
             title={title}
             selected={choice === id}
             onSelect={() => setChoice(id)}
@@ -402,16 +410,64 @@ function Quiz() {
 
 function CourseIntro() {
   return (
-    <Page>
-      <div>Course Intro</div>
+    <Page className="max-w-lg">
+      <motion.h1
+        className="text-center font-semibold text-5xl mt-32 mb-4"
+        // variants={{
+        //   beforeSeen: { opacity: 1, rotate: 180 },
+        //   playing: { rotate: 0, opacity: 1 },
+        // }}
+      >
+        🤨 Smileys In Motion
+      </motion.h1>
+      <motion.h2
+        className="text-center text-lg mb-6"
+        // variants={{
+        //   beforeSeen: { opacity: 0 },
+        //   playing: { opacity: 1, transition: { delay: 0.5 } },
+        // }}
+      >
+        A Framer Motion course on{" "}
+        <span className="line-through">abusing emojis</span> mental models, tips
+        &amp; tricks, and common pitfalls
+      </motion.h2>
+      <Feature emoji="🧠" title="Focus on mental models">
+        <li>Get started from the fundamentals</li>
+        <li>
+          Build a complete mental model of all the features. Know when to use
+          what.
+        </li>
+        <li>Simple examples for the concepts</li>
+      </Feature>
+      <Feature emoji="🌏" title="Real world examples">
+        <li>Get started from the fundamentals</li>
+        <li>
+          Build a complete mental model of all the features. Know when to use
+          what.
+        </li>
+        <li>Simple examples for the concepts</li>
+      </Feature>
+      <div className="pb-96" />
     </Page>
+  );
+}
+
+function Feature({ emoji, title, children }) {
+  return (
+    <div className="flex space-x-6">
+      <div className="text-9xl">{emoji}</div>
+      <ul>
+        <li className="text-2xl font-bold">{title}</li>
+        {children}
+      </ul>
+    </div>
   );
 }
 
 function Main() {
   return (
     <div>
-      {/* <Heading /> */}
+      <Heading />
       <Quiz />
       <QuizAnswer />
       <CourseIntro />
