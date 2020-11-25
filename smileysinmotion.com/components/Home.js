@@ -200,7 +200,9 @@ function Heading() {
 function DanceDemo({ className }) {
   const [danceGuyAnimate, setDanceGuyAnimate] = useState("readyToPlay");
   return (
-    <div className={className}>
+    <div
+      className={`border-solid border-2 border-gray-600 rounded-2xl ${className}`}
+    >
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
