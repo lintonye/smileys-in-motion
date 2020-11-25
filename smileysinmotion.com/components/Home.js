@@ -10,6 +10,7 @@ import {
 } from "framer-motion";
 import { Code } from "./Code";
 import { Carrousel } from "./Carrousel";
+import Image from "next/image";
 
 function Welcome() {
   return (
@@ -523,6 +524,24 @@ function PricingCard({
   );
 }
 
+function Quote({ photo, name, company, title, children }) {
+  return (
+    <div className="flex flex-col items-end">
+      <div className="font-serif text-2xl italic">{children}</div>
+      <Image
+        src={photo}
+        width={100}
+        height={100}
+        className="rounded-full self-end"
+      />
+      <div>{name}</div>
+      <div>
+        {title}, {company}
+      </div>
+    </div>
+  );
+}
+
 function Pricing() {
   return (
     <Page className="max-w-2xl space-y-16 mt-32">
@@ -562,6 +581,17 @@ function Pricing() {
             </a>
           </li>
         </PricingCard>
+      </div>
+      <div className="max-w-2xl mx-auto">
+        <Quote
+          photo="/images/remco.webp"
+          name="Remco van den Top"
+          company="Graphius"
+          title="UX Designer"
+        >
+          The way you build your courses with emojis is very engaging and easy
+          to understand.
+        </Quote>
       </div>
     </Page>
   );
