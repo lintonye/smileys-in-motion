@@ -421,7 +421,7 @@ function CourseIntro() {
         🤨 Smileys In Motion
       </motion.h1>
       <motion.h2
-        className="text-center text-lg mb-6"
+        className="text-center text-lg mb-24"
         // variants={{
         //   beforeSeen: { opacity: 0 },
         //   playing: { opacity: 1, transition: { delay: 0.5 } },
@@ -431,31 +431,41 @@ function CourseIntro() {
         <span className="line-through">abusing emojis</span> mental models, tips
         &amp; tricks, and common pitfalls
       </motion.h2>
-      <Feature emoji="🧠" title="Focus on mental models">
-        <li>Get started from the fundamentals</li>
-        <li>
-          Build a complete mental model of all the features. Know when to use
-          what.
-        </li>
-        <li>Simple examples for the concepts</li>
-      </Feature>
-      <Feature emoji="🌏" title="Real world examples">
-        <li>Get started from the fundamentals</li>
-        <li>
-          Build a complete mental model of all the features. Know when to use
-          what.
-        </li>
-        <li>Simple examples for the concepts</li>
-      </Feature>
-      <div className="pb-96" />
+      <motion.div className="space-y-16">
+        <Feature emoji="🧠" title="Focus on mental models">
+          <li>Get started from the fundamentals</li>
+          <li>
+            Build a complete mental model of all the features. Know when to use
+            what.
+          </li>
+        </Feature>
+        <Feature emoji="🌏" title="Real-world examples">
+          <li>
+            Drag to reorder, Circular slider, Bottom sheet, Parallax scroll
+          </li>
+          <li>Tabs, Shared element transition (React Router)</li>
+          <li>And... this page!</li>
+        </Feature>
+        <Feature emoji="📃" title="Cheat sheet">
+          <li>A list of pitfalls I've stumbled upon</li>
+        </Feature>
+        <Feature emoji="😉" title="Fun examples">
+          <li>
+            Did I mention that all the "images" used in the course (and on this
+            page) are emojis?
+          </li>
+        </Feature>
+      </motion.div>
     </Page>
   );
 }
 
 function Feature({ emoji, title, children }) {
   return (
-    <div className="flex space-x-6">
-      <div className="text-9xl">{emoji}</div>
+    <div className="flex space-x-8 items-center">
+      <div className="text-8xl" style={{ filter: "saturate(0.4)" }}>
+        {emoji}
+      </div>
       <ul>
         <li className="text-2xl font-bold">{title}</li>
         {children}
@@ -466,7 +476,7 @@ function Feature({ emoji, title, children }) {
 
 function Main() {
   return (
-    <div>
+    <div className="pb-64">
       <Heading />
       <Quiz />
       <QuizAnswer />
