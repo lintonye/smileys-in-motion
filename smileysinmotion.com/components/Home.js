@@ -657,8 +657,8 @@ function Bio({ photo, title, children }) {
     <div className="flex space-x-4 items-center">
       <Image
         src={photo}
-        width={200}
-        height={200}
+        width={150}
+        height={150}
         className="rounded-full flex-shrink-0"
       />
       <div className="flex-1 space-y-4">
