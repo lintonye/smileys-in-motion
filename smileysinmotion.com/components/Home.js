@@ -11,6 +11,7 @@ import {
 import { Code, CodeTyping } from "./Code";
 import { Carrousel } from "./Carrousel";
 import Image from "next/image";
+import UAParser from "ua-parser-js";
 
 function Welcome() {
   return (
@@ -777,6 +778,23 @@ function Main() {
   );
 }
 
+function useOS() {
+  const [osType, setOsType] = useState(null);
+  useEffect(() => {
+    const parser = new UAParser();
+    const os = parser.getOS();
+    setOsType(os.name);
+  }, []);
+  return osType;
+}
+
+function Leg() {
+  const os = useOS();
+  console.log(os);
+  const shouldFlip = !["iOS", "Mac OS"].includes(os);
+  return <motion.div style={{ scaleX: shouldFlip ? -1 : 1 }}>🦵</motion.div>;
+}
+
 function DancingGuy({ animate }) {
   const commonTransition = {
     repeat: Infinity,
@@ -812,7 +830,7 @@ function DancingGuy({ animate }) {
           // afterSeen: { rotate: 0 },
         }}
       >
-        🦵
+        <Leg />
       </motion.div>
       <motion.div
         className="absolute"
@@ -824,7 +842,7 @@ function DancingGuy({ animate }) {
           // afterSeen: { rotate: 0 },
         }}
       >
-        🦵
+        <Leg />
       </motion.div>
       <motion.div
         className="absolute text-4xl"
@@ -859,18 +877,9 @@ function Test() {
 }
 
 export function Home() {
-  const [isMain, setIsMain] = useState(false);
-  useEffect(() => {
-    setTimeout(() => {
-      setIsMain(true);
-    }, 1000);
-  }, []);
   return (
     <div className="bg-gray-900 text-gray-200">
       <Main />
-      {/* <AnimateSharedLayout>
-        {isMain ? <Main /> : <Welcome />}
-      </AnimateSharedLayout> */}
     </div>
   );
 }
