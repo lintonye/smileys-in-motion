@@ -599,9 +599,21 @@ function Pricing() {
 
 const content = {
   Foundation: [
-    "1. Framer Motion mental model",
-    "2. Animate any HTML or SVG tag",
-    "3. Keyframes and animation value types",
+    {
+      title: "1. Framer Motion mental model",
+      preview:
+        "https://school.learnreact.design/courses/1217265/lectures/27255965",
+    },
+    {
+      title: "2. Animate any HTML or SVG tag",
+      preview:
+        "https://school.learnreact.design/courses/1217265/lectures/27255961",
+    },
+    {
+      title: "3. Keyframes and animation value types",
+      preview:
+        "https://school.learnreact.design/courses/1217265/lectures/27255960",
+    },
     "4. Spy on animations with MotionValue",
     "5. Orchestrate animations in a React tree",
     "6. Stagger children animations",
@@ -634,16 +646,34 @@ const content = {
 
 function Content() {
   return (
-    <Page className="max-w-md space-y-16 mt-32 text-lg">
+    <Page className="max-w-lg space-y-16 mt-32 text-lg">
       <h1 className="text-4xl text-center font-semibold">Table Of Contents</h1>
-      <div className="space-y-2 border-solid border-2 border-blue-900">
+      <div className="space-y-2 border-solid border-2 border-blue-900 rounded-lg">
         {Object.keys(content).map((section) => (
           <div key={section} className="space-y-2">
             <div className="bg-blue-900 py-1 px-3">{section}</div>
             <ul className="space-y-2 py-1 px-3">
-              {content[section].map((lesson) => (
-                <li key={lesson}>{lesson}</li>
-              ))}
+              {content[section].map((lesson) => {
+                const lessonTitle = lesson.title || lesson;
+                const preview = lesson.preview && (
+                  <a
+                    href={lesson.preview}
+                    className="text-sm border border-solid border-blue-800 rounded py-1 px-2
+                     text-gray-300 hover:border-blue-600 hover:text-white"
+                  >
+                    Preview
+                  </a>
+                );
+                return (
+                  <li
+                    key={lessonTitle}
+                    className="flex justify-between items-center"
+                  >
+                    {lessonTitle}
+                    {preview}
+                  </li>
+                );
+              })}
             </ul>
           </div>
         ))}
