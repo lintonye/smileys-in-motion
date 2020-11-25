@@ -445,10 +445,10 @@ function CourseIntro() {
           <div className="text-center font-semibold text-5xl mt-32 mb-4 flex space-x-4">
             <motion.div
               variants={{
-                beforeSeen: { x: -500 },
+                beforeSeen: { x: "-40vw" },
                 playing: {
                   x: 0,
-                  transition: { delay: 0.8, damping: 15, type: "spring" },
+                  transition: { delay: 1, damping: 15, type: "spring" },
                 },
               }}
             >
@@ -457,8 +457,8 @@ function CourseIntro() {
             <motion.h1
               className=""
               variants={{
-                beforeSeen: { opacity: 0, scale: 100 },
-                playing: { scale: 1, opacity: 1 },
+                beforeSeen: { opacity: 0, scale: 1 },
+                playing: { scale: [20, 1], opacity: [0, 1] },
               }}
             >
               Smiley In Motion
@@ -469,7 +469,7 @@ function CourseIntro() {
             className="text-center text-lg"
             variants={{
               beforeSeen: { opacity: 0 },
-              playing: { opacity: 1, transition: { delay: 0.5 } },
+              playing: { opacity: 1, transition: { delay: 1.5 } },
             }}
           >
             A Framer Motion course on{" "}
@@ -736,7 +736,7 @@ function Bio({ photo, title, children }) {
 
 function Bios() {
   return (
-    <Page className="max-w-3xl space-y-16 mt-32">
+    <Page className="max-w-2xl space-y-16 mt-32">
       <Bio photo="/images/linton.jpg" title="Hi! I'm Linton!">
         <p>
           I'm a full-stack developer and I love design. I've been teaching React
