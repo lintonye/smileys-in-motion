@@ -652,6 +652,61 @@ function Content() {
   );
 }
 
+function Bio({ photo, title, children }) {
+  return (
+    <div className="flex space-x-4 items-center">
+      <Image
+        src={photo}
+        width={200}
+        height={200}
+        className="rounded-full flex-shrink-0"
+      />
+      <div className="flex-1 space-y-4">
+        <h2 className="text-2xl font-semibold">{title}</h2>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+function Bios() {
+  return (
+    <Page className="max-w-3xl space-y-16 mt-32">
+      <Bio photo="/images/linton.jpg" title="Hi! I'm Linton!">
+        <p>
+          I'm a full-stack developer and I love design. I've been teaching React
+          since 2017 and I'm loving it! I'm also the author of a couple of
+          courses at Treehouse and Lynda.
+        </p>
+        <p>
+          My dark little secret: 😈 creating this course is also my special way
+          to learn all things about design and React -- trying to explain things
+          clearly has taken my understanding of the concepts to a whole new
+          level.
+        </p>
+
+        <p>Thrilled to be on this journey with you!</p>
+      </Bio>
+      <Bio photo="/images/beebee.jpg" title="Hey! I'm Beebee!">
+        <p>
+          I'm a designer and animator. I draw inspiration from my dream diaries.
+        </p>
+
+        <p>
+          In my dreams, I saw mammoths chasing little bears on a circus. I
+          managed to turn missiles launched from North Korea into splendid
+          firework shows. I convinced the Emperor of Qin Dynasty to stop
+          killing. I chatted with Prince Edwards in Chinese. I was left in awe
+          by the weirdly breathtaking scenes made up of lily pads, lotus, water
+          grass and pale dead fish...
+        </p>
+
+        <p>What's in your dreams?</p>
+      </Bio>
+    </Page>
+  );
+}
+
 function Main() {
   return (
     <div className="pb-64">
@@ -661,6 +716,7 @@ function Main() {
       <CourseIntro />
       <Pricing />
       <Content />
+      <Bios />
     </div>
   );
 }
