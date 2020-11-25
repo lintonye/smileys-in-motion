@@ -443,8 +443,9 @@ function CourseIntro() {
         </motion.h2>
       </div>
       <div className="text-center text-gray-400">
-        <span className="text-4xl text-white">2</span> hours of{" "}
-        <span className="text-4xl text-white">24</span> bite-sized HQ videos
+        <span className="text-4xl text-white font-extralight">2</span> hours of{" "}
+        <span className="text-4xl text-white font-extralight">24</span>{" "}
+        bite-sized HD videos
       </div>
       <motion.div className="space-y-16">
         <Feature emoji="🧠" title="Focus on mental models">
@@ -487,6 +488,85 @@ function Feature({ emoji, title, children }) {
   );
 }
 
+function PricingCard({
+  title,
+  subtitle,
+  price,
+  discountedPrice,
+  purchaseLink,
+  featured,
+  className,
+  children,
+}) {
+  return (
+    <div
+      className={`border-blue-400 border-solid border-2 p-8 
+    rounded-lg flex flex-col justify-center items-center space-y-6 ${
+      featured ? "bg-gray-900" : "bg-gray-800 "
+    } ${className}`}
+    >
+      <div className="font-semibold text-lg text-center">{title}</div>
+      <div className="text-center text-blue-400">{subtitle}</div>
+      <ul className="list-outside list-disc ml-4">{children}</ul>
+      <div className="space-x-4">
+        <span className="line-through">${price}</span>
+        <span className="text-4xl">${discountedPrice}</span>
+        <span>USD</span>
+      </div>
+      <a
+        href={purchaseLink}
+        className="rounded-md bg-blue-600 px-3 py-2 hover:bg-blue-500"
+      >
+        Buy Now
+      </a>
+    </div>
+  );
+}
+
+function Pricing() {
+  return (
+    <Page className="max-w-2xl space-y-16 mt-32">
+      <div className="text-4xl text-center font-semibold">Get The Course</div>
+      <div className="flex -space-x-3 items-end">
+        <PricingCard
+          title="Smileys In Motion"
+          subtitle="For designers and developers with React experience"
+          price={99}
+          discountedPrice={59}
+          purchaseLink="#"
+          className="mb-5"
+        >
+          <li>24 HD video lessons, 2 hours</li>
+          <li>All starter and final code for you to follow along</li>
+          <li>Pitfall cheat sheet</li>
+        </PricingCard>
+        <PricingCard
+          featured
+          title="React + Framer Starship bundle"
+          subtitle="Learn from the start. No JS experience required"
+          price={299}
+          discountedPrice={199}
+        >
+          <li>14 Modules, 50 HD video lessons, 10+ hours</li>
+          <li>
+            Includes <strong>Smileys In Motion</strong>
+          </li>
+          <li>All starter and final code for you to follow along</li>
+          <li>
+            Check out course details{" "}
+            <a
+              className="underline"
+              href="https://learnreact.design/prototyping-with-react-framer"
+            >
+              here
+            </a>
+          </li>
+        </PricingCard>
+      </div>
+    </Page>
+  );
+}
+
 function Main() {
   return (
     <div className="pb-64">
@@ -494,6 +574,7 @@ function Main() {
       <Quiz />
       <QuizAnswer />
       <CourseIntro />
+      <Pricing />
     </div>
   );
 }
