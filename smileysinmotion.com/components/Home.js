@@ -547,7 +547,8 @@ function CourseIntro() {
             <li>Tabs, Shared element transition (React Router)</li>
             <li>And... this page!</li>
           </Feature>
-          <Feature emoji="📃" title="Cheat sheet">
+          <Feature emoji="📃" title="Cheat sheets">
+            <li>Bite-size content summaries</li>
             <li>A list of pitfalls I've stumbled upon</li>
           </Feature>
           <Feature emoji="😉" title="Fun examples">
@@ -659,7 +660,7 @@ function Pricing() {
         >
           <li>24 lessons, 2 hours of HD videos</li>
           <li>All starter and final code for you to follow along</li>
-          <li>Pitfall cheat sheet</li>
+          <li>Cheat sheets</li>
         </PricingCard>
         <PricingCard
           featured
@@ -688,15 +689,6 @@ function Pricing() {
       </div>
       <Carrousel className="max-w-2xl mx-auto">
         <Quote
-          photo="/images/remco.webp"
-          name="Remco van den Top"
-          company="Graphius"
-          title="UX Designer"
-        >
-          The way you build your courses with emojis is very engaging and easy
-          to understand.
-        </Quote>
-        <Quote
           photo="/images/kristof.webp"
           name="Kristóf Poduszló"
           company="Copyfolio"
@@ -706,6 +698,15 @@ function Pricing() {
           Such a comprehensive overview isn't available throughout the entire
           official docs. The mental models are explained intuitively and without
           leaving any doubt for listeners.
+        </Quote>
+        <Quote
+          photo="/images/remco.webp"
+          name="Remco van den Top"
+          company="Graphius"
+          title="UX Designer"
+        >
+          The way you build your courses with emojis is very engaging and easy
+          to understand.
         </Quote>
       </Carrousel>
     </Page>
