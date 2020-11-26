@@ -174,7 +174,10 @@ function Heading() {
       {/* <div className="relative mx-auto w-4/5">
         <DanceDemo className="" />
       </div> */}
-      <Carrousel className="relative mx-auto w-full sm:w-full" frame>
+      <Carrousel
+        className="relative mx-auto w-full sm:w-full"
+        frameClassName="border-solid border-2 border-gray-600 rounded-2xl overflow-hidden pb-56 sm:pb-80"
+      >
         <DanceDemo onTypingComplete={() => setAnimate("typingComplete")} />
         <DanceDemo />
       </Carrousel>
@@ -721,7 +724,7 @@ function PricingCard({
 function Quote({ photo, name, company, companyLink, title, children }) {
   return (
     <div className="flex flex-col items-end space-y-1">
-      <div className="font-serif text-2xl italic">{children}</div>
+      <div className="font-serif italic text-lg sm:text-2xl">{children}</div>
       <Image
         src={photo}
         width={100}
@@ -746,7 +749,7 @@ function Pricing() {
       <div className="flex flex-col sm:-space-x-3 sm:items-end sm:flex-row">
         <PricingCard
           title="Smiley In Motion"
-          subtitle="For designers and developers with React experience"
+          subtitle="For designers and developers experienced in React"
           price={99}
           discountedPrice={59}
           footnote="Black Friday deal!"
@@ -782,7 +785,7 @@ function Pricing() {
           </li>
         </PricingCard>
       </div>
-      <Carrousel className="max-w-2xl mx-auto">
+      <Carrousel className="max-w-2xl mx-auto" frameClassName="pb-80 sm:pb-64">
         <Quote
           photo="/images/kristof.webp"
           name="Kristóf Poduszló"

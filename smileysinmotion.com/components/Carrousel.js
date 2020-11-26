@@ -23,7 +23,7 @@ const variants = {
   },
 };
 
-export function Carrousel({ children, className, frame }) {
+export function Carrousel({ children, className, frameClassName }) {
   const [index, setIndex] = useState(0);
   const items = React.Children.toArray(children);
   const prevIndex = useRef(0);
@@ -33,14 +33,7 @@ export function Carrousel({ children, className, frame }) {
     <motion.div
       className={`relative flex flex-col justify-center items-center ${className}`}
     >
-      {/* Render it normally to make room */}
-      <div
-        className={`relative w-full ${
-          frame &&
-          `border-solid border-2 border-gray-600 rounded-2xl overflow-hidden`
-        }`}
-      >
-        <div className="invisible w-full">{items[index]}</div>
+      <div className={`relative w-full ${frameClassName}`}>
         <AnimatePresence initial={false} custom={direction}>
           <motion.div
             key={index}
