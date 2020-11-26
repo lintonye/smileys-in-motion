@@ -174,7 +174,7 @@ function Heading() {
       {/* <div className="relative mx-auto w-4/5">
         <DanceDemo className="" />
       </div> */}
-      <Carrousel className="relative mx-auto w-full sm:w-4/5">
+      <Carrousel className="relative mx-auto w-full sm:w-full" frame>
         <DanceDemo onTypingComplete={() => setAnimate("typingComplete")} />
         <DanceDemo />
       </Carrousel>
@@ -215,7 +215,7 @@ function DanceDemo({ className, onTypingComplete }) {
   const [borderAnimate, setBorderAnimate] = useState("borderHidden");
   return (
     <motion.div
-      className={`border-solid border-2 border-gray-600 rounded-2xl ${className}`}
+      className={`${className}`}
       initial={false}
       animate={borderAnimate}
       variants={{

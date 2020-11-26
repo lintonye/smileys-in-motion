@@ -1,29 +1,62 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-export function Carrousel({ children, className }) {
+const variants = {
+  enter: (direction) => {
+    return {
+      x: direction > 0 ? "100%" : "-100%",
+      opacity: 0,
+    };
+  },
+  center: {
+    zIndex: 1,
+    x: 0,
+    opacity: 1,
+  },
+  exit: (direction) => {
+    return {
+      zIndex: 0,
+      x: direction < 0 ? "100%" : "-100%",
+      opacity: 0,
+    };
+  },
+};
+
+export function Carrousel({ children, className, frame }) {
   const [index, setIndex] = useState(0);
   const items = React.Children.toArray(children);
+  const prevIndex = useRef(0);
+  useEffect(() => (prevIndex.current = index));
+  const direction = Math.sign(index - prevIndex.current);
   return (
     <motion.div
       className={`relative flex flex-col justify-center items-center ${className}`}
     >
       {/* Render it normally to make room */}
-      <div className="invisible w-full">{items[index]}</div>
-      <AnimatePresence initial={false}>
-        <motion.div
-          key={index}
-          initial={{ x: "100%" }}
-          animate={{ x: 0 }}
-          exit={{ x: "-50%", opacity: 0 }}
-          className="absolute top-0 left-0 w-full" // absolute is needed for the animation
-        >
-          {items[index]}
-        </motion.div>
-      </AnimatePresence>
+      <div
+        className={`relative w-full ${
+          frame &&
+          `border-solid border-2 border-gray-600 rounded-2xl overflow-hidden`
+        }`}
+      >
+        <div className="invisible w-full">{items[index]}</div>
+        <AnimatePresence initial={false} custom={direction}>
+          <motion.div
+            key={index}
+            initial={"enter"}
+            animate={"center"}
+            custom={direction}
+            exit={"exit"}
+            variants={variants}
+            className="absolute top-0 left-0 w-full" // absolute is needed for the animation
+          >
+            {items[index]}
+          </motion.div>
+        </AnimatePresence>
+      </div>
 
-      <div className="flex space-x-2">
+      <div className="flex space-x-2 mt-4">
         {items.length > 1 &&
           Array(items.length)
             .fill(0)
