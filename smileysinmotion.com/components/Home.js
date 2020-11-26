@@ -108,7 +108,7 @@ function Page({ children, className = "", fullScreen = false, onPageScroll }) {
     const unsub = scrollY.onChange((y) => {
       const y0 = top - vh > 0 ? top - vh : 0;
       const y1 = top - vh > 0 ? top - vh + height : height;
-      console.log({ y, y0, y1 });
+      // console.log({ y, y0, y1 });
       if (typeof onPageScroll === "function" && y0 <= y && y <= y1) {
         onPageScroll({ pageTop: top, scrollY: y });
       }
@@ -289,12 +289,89 @@ function Fist({ repeatType = null, duration = undefined, className }) {
   );
 }
 
-function Option({ id, title, selected, onSelect, children }) {
+function Check(props) {
+  return (
+    <svg
+      width={26}
+      height={19}
+      viewBox="0 0 26 19"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <motion.path
+        d="M1 8.5L6.5 18l19-17"
+        // stroke="#000"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        initial={{ pathLength: 0 }}
+        animate={{ pathLength: 1 }}
+        transition={{ duration: 0.5 }}
+      />
+    </svg>
+  );
+}
+
+function Cross(props) {
+  const [secondPath, setSecondPath] = useState("hidden");
+  return (
+    <motion.svg
+      width={19}
+      height={18}
+      viewBox="0 0 19 18"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <motion.path
+        d="M1 1l15.5 16"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        initial={"hidden"}
+        animate={"visible"}
+        variants={{
+          hidden: { pathLength: 0 },
+          visible: { pathLength: 1 },
+        }}
+        transition={{ duration: 0.25 }}
+        onAnimationComplete={() => {
+          setSecondPath("visible");
+        }}
+      />
+      <motion.path
+        d="M18 1L1 17"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        initial="hidden"
+        animate={secondPath}
+        variants={{
+          hidden: { opacity: 0, pathLength: 0 }, //TODO why opacity is needed here?
+          visible: { opacity: 1, pathLength: 1 },
+        }}
+        transition={{ duration: 0.25 }}
+      />
+    </motion.svg>
+  );
+}
+
+function Option({ id, title, selected, isAnswer, onSelect, children }) {
   const [hovered, setHovered] = useState(false);
   return (
     <motion.div
-      className={`border-2 border-solid border-gray-700 rounded-md p-8 cursor-pointer hover:border-blue-400 flex space-x-4 ${
-        selected && "border-blue-500 bg-gray-800 hover:bg-gray-800"
+      className={`relative border-2 border-solid border-gray-700 rounded-md p-8 cursor-pointer flex space-x-4 bg-opacity-30 
+      ${!selected && "hover:border-blue-400"}
+      ${
+        selected &&
+        isAnswer &&
+        "bg-green-900 border-green-500 hover:border-green-400"
+      }
+      ${
+        selected &&
+        !isAnswer &&
+        "bg-red-900 border-red-500 hover:border-red-400"
       }`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -302,6 +379,19 @@ function Option({ id, title, selected, onSelect, children }) {
     >
       <span className="text-gray-400">{id}.</span>
       <span>{hovered && children ? children : title}</span>
+      {selected && (
+        <div
+          className={`absolute right-6 mt-2 ${
+            isAnswer ? "text-green-500" : "text-red-500"
+          }`}
+        >
+          {isAnswer ? (
+            <Check className="stroke-current" />
+          ) : (
+            <Cross className="stroke-current" />
+          )}
+        </div>
+      )}
     </motion.div>
   );
 }
@@ -397,7 +487,7 @@ function Quiz() {
   ];
   return (
     <Page className="max-w-xs space-y-6 text-lg pt-16 sm:max-w-xl" fullScreen>
-      <p className="">But let ask you a question. 👇</p>
+      <p className="">But let me ask you a question. 👇</p>
       <div className="border-solid border-2 border-gray-500 rounded-2xl ">
         <Code>{`<motion.span 
    animate={{ scale: 4 }}>
@@ -412,6 +502,7 @@ function Quiz() {
         {options.map(({ id, title, preview }) => (
           <Option
             id={id}
+            isAnswer={id === "D"}
             key={id}
             title={title}
             selected={choice === id}
@@ -431,7 +522,7 @@ function Quiz() {
             visible: { opacity: 1 },
           }}
         >
-          <ScrollIndicator title="Scroll to see the answer" />
+          <ScrollIndicator title="Scroll to see why" />
         </motion.div>
       )}
     </Page>
