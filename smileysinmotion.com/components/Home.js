@@ -486,7 +486,7 @@ function Quiz() {
     { id: "D", title: "none of the above" },
   ];
   return (
-    <Page className="max-w-xs space-y-6 text-lg pt-16 sm:max-w-xl" fullScreen>
+    <Page className="max-w-xs space-y-6 text-lg pt-16 mb-16 min-h-screen sm:max-w-xl sm:mb-0">
       <p className="">But let me ask you a question. 👇</p>
       <div className="border-solid border-2 border-gray-500 rounded-2xl ">
         <Code>{`<motion.span 
