@@ -357,29 +357,36 @@ function Cross(props) {
   );
 }
 
-function Option({ id, title, selected, isAnswer, onSelect, children }) {
+function Option({
+  id,
+  title,
+  selected,
+  isAnswer,
+  onSelect,
+  selectable,
+  children,
+}) {
   const [hovered, setHovered] = useState(false);
+  const hover = selectable
+    ? (selected
+        ? isAnswer
+          ? "hover:border-green-400"
+          : "hover:border-red-400"
+        : "hover:border-blue-400") + " cursor-pointer"
+    : "";
   return (
     <motion.div
-      className={`relative border-2 border-solid border-gray-700 rounded-md p-8 cursor-pointer flex space-x-4 bg-opacity-30 
-      ${!selected && "hover:border-blue-400"}
-      ${
-        selected &&
-        isAnswer &&
-        "bg-green-900 border-green-500 hover:border-green-400"
-      }
-      ${
-        selected &&
-        !isAnswer &&
-        "bg-red-900 border-red-500 hover:border-red-400"
-      }`}
+      className={`relative border-2 border-solid border-gray-700 rounded-md p-8 flex space-x-4 bg-opacity-30 
+      ${hover}
+      ${selected && isAnswer && "bg-green-900 border-green-500 "}
+      ${selected && !isAnswer && "bg-red-900 border-red-500 "}`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      onTap={() => typeof onSelect === "function" && onSelect()}
+      onTap={() => selectable && typeof onSelect === "function" && onSelect()}
     >
       <span className="text-gray-400">{id}.</span>
       <span>{hovered && children ? children : title}</span>
-      {selected && (
+      {(selected || (!selectable && isAnswer)) && (
         <div
           className={`absolute right-6 mt-2 ${
             isAnswer ? "text-green-500" : "text-red-500"
@@ -506,6 +513,7 @@ function Quiz() {
             key={id}
             title={title}
             selected={choice === id}
+            selectable={choice === null}
             onSelect={() => setChoice(id)}
           >
             {preview}
