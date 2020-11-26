@@ -628,7 +628,7 @@ function Pricing() {
           price={99}
           discountedPrice={59}
           footnote="Black Friday deal!"
-          purchaseLink="#"
+          purchaseLink="https://sso.teachable.com/secure/157508/checkout/2635049/smileys-in-motion?coupon_code=BF2020"
           className="mb-5"
         >
           <li>24 lessons, 2 hours of HD videos</li>
@@ -642,6 +642,7 @@ function Pricing() {
           price={299}
           discountedPrice={199}
           footnote="Black Friday deal!"
+          purchaseLink="https://sso.teachable.com/secure/157508/checkout/1669960/prototyping-with-react-framer-starship-bundle?coupon_code=BF2020"
         >
           <li>14 Modules, 50 lessons, 10+ hours of HD videos</li>
           <li>
