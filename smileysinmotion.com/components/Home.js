@@ -125,46 +125,45 @@ function Page({ children, className = "", fullScreen = false, onPageScroll }) {
       initial={false}
     >
       {children}
-      {fullScreen && (
+      {/* {fullScreen && (
         <motion.div
           className="absolute bottom-1 left-0 right-0"
           style={{ opacity: indicatorOpacity }}
         >
           <ScrollIndicator />
         </motion.div>
-      )}
+      )} */}
     </motion.div>
   );
 }
 
 function Heading() {
-  const [textBelowDemoAnimate, setTextBelowDemoAnimate] = useState(
-    "beforeSeen"
-  );
+  // initial, typing, typingComplete, scrolled
+  const [animate, setAnimate] = useState("initial");
   return (
     <Page
       className="max-w-xl mx-auto flex flex-col justify-center align-middle space-y-8"
       fullScreen
       onPageScroll={({ scrollY }) => {
         if (scrollY > 20) {
-          console.log(textBelowDemoAnimate);
-          setTextBelowDemoAnimate("playing");
+          // console.log(animate);
+          setAnimate("scrolled");
         }
       }}
     >
       <motion.h1
         className="text-4xl text-center font-extrabold"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 4 }}
+        initial={false}
+        animate={animate}
+        variants={{ initial: { opacity: 0 }, typingComplete: { opacity: 1 } }}
       >
         Build Advanced UI Animations With Framer Motion &amp; React
       </motion.h1>
       <motion.div
         className="text-center mb-6 space-x-3"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 4 }}
+        initial={false}
+        animate={animate}
+        variants={{ initial: { opacity: 0 }, typingComplete: { opacity: 1 } }}
       >
         {Array(5)
           .fill("⭐️")
@@ -176,15 +175,29 @@ function Heading() {
         <DanceDemo className="" />
       </div> */}
       <Carrousel className="relative mx-auto w-4/5">
-        <DanceDemo className="" />
+        <DanceDemo
+          className=""
+          onTypingComplete={() => setAnimate("typingComplete")}
+        />
       </Carrousel>
+      <motion.div
+        initial={false}
+        animate={animate}
+        variants={{
+          initial: { opacity: 0 },
+          typingComplete: { opacity: 1 },
+          scrolled: { opacity: 0, display: "none" }, //TODO why opacity along doesn't work here???
+        }}
+      >
+        <ScrollIndicator />
+      </motion.div>
       <motion.div
         className="text-lg space-y-4"
         initial={false}
-        animate={textBelowDemoAnimate}
+        animate={animate}
         variants={{
-          beforeSeen: { opacity: 0, y: -100 },
-          playing: { opacity: 1, y: 0 },
+          initial: { opacity: 0, y: -100 },
+          scrolled: { opacity: 1, y: 0 },
         }}
         transition={{ type: "spring", damping: 15 }}
       >
@@ -199,7 +212,7 @@ function Heading() {
   );
 }
 
-function DanceDemo({ className }) {
+function DanceDemo({ className, onTypingComplete }) {
   const [danceGuyAnimate, setDanceGuyAnimate] = useState("readyToPlay");
   const [borderAnimate, setBorderAnimate] = useState("borderHidden");
   return (
@@ -245,6 +258,7 @@ function DanceDemo({ className }) {
           onTypingComplete={() => {
             setDanceGuyAnimate("playing");
             setBorderAnimate("borderVisible");
+            typeof onTypingComplete === "function" && onTypingComplete();
           }}
         />
       </motion.div>
@@ -409,10 +423,14 @@ function Quiz() {
       {choice && (
         <motion.div
           className="text-center text-gray-400"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={false}
+          animate={choice === null ? "hidden" : "visible"}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1 },
+          }}
         >
-          Scroll to reveal the answer
+          <ScrollIndicator title="Scroll to see the answer" />
         </motion.div>
       )}
     </Page>
@@ -841,7 +859,6 @@ function useOS() {
 
 function Leg() {
   const os = useOS();
-  console.log(os);
   const shouldFlip = !["iOS", "Mac OS"].includes(os);
   return (
     <motion.div style={shouldFlip ? { scaleX: -1, rotate: -35 } : {}}>
