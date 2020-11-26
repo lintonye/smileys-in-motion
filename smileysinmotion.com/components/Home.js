@@ -833,7 +833,7 @@ function Leg() {
   console.log(os);
   const shouldFlip = !["iOS", "Mac OS"].includes(os);
   return (
-    <motion.div style={shouldFlip ? { scaleX: -1, rotate: 15 } : {}}>
+    <motion.div style={shouldFlip ? { scaleX: -1, rotate: -35 } : {}}>
       🦵
     </motion.div>
   );

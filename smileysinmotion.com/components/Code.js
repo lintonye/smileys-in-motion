@@ -12,7 +12,7 @@ export function Code({ children, inline, lang = "html" }) {
     <code className={`language-${lang}`}>{children}</code>
   ) : (
     <div className="text-3xl relative flex">
-      <pre className="text-3xl  relative">
+      <pre className="text-3xl relative overflow-hidden">
         <code className={`language-${lang}`}>{children}</code>
       </pre>
     </div>
