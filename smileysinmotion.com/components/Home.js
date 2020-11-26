@@ -622,7 +622,7 @@ function PricingCard({
   );
 }
 
-function Quote({ photo, name, company, title, children }) {
+function Quote({ photo, name, company, companyLink, title, children }) {
   return (
     <div className="flex flex-col items-end space-y-1">
       <div className="font-serif text-2xl italic">{children}</div>
@@ -634,7 +634,10 @@ function Quote({ photo, name, company, title, children }) {
       />
       <div>{name}</div>
       <div>
-        {title}, {company}
+        {title},{" "}
+        <a href={companyLink} className={`${companyLink && "underline"}`}>
+          {company}
+        </a>
       </div>
     </div>
   );
@@ -696,7 +699,8 @@ function Pricing() {
         <Quote
           photo="/images/kristof.webp"
           name="Kristóf Poduszló"
-          company=""
+          company="Copyfolio"
+          companyLink="https://copyfol.io/"
           title="Front-end Engineer"
         >
           Such a comprehensive overview isn't available throughout the entire
