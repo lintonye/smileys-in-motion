@@ -119,7 +119,7 @@ function Page({ children, className = "", fullScreen = false, onPageScroll }) {
     <motion.div
       style={{ filter, opacity }}
       className={
-        className + " relative m-auto " + (fullScreen ? "h-screen" : "")
+        className + " relative m-auto " + (fullScreen ? "min-h-screen" : "")
       }
       ref={ref}
       initial={false}
