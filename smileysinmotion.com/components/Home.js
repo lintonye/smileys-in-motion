@@ -437,9 +437,10 @@ function CourseIntroLogo() {
     <motion.div className="relative">
       <motion.div
         style={{ originX: "center", originY: "center" }}
-        initial={{ opacity: 1, rotate: 0 }}
-        animate={{ opacity: 0, rotate: 360 }}
-        transition={{ delay: 2.5 }}
+        variants={{
+          beforeSeen: { opacity: 1, rotate: 0 },
+          playing: { opacity: 0, rotate: 360, transition: { delay: 2 } },
+        }}
       >
         <motion.div
           variants={{
@@ -457,11 +458,9 @@ function CourseIntroLogo() {
       <motion.div
         className="absolute"
         style={{ left: -28, top: -42 }}
-        initial={"beforeSeen"}
-        animate={"revealLogo"}
         variants={{
           beforeSeen: { opacity: 0, rotate: -360 },
-          revealLogo: { opacity: 1, rotate: 0, transition: { delay: 2.8 } },
+          playing: { opacity: 1, rotate: 0, transition: { delay: 2 } },
         }}
       >
         <Logo />
