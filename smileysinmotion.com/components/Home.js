@@ -374,7 +374,7 @@ function Option({
     : "";
   return (
     <motion.div
-      className={`relative border-2 border-solid border-gray-700 rounded-md p-8 flex space-x-4 bg-opacity-30 
+      className={`relative border-2 border-solid border-gray-700 border-opacity-80 rounded-md p-8 flex space-x-4 bg-opacity-30 
       ${hover}
       ${selected && isAnswer && "bg-green-900 border-green-500 "}
       ${selected && !isAnswer && "bg-red-900 border-red-500 "}`}
