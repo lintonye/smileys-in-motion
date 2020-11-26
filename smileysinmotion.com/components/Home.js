@@ -172,12 +172,12 @@ function Heading() {
             <span key={index}>{s}</span>
           ))}
       </motion.div>
-      <div className="relative mx-auto w-4/5">
+      {/* <div className="relative mx-auto w-4/5">
         <DanceDemo className="" />
-      </div>
-      {/* <Carrousel className="relative mx-auto w-4/5">
+      </div> */}
+      <Carrousel className="relative mx-auto w-4/5">
         <DanceDemo className="" />
-      </Carrousel> */}
+      </Carrousel>
       <motion.div
         className="text-lg space-y-4"
         initial={false}
@@ -518,7 +518,7 @@ function CourseIntro() {
               use what.
             </li>
           </Feature>
-          <Feature emoji="🌏" title="Real-world examples">
+          <Feature emoji="🌏" title="Real-world use cases">
             <li>Drag to reorder, Circular slider</li>
             <li>Bottom sheet, Parallax scroll</li>
             <li>Tabs, Shared element transition (React Router)</li>
