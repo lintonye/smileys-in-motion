@@ -196,7 +196,7 @@ function Heading() {
         initial={false}
         animate={animate}
         variants={{
-          initial: { opacity: 0, y: -100 },
+          initial: { opacity: 0, y: -30 },
           scrolled: { opacity: 1, y: 0 },
         }}
         transition={{ type: "spring", damping: 15 }}

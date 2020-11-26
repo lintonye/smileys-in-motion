@@ -110,83 +110,6 @@ function createCodes(sequence) {
 </div>`,
     },
     {
-      col: 3,
-      row: 6,
-      text: `<motion.div>
-
-
-
-
-
-</mdiv>`,
-    },
-    {
-      col: 4,
-      row: 6,
-      text: `<motion.div>
-
-
-
-
-
-</modiv>`,
-    },
-    {
-      col: 5,
-      row: 6,
-      text: `<motion.div>
-
-
-
-
-
-</motdiv>`,
-    },
-    {
-      col: 6,
-      row: 6,
-      text: `<motion.div>
-
-
-
-
-
-</motidiv>`,
-    },
-    {
-      col: 7,
-      row: 6,
-      text: `<motion.div>
-
-
-
-
-
-</motiodiv>`,
-    },
-    {
-      col: 8,
-      row: 6,
-      text: `<motion.div>
-
-
-
-
-
-</motiondiv>`,
-    },
-    {
-      col: 9,
-      row: 6,
-      text: `<motion.div>
-
-
-
-
-
-</motion.div>`,
-    },
-    {
       col: 12,
       row: 0,
       text: `<motion.div >
@@ -195,7 +118,7 @@ function createCodes(sequence) {
 
 
 
-</motion.div>`,
+</div>`,
     },
     {
       col: 13,
@@ -206,7 +129,7 @@ function createCodes(sequence) {
 
 
 
-</motion.div>`,
+</div>`,
     },
     {
       col: 14,
@@ -217,7 +140,7 @@ function createCodes(sequence) {
 
 
 
-</motion.div>`,
+</div>`,
     },
     {
       col: 15,
@@ -228,7 +151,7 @@ function createCodes(sequence) {
 
 
 
-</motion.div>`,
+</div>`,
     },
     {
       col: 16,
@@ -239,7 +162,7 @@ function createCodes(sequence) {
 
 
 
-</motion.div>`,
+</div>`,
     },
     {
       col: 17,
@@ -250,7 +173,7 @@ function createCodes(sequence) {
 
 
 
-</motion.div>`,
+</div>`,
     },
     {
       col: 18,
@@ -261,7 +184,7 @@ function createCodes(sequence) {
 
 
 
-</motion.div>`,
+</div>`,
     },
     {
       col: 19,
@@ -272,7 +195,7 @@ function createCodes(sequence) {
 
 
 
-</motion.div>`,
+</div>`,
     },
     {
       col: 20,
@@ -283,7 +206,7 @@ function createCodes(sequence) {
 
 
 
-</motion.div>`,
+</div>`,
     },
     {
       col: 21,
@@ -294,7 +217,7 @@ function createCodes(sequence) {
 
 
 
-</motion.div>`,
+</div>`,
     },
     {
       col: 22,
@@ -305,7 +228,7 @@ function createCodes(sequence) {
 
 
 
-</motion.div>`,
+</div>`,
     },
     {
       col: 23,
@@ -316,7 +239,7 @@ function createCodes(sequence) {
 
 
 
-</motion.div>`,
+</div>`,
     },
     {
       col: 24,
@@ -327,7 +250,7 @@ function createCodes(sequence) {
 
 
 
-</motion.div>`,
+</div>`,
     },
     {
       col: 25,
@@ -338,7 +261,7 @@ function createCodes(sequence) {
 
 
 
-</motion.div>`,
+</div>`,
     },
     {
       col: 26,
@@ -349,11 +272,88 @@ function createCodes(sequence) {
 
 
 
-</motion.div>`,
+</div>`,
     },
     {
       col: 27,
       row: 0,
+      text: `<motion.div animate="dance">
+
+
+
+
+
+</div>`,
+    },
+    {
+      col: 3,
+      row: 6,
+      text: `<motion.div animate="dance">
+
+
+
+
+
+</mdiv>`,
+    },
+    {
+      col: 4,
+      row: 6,
+      text: `<motion.div animate="dance">
+
+
+
+
+
+</modiv>`,
+    },
+    {
+      col: 5,
+      row: 6,
+      text: `<motion.div animate="dance">
+
+
+
+
+
+</motdiv>`,
+    },
+    {
+      col: 6,
+      row: 6,
+      text: `<motion.div animate="dance">
+
+
+
+
+
+</motidiv>`,
+    },
+    {
+      col: 7,
+      row: 6,
+      text: `<motion.div animate="dance">
+
+
+
+
+
+</motiodiv>`,
+    },
+    {
+      col: 8,
+      row: 6,
+      text: `<motion.div animate="dance">
+
+
+
+
+
+</motiondiv>`,
+    },
+    {
+      col: 9,
+      row: 6,
       text: `<motion.div animate="dance">
 
 
