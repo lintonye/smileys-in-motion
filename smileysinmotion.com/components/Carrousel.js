@@ -2,6 +2,8 @@ import * as React from "react";
 import { useState, useRef, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
+// Include code from: https://codesandbox.io/s/framer-motion-image-gallery-pqvx3?fontsize=14&module=/src/Example.tsx&file=/src/Example.tsx:838-978
+
 const variants = {
   enter: (direction) => {
     return {
@@ -21,6 +23,11 @@ const variants = {
       opacity: 0,
     };
   },
+};
+
+const swipeConfidenceThreshold = 10000;
+const swipePower = (offset, velocity) => {
+  return Math.abs(offset) * velocity;
 };
 
 export function Carrousel({ children, className, frameClassName }) {
@@ -43,6 +50,18 @@ export function Carrousel({ children, className, frameClassName }) {
             exit={"exit"}
             variants={variants}
             className="absolute top-0 left-0 w-full" // absolute is needed for the animation
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={1}
+            onDragEnd={(e, { offset, velocity }) => {
+              const swipe = swipePower(offset.x, velocity.x);
+
+              if (swipe < -swipeConfidenceThreshold) {
+                setIndex((i) => (i < items.length - 1 ? i + 1 : i));
+              } else if (swipe > swipeConfidenceThreshold) {
+                setIndex((i) => (i > 0 ? i - 1 : 0));
+              }
+            }}
           >
             {items[index]}
           </motion.div>
