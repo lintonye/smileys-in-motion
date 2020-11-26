@@ -12,6 +12,7 @@ import { Code, CodeTyping } from "./Code";
 import { Carrousel } from "./Carrousel";
 import Image from "next/image";
 import UAParser from "ua-parser-js";
+import Logo from "./Logo";
 
 function Welcome() {
   return (
@@ -429,6 +430,46 @@ function Confetti() {
   );
 }
 
+function CourseIntroLogo() {
+  const [animate, setAnimate] = useState("beforeSeen");
+  return (
+    //TODO could be better orchestrated instead of relying on delay
+    <motion.div className="relative">
+      <motion.div
+        style={{ originX: "center", originY: "center" }}
+        initial={{ opacity: 1, rotate: 0 }}
+        animate={{ opacity: 0, rotate: 360 }}
+        transition={{ delay: 2.5 }}
+      >
+        <motion.div
+          variants={{
+            beforeSeen: { x: "-50vw" },
+            playing: {
+              x: 0,
+              opacity: 1,
+              transition: { delay: 1, damping: 15, type: "spring" },
+            },
+          }}
+        >
+          🤨
+        </motion.div>
+      </motion.div>
+      <motion.div
+        className="absolute"
+        style={{ left: -28, top: -42 }}
+        initial={"beforeSeen"}
+        animate={"revealLogo"}
+        variants={{
+          beforeSeen: { opacity: 0, rotate: -360 },
+          revealLogo: { opacity: 1, rotate: 0, transition: { delay: 2.8 } },
+        }}
+      >
+        <Logo />
+      </motion.div>
+    </motion.div>
+  );
+}
+
 function CourseIntro() {
   const [animate, setAnimate] = useState("beforeSeen");
   return (
@@ -440,18 +481,8 @@ function CourseIntro() {
     >
       <motion.div className="space-y-16" initial={false} animate={animate}>
         <div>
-          <div className="text-center font-semibold text-5xl mt-32 mb-4 flex space-x-4">
-            <motion.div
-              variants={{
-                beforeSeen: { x: "-40vw" },
-                playing: {
-                  x: 0,
-                  transition: { delay: 1, damping: 15, type: "spring" },
-                },
-              }}
-            >
-              🤨
-            </motion.div>
+          <div className="text-center font-semibold text-5xl mt-32 mb-7 flex space-x-8">
+            <CourseIntroLogo />
             <motion.h1
               className=""
               variants={{
