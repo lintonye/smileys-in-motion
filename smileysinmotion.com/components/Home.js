@@ -142,7 +142,7 @@ function Heading() {
   const [animate, setAnimate] = useState("initial");
   return (
     <Page
-      className="mx-auto flex flex-col justify-center align-middle space-y-8 max-w-xs sm:max-w-xl"
+      className="mx-auto flex flex-col justify-center align-middle space-y-4 max-w-xs sm:max-w-xl sm:space-y-8"
       fullScreen
       onPageScroll={({ scrollY }) => {
         if (scrollY > 20) {
@@ -175,10 +175,8 @@ function Heading() {
         <DanceDemo className="" />
       </div> */}
       <Carrousel className="relative mx-auto w-full sm:w-4/5">
-        <DanceDemo
-          className=""
-          onTypingComplete={() => setAnimate("typingComplete")}
-        />
+        <DanceDemo onTypingComplete={() => setAnimate("typingComplete")} />
+        <DanceDemo />
       </Carrousel>
       <motion.div
         initial={false}
@@ -502,9 +500,7 @@ function Quiz() {
 </motion.span>
 `}</Code>
       </div>
-      <p className="text-center">
-        What kind of animation would you get (hover to preview)?
-      </p>
+      <p className="text-center">What kind of animation would you get?</p>
       <div className="grid gap-2 grid-cols-1 sm:grid-cols-2">
         {options.map(({ id, title, preview }) => (
           <Option
