@@ -565,13 +565,19 @@ function PricingCard({
 }) {
   return (
     <div
-      className={`border-blue-400 border-solid border-2 p-8 
-    rounded-lg flex flex-col justify-center items-center space-y-6 ${
-      featured ? "bg-gray-900" : "bg-gray-800 "
-    } ${className}`}
+      className={`${
+        featured ? "border-indigo-400" : "border-blue-400"
+      } border-solid border-2 p-8 
+    rounded-lg flex flex-col justify-center items-center space-y-6 bg-gray-900 " ${className}`}
     >
       <div className="font-semibold text-lg text-center">{title}</div>
-      <div className="text-center text-blue-400">{subtitle}</div>
+      <div
+        className={`text-center ${
+          featured ? "text-indigo-400" : "text-blue-400"
+        }`}
+      >
+        {subtitle}
+      </div>
       <ul className="list-outside list-disc ml-4">{children}</ul>
       <div className="space-x-4">
         <span className="line-through">${price}</span>
@@ -580,7 +586,11 @@ function PricingCard({
       </div>
       <a
         href={purchaseLink}
-        className="rounded-md bg-blue-600 px-4 py-2 hover:bg-blue-500"
+        className={`rounded-md px-4 py-2 ${
+          featured
+            ? "bg-indigo-600 hover:bg-indigo-500"
+            : "bg-blue-600 hover:bg-blue-500"
+        }`}
       >
         Buy Now
       </a>
