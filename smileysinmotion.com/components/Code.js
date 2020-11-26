@@ -11,8 +11,8 @@ export function Code({ children, inline, lang = "html" }) {
   return inline ? (
     <code className={`language-${lang}`}>{children}</code>
   ) : (
-    <div className="text-3xl relative flex">
-      <pre className="text-3xl relative overflow-hidden">
+    <div className="text-xl relative flex sm:text-3xl">
+      <pre className="relative overflow-hidden">
         <code className={`language-${lang}`}>{children}</code>
       </pre>
     </div>
@@ -370,8 +370,9 @@ function Cursor({ col, row }) {
   const cursorHeight = 20;
   const lineHeight = 40;
   return (
+    // TODO cursor is hidden on mobile.
     <motion.div
-      className="w-1 bg-gray-400 absolute"
+      className="invisible w-1 bg-gray-400 absolute sm:visible"
       style={{
         height: cursorHeight,
         x: col * charWidth,

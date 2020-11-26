@@ -1,6 +1,6 @@
 import * as React from "react";
 
-function Icon({ size = 110 }) {
+function Icon({ size = 110, className }) {
   return (
     <svg
       width={size}
@@ -8,6 +8,7 @@ function Icon({ size = 110 }) {
       viewBox="0 0 371 346"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
       // {...props}
     >
       <path

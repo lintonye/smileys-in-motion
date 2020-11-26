@@ -142,7 +142,7 @@ function Heading() {
   const [animate, setAnimate] = useState("initial");
   return (
     <Page
-      className="max-w-xl mx-auto flex flex-col justify-center align-middle space-y-8"
+      className="mx-auto flex flex-col justify-center align-middle space-y-8 max-w-xs sm:max-w-xl"
       fullScreen
       onPageScroll={({ scrollY }) => {
         if (scrollY > 20) {
@@ -152,7 +152,7 @@ function Heading() {
       }}
     >
       <motion.h1
-        className="text-4xl text-center font-extrabold"
+        className="text-2xl text-center font-extrabold sm:text-4xl"
         initial={false}
         animate={animate}
         variants={{ initial: { opacity: 0 }, typingComplete: { opacity: 1 } }}
@@ -174,7 +174,7 @@ function Heading() {
       {/* <div className="relative mx-auto w-4/5">
         <DanceDemo className="" />
       </div> */}
-      <Carrousel className="relative mx-auto w-4/5">
+      <Carrousel className="relative mx-auto w-full sm:w-4/5">
         <DanceDemo
           className=""
           onTypingComplete={() => setAnimate("typingComplete")}
@@ -192,7 +192,7 @@ function Heading() {
         <ScrollIndicator />
       </motion.div>
       <motion.div
-        className="text-lg space-y-4"
+        className="space-y-2 sm:text-lg sm:space-y-4"
         initial={false}
         animate={animate}
         variants={{
@@ -263,7 +263,7 @@ function DanceDemo({ className, onTypingComplete }) {
         />
       </motion.div>
       <motion.div
-        className="-mt-64"
+        className="-mt-56 -mb-8 sm:mb-0 sm:-mt-64"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
@@ -308,7 +308,7 @@ function Option({ id, title, selected, onSelect, children }) {
 
 function QuizAnswer() {
   return (
-    <Page className="m-auto max-w-xl pt-10 space-y-8 text-lg">
+    <Page className="max-w-xs pt-10 space-y-8 text-lg sm:max-w-xl">
       <p>The correct answer is D -- there is no animation at all! </p>
 
       <p>
@@ -331,7 +331,7 @@ function QuizAnswer() {
       </p>
 
       <p>Here are a few more examples:</p>
-      <ul className="list-disc list-inside">
+      <ul className="list-disc list-outside ml-4">
         <li>How would I make Motion work with React Router?</li>
         <li>Why is the text distorted during the transition?</li>
         <li>
@@ -396,10 +396,11 @@ function Quiz() {
     { id: "D", title: "none of the above" },
   ];
   return (
-    <Page className="max-w-xl space-y-6 text-lg pt-16" fullScreen>
+    <Page className="max-w-xs space-y-6 text-lg pt-16 sm:max-w-xl" fullScreen>
       <p className="">But let ask you a question. 👇</p>
       <div className="border-solid border-2 border-gray-500 rounded-2xl ">
-        <Code>{`<motion.span animate={{ scale: 4 }}>
+        <Code>{`<motion.span 
+   animate={{ scale: 4 }}>
 👊
 </motion.span>
 `}</Code>
@@ -407,7 +408,7 @@ function Quiz() {
       <p className="text-center">
         What kind of animation would you get (hover to preview)?
       </p>
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid gap-2 grid-cols-1 sm:grid-cols-2">
         {options.map(({ id, title, preview }) => (
           <Option
             id={id}
@@ -481,7 +482,7 @@ function CourseIntroLogo() {
           playing: { opacity: 1, rotate: 0, transition: { delay: 2 } },
         }}
       >
-        <Logo />
+        <Logo className="w-20 sm:w-32" />
       </motion.div>
     </motion.div>
   );
@@ -491,17 +492,21 @@ function CourseIntro() {
   const [animate, setAnimate] = useState("beforeSeen");
   return (
     <Page
-      className="max-w-lg"
+      className="max-w-xs sm:max-w-lg"
       onPageScroll={({ pageTop, scrollY }) => {
         setAnimate("playing");
       }}
     >
-      <motion.div className="space-y-16" initial={false} animate={animate}>
+      <motion.div
+        className="space-y-16 sm:space-y-16"
+        initial={false}
+        animate={animate}
+      >
         <div>
-          <div className="text-center font-semibold text-5xl mt-32 mb-7 flex space-x-8">
+          <div className="text-center font-semibold mt-32 mb-7 flex text-3xl space-x-6 sm:space-x-11 sm:text-5xl">
             <CourseIntroLogo />
             <motion.h1
-              className=""
+              className="z-10"
               variants={{
                 beforeSeen: { opacity: 0, scale: 1 },
                 playing: { scale: [20, 1], opacity: [0, 1] },
@@ -512,7 +517,7 @@ function CourseIntro() {
           </div>
           {/* <Confetti /> */}
           <motion.h2
-            className="text-center text-lg"
+            className="text-center sm:text-lg"
             variants={{
               beforeSeen: { opacity: 0 },
               playing: { opacity: 1, transition: { delay: 1.5 } },
@@ -558,12 +563,12 @@ function CourseIntro() {
 
 function Feature({ emoji, title, children }) {
   return (
-    <div className="flex space-x-8 items-center">
-      <div className="text-8xl" style={{ filter: "saturate(0.4)" }}>
+    <div className="flex items-center space-x-6 sm:space-x-8 ">
+      <div className="text-6xl sm:text-8xl" style={{ filter: "saturate(0.4)" }}>
         {emoji}
       </div>
       <ul>
-        <li className="text-2xl font-bold">{title}</li>
+        <li className="text-xl font-bold sm:text-2xl">{title}</li>
         {children}
       </ul>
     </div>
@@ -637,9 +642,9 @@ function Quote({ photo, name, company, title, children }) {
 
 function Pricing() {
   return (
-    <Page className="max-w-2xl space-y-16 mt-32">
+    <Page className="max-w-xs space-y-8 mt-16 sm:max-w-2xl sm:space-y-16 sm:mt-32">
       <h1 className="text-4xl text-center font-semibold">Get The Course</h1>
-      <div className="flex -space-x-3 items-end">
+      <div className="flex flex-col sm:-space-x-3 sm:items-end sm:flex-row">
         <PricingCard
           title="Smiley In Motion"
           subtitle="For designers and developers with React experience"
@@ -742,8 +747,10 @@ const content = {
 
 function Content() {
   return (
-    <Page className="max-w-lg space-y-16 mt-32 text-lg">
-      <h1 className="text-4xl text-center font-semibold">Table Of Contents</h1>
+    <Page className="max-w-xs space-y-8 mt-16 text-base sm:max-w-lg sm:space-y-16 sm:mt-32 sm:text-lg">
+      <h1 className="text-3xl text-center font-semibold sm:text-4xl">
+        Table Of Contents
+      </h1>
       <div className="space-y-2 border-solid border-2 border-blue-900 rounded-lg">
         {Object.keys(content).map((section) => (
           <div key={section} className="space-y-2">
@@ -780,7 +787,7 @@ function Content() {
 
 function Bio({ photo, title, children }) {
   return (
-    <div className="flex space-x-4 items-center">
+    <div className="flex flex-col space-y-4 items-center sm:flex-row sm:space-x-4">
       <Image
         src={photo}
         width={150}
@@ -797,7 +804,7 @@ function Bio({ photo, title, children }) {
 
 function Bios() {
   return (
-    <Page className="max-w-2xl space-y-16 mt-32">
+    <Page className="max-w-xs space-y-8 mt-16 sm:max-w-2xl sm:space-y-16 sm:mt-32">
       <Bio photo="/images/linton.jpg" title="Hi! I'm Linton!">
         <p>
           I'm a full-stack developer and I love design. I've been teaching React
@@ -876,7 +883,7 @@ function DancingGuy({ animate }) {
   };
   return (
     <motion.div
-      className="m-auto text-6xl relative w-48 h-64"
+      className="m-auto relative w-48 h-64 text-6xl scale-75 transform sm:scale-100"
       initial={"readyToPlay"}
       animate={animate}
     >
