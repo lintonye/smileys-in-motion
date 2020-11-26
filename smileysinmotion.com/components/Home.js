@@ -624,7 +624,7 @@ function PricingCard({
 
 function Quote({ photo, name, company, title, children }) {
   return (
-    <div className="flex flex-col items-end">
+    <div className="flex flex-col items-end space-y-1">
       <div className="font-serif text-2xl italic">{children}</div>
       <Image
         src={photo}
@@ -683,7 +683,7 @@ function Pricing() {
           </li>
         </PricingCard>
       </div>
-      <div className="max-w-2xl mx-auto">
+      <Carrousel className="max-w-2xl mx-auto">
         <Quote
           photo="/images/remco.webp"
           name="Remco van den Top"
@@ -693,7 +693,17 @@ function Pricing() {
           The way you build your courses with emojis is very engaging and easy
           to understand.
         </Quote>
-      </div>
+        <Quote
+          photo="/images/kristof.webp"
+          name="Kristóf Poduszló"
+          company=""
+          title="Front-end Engineer"
+        >
+          Such a comprehensive overview isn't available throughout the entire
+          official docs. The mental models are explained intuitively and without
+          leaving any doubt for listeners.
+        </Quote>
+      </Carrousel>
     </Page>
   );
 }
