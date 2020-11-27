@@ -186,9 +186,13 @@ function Heading() {
       >
         <DanceDemo
           onTypingComplete={() => {
-            setAnimate("typingComplete");
-            setLightsOut(false);
-            setTimeout(() => setAutoSwitchCarrousel(true), 2000);
+            setTimeout(() => {
+              setAnimate("typingComplete");
+              setLightsOut(false);
+              setTimeout(() => {
+                setAutoSwitchCarrousel(true);
+              }, 1000);
+            }, 1000);
           }}
         />
         <Video src="/images/drag-reorder.mp4" />
