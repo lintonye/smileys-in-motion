@@ -8,7 +8,7 @@ export default function HomePage() {
     "A comprehensive Framer Motion course on mental models, tips &amp; tricks, and common pitfalls";
   const twitterHandle = "lintonye";
   const previewImage = "/images/social-card.png";
-  const currentURL = "https//smileyinmotion.com";
+  const currentURL = "https://smileyinmotion.com";
   return (
     <>
       <Head>
