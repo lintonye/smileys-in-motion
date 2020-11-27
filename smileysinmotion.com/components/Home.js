@@ -442,12 +442,12 @@ function QuizAnswer() {
         <Code inline>scale</Code>) don't work on inline elements if its parent
         is a block element. To make it work, we could set its display to either{" "}
         <Code inline>block</Code> or <Code inline>inline-block</Code>. You can
-        play with the code{" "}
+        play with{" "}
         <a
           href="https://codesandbox.io/s/festive-stallman-580rz?file=/src/App.js"
           className="underline"
         >
-          here
+          the code here
         </a>
         .
       </p>
@@ -813,12 +813,12 @@ function Pricing() {
           </li>
           <li>All starter and final code for you to follow along</li>
           <li>
-            Check out course details{" "}
+            Check out{" "}
             <a
               className="underline"
               href="https://learnreact.design/prototyping-with-react-framer"
             >
-              here
+              course details
             </a>
           </li>
         </PricingCard>
