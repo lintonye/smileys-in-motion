@@ -415,8 +415,10 @@ export function CodeTyping({ sequence, onTypingComplete, initialDelay = 0 }) {
   const code = codes[index];
   return (
     <div className="relative">
-      {/* To prevent flickering, only highlight the code in the end. */}
-      <Code highlight={index === codes.length - 1}>{code.text}</Code>
+      {/* To prevent flickering, only highlight the code at the start and the end. */}
+      <Code highlight={index === 0 || index === codes.length - 1}>
+        {code.text}
+      </Code>
       {index > 0 && <Cursor col={code.col} row={code.row} />}
     </div>
   );
