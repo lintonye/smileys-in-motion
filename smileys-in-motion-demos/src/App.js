@@ -10,6 +10,7 @@ import { DragAndLayoutAnimation } from "./DragAndLayoutAnimation";
 import { PanMuscleGuy } from "./PanMuscleGuy";
 import { SharedLayout } from "./SharedLayout";
 import { SharedElementWithRouter } from "./SharedElementWithRouter";
+import { DragToReorder } from "./DragToReorder";
 
 export default function App() {
   return (
@@ -25,7 +26,7 @@ export default function App() {
     >
       {/* <Fistful /> */}
       {/* <SVGSmiley /> */}
-      {/* <ThemeToggle /> */}
+      <ThemeToggle />
       {/* <EmojiPicker /> */}
       {/* <LayoutExamples /> */}
       {/* <MountUnmount /> */}
@@ -33,7 +34,8 @@ export default function App() {
       {/* <DragAndLayoutAnimation /> */}
       {/* <PanMuscleGuy /> */}
       {/* <SharedLayout /> */}
-      <SharedElementWithRouter />
+      {/* <SharedElementWithRouter /> */}
+      {/* <DragToReorder /> */}
     </div>
   );
 }

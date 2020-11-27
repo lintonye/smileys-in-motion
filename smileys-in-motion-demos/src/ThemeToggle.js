@@ -1,12 +1,18 @@
 import * as React from "react";
+import { useState } from "react";
 import { motion, useCycle } from "framer-motion";
 
 /* eslint-disable jsx-a11y/accessible-emoji */
 
-export function ThemeToggle() {
+function Toggle({ initialMode, onModeChange }) {
   const [mode, cycleMode] = useCycle("light", "dark");
   const toggleWidth = 200;
   const knobWidth = 110;
+  const toggleMode = () => {
+    typeof onModeChange === "function" &&
+      onModeChange(mode === "light" ? "dark" : "light");
+    cycleMode();
+  };
   const clouds = (
     <motion.div
       style={{
@@ -66,7 +72,7 @@ export function ThemeToggle() {
     <>
       <motion.div
         style={{ margin: -30, cursor: "pointer", position: "absolute" }}
-        onClick={cycleMode}
+        onClick={toggleMode}
         variants={{
           light: { rotate: 0, opacity: 1, x: 0 },
           dark: { rotate: 180, opacity: 0, x: toggleWidth - knobWidth / 2 },
@@ -81,7 +87,7 @@ export function ThemeToggle() {
           position: "absolute",
           scale: 0.9,
         }}
-        onClick={cycleMode}
+        onClick={toggleMode}
         variants={{
           light: { rotate: -180, opacity: 0, x: 0 },
           dark: { rotate: 0, opacity: 1, x: toggleWidth - knobWidth / 2 },
@@ -104,6 +110,7 @@ export function ThemeToggle() {
         position: "relative",
       }}
       // animate={{ background: mode === "light" ? "#9fe3f4" : "#000526" }}
+      initial={false}
       animate={mode}
       variants={{
         light: { background: "#9fe3f4", borderColor: "#fff" },
@@ -113,6 +120,28 @@ export function ThemeToggle() {
       {clouds}
       {stars}
       {knob}
+    </motion.div>
+  );
+}
+
+export function ThemeToggle() {
+  const [mode, setMode] = useState("light");
+  return (
+    <motion.div
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+      animate={mode}
+      variants={{
+        light: { background: "rgb(196 228 248)" },
+        dark: { background: "rgba(17, 24, 39, 1)" },
+      }}
+    >
+      <Toggle initialMode="light" onModeChange={(mode) => setMode(mode)} />
     </motion.div>
   );
 }
