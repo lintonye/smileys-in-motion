@@ -431,15 +431,25 @@ function QuizAnswer() {
 
       <p>
         It's NOT a bug. It's due to{" "}
-        <a href="https://stackoverflow.com/a/14883287">the rules of HTML</a>:
-        <Code inline>span</Code> has{" "}
+        <a href="https://stackoverflow.com/a/14883287" className="underline">
+          the rules of HTML
+        </a>
+        :<Code inline>span</Code> has{" "}
         <Code inline lang="css">
           display: inline
         </Code>{" "}
         by default, and CSS transforms (such as
-        <Code inline>scale</Code>) don't work on inline elements. To make it
-        work, we could set its display to either <Code inline>block</Code> or{" "}
-        <Code inline>inline-block</Code>.
+        <Code inline>scale</Code>) don't work on inline elements if its parent
+        is a block element. To make it work, we could set its display to either{" "}
+        <Code inline>block</Code> or <Code inline>inline-block</Code>. You can
+        play with the code{" "}
+        <a
+          href="https://codesandbox.io/s/festive-stallman-580rz?file=/src/App.js"
+          className="underline"
+        >
+          here
+        </a>
+        .
       </p>
 
       <p>
@@ -514,7 +524,7 @@ function Quiz() {
     { id: "D", title: "none of the above" },
   ];
   return (
-    <Page className="max-w-xs space-y-6 text-lg pt-16 mb-16 min-h-screen sm:max-w-xl sm:mb-0">
+    <Page className="max-w-xs space-y-6 text-lg pt-16 mb-16 min-h-screen sm:max-w-xl sm:mb-32">
       <p>
         This is Framer Motion. Add a "motion." prefix. Sprinkle some props.
         Animate on!
@@ -522,10 +532,12 @@ function Quiz() {
       <p>It's THAT easy!</p>
       <p className="font-bold text-xl">But, let me ask you a question. 👇</p>
       <div className="border-solid border-2 border-gray-500 rounded-2xl ">
-        <Code>{`<motion.span 
-   animate={{ scale: 4 }}>
-👊
-</motion.span>
+        <Code>{`<div>
+   <motion.span 
+     animate={{ scale: 4 }}>
+    👊
+   </motion.span>
+</div>
 `}</Code>
       </div>
       <p className="text-center">What kind of animation would you get?</p>
