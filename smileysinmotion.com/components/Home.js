@@ -95,7 +95,7 @@ function Page({ children, className = "", fullScreen = false, onPageScroll }) {
   const { scrollY } = useViewportScroll();
   // This is to prevent the case when top/height is briefly undefined but used to set up filter/opacity
   // TODO likely this is not necessary!
-  const bboxUnavailable = false; //top === undefined || height === undefined;
+  const bboxUnavailable = top === undefined || height === undefined;
   const inputRange = bboxUnavailable
     ? [0, 1]
     : [
