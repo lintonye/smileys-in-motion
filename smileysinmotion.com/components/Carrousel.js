@@ -34,7 +34,9 @@ export function Carrousel({
   children,
   className,
   frameClassName,
+  border = false,
   autoSwitch = true,
+  lightsOut = false,
 }) {
   const [index, setIndex] = useState(0);
   const items = React.Children.toArray(children);
@@ -55,7 +57,13 @@ export function Carrousel({
     <motion.div
       className={`relative flex flex-col justify-center items-center ${className}`}
     >
-      <div className={`relative w-full ${frameClassName}`}>
+      <div
+        className={`relative w-full ${
+          border &&
+          !lightsOut &&
+          "border-solid border-2 border-gray-600 rounded-2xl overflow-hidden "
+        } ${frameClassName}`}
+      >
         <AnimatePresence initial={false} custom={direction}>
           <motion.div
             key={index}
@@ -83,7 +91,11 @@ export function Carrousel({
         </AnimatePresence>
       </div>
 
-      <div className="flex space-x-2 mt-4">
+      <motion.div
+        className="flex space-x-2 mt-4"
+        initial={false}
+        animate={{ opacity: lightsOut ? 0 : 1 }}
+      >
         {items.length > 1 &&
           Array(items.length)
             .fill(0)
@@ -97,7 +109,7 @@ export function Carrousel({
                 onTap={() => setIndex(i)}
               />
             ))}
-      </div>
+      </motion.div>
     </motion.div>
   );
 }

@@ -142,6 +142,7 @@ function Heading() {
   // initial, typing, typingComplete, scrolled
   const [animate, setAnimate] = useState("initial");
   const [autoSwitchCarrousel, setAutoSwitchCarrousel] = useState(false);
+  const [lightsOut, setLightsOut] = useState(true);
   return (
     <Page
       className="mx-auto flex flex-col justify-center align-middle space-y-4 max-w-xs sm:max-w-xl sm:space-y-8"
@@ -178,12 +179,15 @@ function Heading() {
       </div> */}
       <Carrousel
         className="relative mx-auto w-full sm:w-full"
-        frameClassName="border-solid border-2 border-gray-600 rounded-2xl overflow-hidden pb-56 sm:pb-80"
+        frameClassName="pb-56 sm:pb-80"
+        border
         autoSwitch={autoSwitchCarrousel}
+        lightsOut={lightsOut}
       >
         <DanceDemo
           onTypingComplete={() => {
             setAnimate("typingComplete");
+            setLightsOut(false);
             setTimeout(() => setAutoSwitchCarrousel(true), 2000);
           }}
         />
