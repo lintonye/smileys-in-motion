@@ -151,7 +151,7 @@ function List() {
 
 export function SharedElementWithRouter() {
   return (
-    <AnimateSharedLayout>
+    <AnimateSharedLayout type="crossfade">
       <Router>
         <Route path="/sport/:sportId" component={SportModal} />
         <Route path="/" component={List} />
