@@ -11,6 +11,7 @@ import { PanMuscleGuy } from "./PanMuscleGuy";
 import { SharedLayout } from "./SharedLayout";
 import { SharedElementWithRouter } from "./SharedElementWithRouter";
 import { DragToReorder } from "./DragToReorder";
+import { CircularSliderDemo } from "./CircularSliderDemo";
 
 export default function App() {
   return (
@@ -26,7 +27,7 @@ export default function App() {
     >
       {/* <Fistful /> */}
       {/* <SVGSmiley /> */}
-      <ThemeToggle />
+      {/* <ThemeToggle /> */}
       {/* <EmojiPicker /> */}
       {/* <LayoutExamples /> */}
       {/* <MountUnmount /> */}
@@ -36,6 +37,7 @@ export default function App() {
       {/* <SharedLayout /> */}
       {/* <SharedElementWithRouter /> */}
       {/* <DragToReorder /> */}
+      <CircularSliderDemo />
     </div>
   );
 }
