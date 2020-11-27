@@ -61,7 +61,7 @@ export function Carrousel({
         className={`relative w-full ${
           border &&
           !lightsOut &&
-          "border-solid border-2 border-gray-600 rounded-2xl overflow-hidden"
+          "border-solid border-2 border-gray-600 rounded-2xl overflow-hidden safari-overflow-fix"
         } ${frameClassName}`}
       >
         <AnimatePresence initial={false} custom={direction}>

@@ -16,3 +16,9 @@ body {
   --tw-scale-x: 0.6;
   --tw-scale-y: 0.6;
 }
+
+/* https://stackoverflow.com/a/44949525 */
+.safari-overflow-fix {
+  -webkit-transform: translateZ(0);
+  -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
+}
