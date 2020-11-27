@@ -56,17 +56,22 @@ function useInitialBoundingBox() {
   const ref = useRef();
   const [box, setBox] = useState({});
   useEffect(() => {
-    if (ref.current) {
-      const b = ref.current.getBoundingClientRect();
-      setBox(
-        DOMRectReadOnly.fromRect({
-          x: b.left + window.scrollX,
-          y: b.top + window.scrollY,
-          width: b.width,
-          height: b.height,
-        })
-      );
-    }
+    const updateBox = () => {
+      if (ref.current) {
+        const b = ref.current.getBoundingClientRect();
+        setBox(
+          DOMRectReadOnly.fromRect({
+            x: b.left + window.scrollX,
+            y: b.top + window.scrollY,
+            width: b.width,
+            height: b.height,
+          })
+        );
+      }
+    };
+    updateBox();
+    window.addEventListener("resize", updateBox);
+    return () => window.removeEventListener("resize", updateBox);
   }, [ref]);
   return [ref, box];
 }
@@ -89,7 +94,8 @@ function Page({ children, className = "", fullScreen = false, onPageScroll }) {
   const { height: vh } = useViewportDimension();
   const { scrollY } = useViewportScroll();
   // This is to prevent the case when top/height is briefly undefined but used to set up filter/opacity
-  const bboxUnavailable = top === undefined || height === undefined;
+  // TODO likely this is not necessary!
+  const bboxUnavailable = false; //top === undefined || height === undefined;
   const inputRange = bboxUnavailable
     ? [0, 1]
     : [
@@ -976,6 +982,20 @@ function Bios() {
   );
 }
 
+function Acknowledgement() {
+  return (
+    <Page className="max-w-xs space-y-8 mt-16 sm:max-w-2xl sm:space-y-16 sm:mt-32 text-center">
+      <p className="font-serif italic text-xl text-gray-300">
+        Special Thanks to{" "}
+        <a href="https://twitter.com/mattgperry" className="underline">
+          Matt Perry
+        </a>{" "}
+        for answering my endless questions.
+      </p>
+    </Page>
+  );
+}
+
 function Main() {
   return (
     <div className="pb-64">
@@ -986,6 +1006,7 @@ function Main() {
       <Pricing />
       <Content />
       <Bios />
+      <Acknowledgement />
     </div>
   );
 }
@@ -1085,10 +1106,6 @@ function DancingGuy({ animate }) {
       </motion.div>
     </motion.div>
   );
-}
-
-function Test() {
-  return <motion.span animate={{ scale: 4 }}>🦶</motion.span>;
 }
 
 export function Home() {
