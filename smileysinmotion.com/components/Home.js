@@ -770,7 +770,8 @@ function Quote({ photo, name, company, companyLink, title, children }) {
       />
       <div>{name}</div>
       <div>
-        {title},{" "}
+        {title}
+        {company && ", "}
         <a href={companyLink} className={`${companyLink && "underline"}`}>
           {company}
         </a>
@@ -837,6 +838,17 @@ function Pricing() {
           Such a comprehensive overview isn't available throughout the entire
           official docs. The mental models are explained intuitively and without
           leaving any doubt for listeners.
+        </Quote>
+        <Quote
+          photo="/images/winnie.webp"
+          name="Winnie Chen"
+          // company="Copyfolio"
+          title="UX Designer"
+        >
+          I really like the simple yet interesting emoji analogies used in the
+          projects! Also the course points out what are the possible challenges
+          users might face using Motion library, which is helpful to save time
+          from troubleshooting on our own.
         </Quote>
         <Quote
           photo="/images/remco.webp"
