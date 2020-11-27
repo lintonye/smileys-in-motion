@@ -520,7 +520,7 @@ function Quiz() {
         Animate on!
       </p>
       <p>It's THAT easy!</p>
-      <p className="">But let me ask you a question. 👇</p>
+      <p className="font-bold text-xl">But, let me ask you a question. 👇</p>
       <div className="border-solid border-2 border-gray-500 rounded-2xl ">
         <Code>{`<motion.span 
    animate={{ scale: 4 }}>
@@ -985,6 +985,7 @@ function Bios() {
 function Acknowledgement() {
   return (
     <Page className="max-w-xs space-y-8 mt-16 sm:max-w-2xl sm:space-y-16 sm:mt-32 text-center">
+      <hr className="border-gray-700" />
       <p className="font-serif italic text-xl text-gray-300">
         Special Thanks to{" "}
         <a href="https://twitter.com/mattgperry" className="underline">
@@ -992,6 +993,7 @@ function Acknowledgement() {
         </a>{" "}
         for answering my endless questions.
       </p>
+      <hr className="border-gray-700" />
     </Page>
   );
 }
