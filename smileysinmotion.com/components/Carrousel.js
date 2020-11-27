@@ -30,12 +30,24 @@ const swipePower = (offset, velocity) => {
   return Math.abs(offset) * velocity;
 };
 
-export function Carrousel({ children, className, frameClassName }) {
+export function Carrousel({
+  children,
+  className,
+  frameClassName,
+  autoSwitch = true,
+}) {
   const [index, setIndex] = useState(0);
   const items = React.Children.toArray(children);
   const prevIndex = useRef(0);
   useEffect(() => (prevIndex.current = index));
   const direction = Math.sign(index - prevIndex.current);
+  useEffect(() => {
+    const interval = setInterval(
+      () => setIndex((i) => (i < items.length - 1 ? i + 1 : 0)),
+      4000
+    );
+    return () => clearInterval(interval);
+  }, [autoSwitch]);
   return (
     <motion.div
       className={`relative flex flex-col justify-center items-center ${className}`}

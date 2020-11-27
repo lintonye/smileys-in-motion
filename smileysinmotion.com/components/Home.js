@@ -185,6 +185,7 @@ function Heading() {
         <Video src="/images/circular-slider.mp4" />
         <Video src="/images/mount-unmount.mp4" />
         <Video src="/images/theme-toggle.mp4" />
+        <Video src="/images/smileyinmotion.mp4" />
       </Carrousel>
       <motion.div
         initial={false}
