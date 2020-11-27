@@ -145,7 +145,7 @@ function Heading() {
   const [lightsOut, setLightsOut] = useState(true);
   return (
     <Page
-      className="mx-auto flex flex-col justify-center align-middle space-y-4 max-w-xs sm:max-w-xl sm:space-y-8"
+      className="mx-auto flex flex-col justify-center -mt-16 items-center space-y-8 max-w-xs sm:max-w-xl sm:mt-0"
       fullScreen
       onPageScroll={({ scrollY }) => {
         if (scrollY > 20) {
