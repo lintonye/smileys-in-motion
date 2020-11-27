@@ -13,6 +13,7 @@ import { Carrousel } from "./Carrousel";
 import Image from "next/image";
 import UAParser from "ua-parser-js";
 import Logo from "./Logo";
+import { Video } from "./Video";
 
 function Welcome() {
   return (
@@ -179,7 +180,7 @@ function Heading() {
         frameClassName="border-solid border-2 border-gray-600 rounded-2xl overflow-hidden pb-56 sm:pb-80"
       >
         <DanceDemo onTypingComplete={() => setAnimate("typingComplete")} />
-        <DanceDemo />
+        <Video src="/images/shared-element.mp4" />
       </Carrousel>
       <motion.div
         initial={false}
