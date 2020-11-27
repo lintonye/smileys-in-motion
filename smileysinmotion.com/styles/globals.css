@@ -6,3 +6,13 @@
 body {
   background-color: rgba(17, 24, 39, 1);
 }
+
+.aspect-16x9 {
+  @apply w-full h-0;
+  padding-bottom: 56.25%;
+}
+
+.scale-60 {
+  --tw-scale-x: 0.6;
+  --tw-scale-y: 0.6;
+}

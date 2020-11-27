@@ -179,7 +179,7 @@ function Heading() {
       </div> */}
       <Carrousel
         className="relative mx-auto w-full sm:w-full"
-        frameClassName="pb-56 sm:pb-80"
+        frameClassName="aspect-16x9"
         border
         autoSwitch={autoSwitchCarrousel}
         lightsOut={lightsOut}
@@ -281,7 +281,7 @@ function DanceDemo({ className, onTypingComplete }) {
         />
       </motion.div>
       <motion.div
-        className="-mt-56 -mb-8 sm:mb-0 sm:-mt-64"
+        className="-mt-52 -mb-8 sm:mb-0 sm:-mt-64"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
@@ -1017,7 +1017,7 @@ function DancingGuy({ animate }) {
   };
   return (
     <motion.div
-      className="m-auto relative w-48 h-64 text-6xl scale-75 transform sm:scale-100"
+      className="m-auto relative w-48 h-64 text-6xl scale-60 transform sm:scale-100"
       initial={"readyToPlay"}
       animate={animate}
     >

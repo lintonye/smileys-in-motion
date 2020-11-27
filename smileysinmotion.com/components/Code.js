@@ -11,7 +11,7 @@ export function Code({ children, inline, lang = "html" }) {
   return inline ? (
     <code className={`language-${lang}`}>{children}</code>
   ) : (
-    <div className="text-xl relative flex sm:text-3xl">
+    <div className="text-lg relative flex sm:text-3xl">
       <pre className="relative overflow-hidden">
         <code className={`language-${lang}`}>{children}</code>
       </pre>
