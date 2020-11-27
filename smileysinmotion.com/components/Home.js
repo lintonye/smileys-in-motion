@@ -141,6 +141,7 @@ function Page({ children, className = "", fullScreen = false, onPageScroll }) {
 function Heading() {
   // initial, typing, typingComplete, scrolled
   const [animate, setAnimate] = useState("initial");
+  const [autoSwitchCarrousel, setAutoSwitchCarrousel] = useState(false);
   return (
     <Page
       className="mx-auto flex flex-col justify-center align-middle space-y-4 max-w-xs sm:max-w-xl sm:space-y-8"
@@ -178,8 +179,14 @@ function Heading() {
       <Carrousel
         className="relative mx-auto w-full sm:w-full"
         frameClassName="border-solid border-2 border-gray-600 rounded-2xl overflow-hidden pb-56 sm:pb-80"
+        autoSwitch={autoSwitchCarrousel}
       >
-        <DanceDemo onTypingComplete={() => setAnimate("typingComplete")} />
+        <DanceDemo
+          onTypingComplete={() => {
+            setAnimate("typingComplete");
+            setTimeout(() => setAutoSwitchCarrousel(true), 2000);
+          }}
+        />
         <Video src="/images/drag-reorder.mp4" />
         <Video src="/images/shared-element.mp4" />
         <Video src="/images/circular-slider.mp4" />
@@ -791,7 +798,11 @@ function Pricing() {
           </li>
         </PricingCard>
       </div>
-      <Carrousel className="max-w-2xl mx-auto" frameClassName="pb-80 sm:pb-64">
+      <Carrousel
+        className="max-w-2xl mx-auto"
+        frameClassName="pb-80 sm:pb-64"
+        autoSwitch={false}
+      >
         <Quote
           photo="/images/kristof.webp"
           name="Kristóf Poduszló"

@@ -42,11 +42,14 @@ export function Carrousel({
   useEffect(() => (prevIndex.current = index));
   const direction = Math.sign(index - prevIndex.current);
   useEffect(() => {
-    const interval = setInterval(
-      () => setIndex((i) => (i < items.length - 1 ? i + 1 : 0)),
-      4000
-    );
-    return () => clearInterval(interval);
+    if (autoSwitch) {
+      function switchOnce() {
+        setIndex((i) => (i < items.length - 1 ? i + 1 : 0));
+      }
+      switchOnce();
+      const interval = setInterval(switchOnce, 4000);
+      return () => clearInterval(interval);
+    }
   }, [autoSwitch]);
   return (
     <motion.div
