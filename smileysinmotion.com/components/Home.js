@@ -88,25 +88,35 @@ function Page({ children, className = "", fullScreen = false, onPageScroll }) {
   const [ref, { top, height }] = useInitialBoundingBox();
   const { height: vh } = useViewportDimension();
   const { scrollY } = useViewportScroll();
-  const inputRange = [
-    ...(top >= vh ? [top - vh, top - vh + 20] : [0]),
-    top + (height / 3) * 2,
-    top + (height / 4) * 3,
-  ];
+  // This is to prevent the case when top/height is briefly undefined but used to set up filter/opacity
+  const bboxUnavailable = top === undefined || height === undefined;
+  const inputRange = bboxUnavailable
+    ? [0, 1]
+    : [
+        ...(top >= vh ? [top - vh, top - vh + 20] : [0]),
+        top + (height - vh / 3),
+        top + (height - vh / 4),
+      ];
   // console.log({ top, vh, inputRange });
-  const filter = useTransform(scrollY, inputRange, [
-    ...(top >= vh ? ["grayscale(0)", "grayscale(0)"] : ["grayscale(0)"]),
-    "grayscale(0)",
-    "grayscale(1)",
-  ]);
-  const opacity = useTransform(scrollY, inputRange, [
-    ...(top >= vh ? [1, 1] : [1]),
-    1,
-    0.3,
-  ]);
+  const filter = useTransform(
+    scrollY,
+    inputRange,
+    bboxUnavailable
+      ? ["grayscale(0)", "grayscale(0)"]
+      : [
+          ...(top >= vh ? ["grayscale(0)", "grayscale(0)"] : ["grayscale(0)"]),
+          "grayscale(0)",
+          "grayscale(1)",
+        ]
+  );
+  const opacity = useTransform(
+    scrollY,
+    inputRange,
+    bboxUnavailable ? [1, 1] : [...(top >= vh ? [1, 1] : [1]), 1, 0.3]
+  );
   const indicatorOpacity = useTransform(scrollY, [top, top + 20], [1, 0]);
   useEffect(() => {
-    const unsub = scrollY.onChange((y) => {
+    const unsubscribe = scrollY.onChange((y) => {
       const y0 = top - vh > 0 ? top - vh : 0;
       const y1 = top - vh > 0 ? top - vh + height : height;
       // console.log({ y, y0, y1 });
@@ -114,7 +124,7 @@ function Page({ children, className = "", fullScreen = false, onPageScroll }) {
         onPageScroll({ pageTop: top, scrollY: y });
       }
     });
-    return unsub;
+    return unsubscribe;
   }, [onPageScroll, top, vh, height]);
   return (
     <motion.div
@@ -411,7 +421,7 @@ function Option({
 function QuizAnswer() {
   return (
     <Page className="max-w-xs pt-10 space-y-8 text-lg sm:max-w-xl">
-      <p>The correct answer is D -- there is no animation at all! </p>
+      <p>The correct answer is D because -- there is no animation at all! </p>
 
       <p>
         It's NOT a bug. It's due to{" "}
