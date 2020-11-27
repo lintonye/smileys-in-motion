@@ -4,10 +4,12 @@ import { useEffect, useState } from "react";
 
 import { motion, useAnimation } from "framer-motion";
 
-export function Code({ children, inline, lang = "html" }) {
+export function Code({ children, inline, lang = "html", highlight = true }) {
   useEffect(() => {
-    Prism.highlightAll();
-  }, [children]);
+    if (highlight) {
+      Prism.highlightAll();
+    }
+  }, [children, highlight]);
   return inline ? (
     <code className={`language-${lang}`}>{children}</code>
   ) : (
@@ -413,7 +415,8 @@ export function CodeTyping({ sequence, onTypingComplete, initialDelay = 0 }) {
   const code = codes[index];
   return (
     <div className="relative">
-      <Code>{code.text}</Code>
+      {/* To prevent flickering, only highlight the code in the end. */}
+      <Code highlight={index === codes.length - 1}>{code.text}</Code>
       {index > 0 && <Cursor col={code.col} row={code.row} />}
     </div>
   );
