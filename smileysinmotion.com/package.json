@@ -8,15 +8,17 @@
     "start": "next start"
   },
   "dependencies": {
-    "autoprefixer": "^10.0.2",
     "framer-motion": "^2.9.4",
     "next": "10.0.2",
-    "postcss": "^8.1.9",
     "prismjs": "^1.22.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
-    "sass": "^1.29.0",
-    "tailwindcss": "^2.0.1",
     "ua-parser-js": "^0.7.22"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.0.3",
+    "postcss": "^8.1.10",
+    "sass": "^1.29.0",
+    "tailwindcss": "^2.0.1"
   }
 }
