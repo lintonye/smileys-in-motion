@@ -42,7 +42,7 @@ function ScrollIndicator({ title = "Scroll" }) {
         {title}
       </div>
       <motion.div
-        className="text-center"
+        className="text-center mt-1"
         animate={{ y: [0, 5], opacity: [0.5, 1] }}
         transition={{ repeat: Infinity, repeatType: "reverse" }}
       >

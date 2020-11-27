@@ -55,7 +55,7 @@ export function Carrousel({
   }, [autoSwitch]);
   return (
     <motion.div
-      className={`relative flex flex-col justify-center items-center ${className}`}
+      className={`relative flex flex-col justify-center items-center overflow-hidden ${className}`}
     >
       <div
         className={`relative w-full ${
