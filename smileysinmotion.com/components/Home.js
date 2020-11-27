@@ -209,23 +209,6 @@ function Heading() {
       >
         <ScrollIndicator />
       </motion.div>
-      <motion.div
-        className="space-y-2 sm:text-lg sm:space-y-4"
-        initial={false}
-        animate={animate}
-        variants={{
-          initial: { opacity: 0, y: -30 },
-          scrolled: { opacity: 1, y: 0 },
-        }}
-        transition={{ type: "spring", damping: 15 }}
-      >
-        <p>This is Framer Motion.</p>
-        <p>Add a "motion." prefix. Sprinkle some props. Animate on!</p>
-        <p>It's THAT easy!</p>
-        {/* <p className="text-sm">
-          PS: Guess what the "video" above was made with?
-        </p> */}
-      </motion.div>
     </Page>
   );
 }
@@ -512,6 +495,11 @@ function Quiz() {
   ];
   return (
     <Page className="max-w-xs space-y-6 text-lg pt-16 mb-16 min-h-screen sm:max-w-xl sm:mb-0">
+      <p>
+        This is Framer Motion. Add a "motion." prefix. Sprinkle some props.
+        Animate on!
+      </p>
+      <p>It's THAT easy!</p>
       <p className="">But let me ask you a question. 👇</p>
       <div className="border-solid border-2 border-gray-500 rounded-2xl ">
         <Code>{`<motion.span 
