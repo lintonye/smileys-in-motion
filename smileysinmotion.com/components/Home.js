@@ -180,7 +180,11 @@ function Heading() {
         frameClassName="border-solid border-2 border-gray-600 rounded-2xl overflow-hidden pb-56 sm:pb-80"
       >
         <DanceDemo onTypingComplete={() => setAnimate("typingComplete")} />
+        <Video src="/images/drag-reorder.mp4" />
         <Video src="/images/shared-element.mp4" />
+        <Video src="/images/circular-slider.mp4" />
+        <Video src="/images/mount-unmount.mp4" />
+        <Video src="/images/theme-toggle.mp4" />
       </Carrousel>
       <motion.div
         initial={false}
