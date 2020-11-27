@@ -854,16 +854,16 @@ const content = {
     "18. Animate custom components",
   ],
   "Real-world Examples": [
-    "r1. Drag to reorder",
-    "r2. Circular slider",
-    "r3. Tabs (AnimatePresence and React Router 5)",
-    "r4. Shared element transition (with React Router 5)",
-    "r5. Bottom sheet",
+    "r1. Drag to reorder (coming soon)",
+    "r2. Circular slider (coming soon)",
+    "r3. Tabs (AnimatePresence and React Router 5) (coming soon)",
+    "r4. Shared element transition (with React Router 5) (coming soon)",
+    "r5. Bottom sheet (coming soon)",
     "r6. smileyinmotion.com (coming soon)",
   ],
   "Cheat sheets": [
     "All starter and final code",
-    "Cheat sheet: pitfalls & solutions",
+    "Cheat sheet: pitfalls & solutions (coming soon)",
   ],
 };
 
