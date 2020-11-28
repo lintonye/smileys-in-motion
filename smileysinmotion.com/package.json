@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "framer-motion": "^2.9.4",
+    "nanoid": "^3.1.18",
     "next": "10.0.2",
     "prismjs": "^1.22.0",
     "react": "17.0.1",

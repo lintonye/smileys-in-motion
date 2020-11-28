@@ -14,6 +14,8 @@ import Image from "next/image";
 import UAParser from "ua-parser-js";
 import Logo from "./Logo";
 import { Video } from "./Video";
+import { useLocalStorage } from "./useLocalStorage";
+import { nanoid } from "nanoid";
 
 function Welcome() {
   return (
@@ -523,6 +525,9 @@ function Quiz() {
 
     { id: "D", title: "none of the above" },
   ];
+  const [uid, setUid] = useLocalStorage("userId");
+  if (uid === undefined) setUid(nanoid());
+  const questionId = "framer-motion-span-animate";
   return (
     <Page className="max-w-xs space-y-6 text-lg pt-16 mb-16 min-h-screen sm:max-w-xl sm:mb-32">
       <p>
@@ -550,7 +555,13 @@ function Quiz() {
             title={title}
             selected={choice === id}
             selectable={choice === null}
-            onSelect={() => setChoice(id)}
+            onSelect={() => {
+              setChoice(id);
+              fetch(
+                `https://us-central1-together-courses.cloudfunctions.net/quizAnswer?userId=${uid}&questionId=${questionId}&answerId=D`,
+                { method: "POST", body: id }
+              ).then((response) => console.log(response.status));
+            }}
           >
             {preview}
           </Option>
