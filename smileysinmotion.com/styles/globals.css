@@ -22,3 +22,16 @@ body {
   -webkit-transform: translateZ(0);
   -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
 }
+
+.list-arrow {
+  @apply list-none list-outside ml-5;
+}
+
+.list-arrow li {
+  @apply relative;
+}
+
+.list-arrow li::before {
+  content: "→";
+  @apply absolute top-0 -left-6 text-gray-400;
+}
