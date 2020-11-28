@@ -91,7 +91,13 @@ function useViewportDimension() {
   return dim;
 }
 
-function Page({ children, className = "", fullScreen = false, onPageScroll }) {
+function Page({
+  children,
+  className = "",
+  fullScreen = false,
+  onPageScroll,
+  log = false,
+}) {
   const [ref, { top, height }] = useInitialBoundingBox();
   const { height: vh } = useViewportDimension();
   const { scrollY } = useViewportScroll();
@@ -105,7 +111,6 @@ function Page({ children, className = "", fullScreen = false, onPageScroll }) {
         top + (height - vh / 3),
         top + (height - vh / 4),
       ];
-  // console.log({ top, vh, inputRange });
   const filter = useTransform(
     scrollY,
     inputRange,
@@ -128,6 +133,7 @@ function Page({ children, className = "", fullScreen = false, onPageScroll }) {
       const y0 = top - vh > 0 ? top - vh : 0;
       const y1 = top - vh > 0 ? top - vh + height : height;
       // console.log({ y, y0, y1 });
+      if (log) console.log({ y, y0, y1, top, vh, inputRange });
       if (typeof onPageScroll === "function" && y0 <= y && y <= y1) {
         onPageScroll({ pageTop: top, scrollY: y });
       }
@@ -427,7 +433,7 @@ function Option({
 
 function QuizAnswer() {
   return (
-    <Page className="max-w-xs pt-10 space-y-8 text-lg sm:max-w-xl">
+    <Page className="max-w-xs pt-10 space-y-8 text-lg sm:max-w-xl" log>
       <p>The correct answer is D because -- there is no animation at all! </p>
 
       <p>
@@ -934,7 +940,10 @@ const content = {
 
 function Content() {
   return (
-    <Page className="max-w-xs space-y-8 mt-16 text-base sm:max-w-lg sm:space-y-16 sm:mt-32 sm:text-lg">
+    <Page
+      className="max-w-xs space-y-8 mt-16 text-base sm:max-w-lg sm:space-y-16 sm:mt-32 sm:text-lg"
+      log
+    >
       <h1 className="text-3xl text-center font-semibold sm:text-4xl">
         Table Of Contents
       </h1>
