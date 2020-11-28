@@ -136,7 +136,7 @@ function Page({ children, className = "", fullScreen = false, onPageScroll }) {
   }, [onPageScroll, top, vh, height]);
   return (
     <motion.div
-      style={{ filter, opacity }}
+      // style={{ filter, opacity }}
       className={
         className + " relative m-auto " + (fullScreen ? "min-h-screen" : "")
       }
