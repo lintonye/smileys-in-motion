@@ -298,7 +298,7 @@ function Heading() {
               setLightsOut(false);
               setTimeout(() => {
                 setAutoSwitchCarrousel(true);
-              }, 1000);
+              }, 2500);
             }, 1000);
           }}
         />
@@ -1148,12 +1148,21 @@ function useSoundControl() {
   return { isSoundOn, toggleSound };
 }
 
+function DancingGuyTest() {
+  const [_, _2] = usePlaySound("/bg-music.mp3", {
+    autoplay: true,
+  });
+  return <DancingGuy animate="playing" />;
+}
+
 function Main() {
   const [isSoundOn, setIsSoundOn] = useState(false);
   const toggleSound = () => setIsSoundOn((b) => !b);
+
   return (
     <SoundControlContext.Provider value={{ isSoundOn, toggleSound }}>
       <div className="pb-64">
+        {/* <DancingGuyTest /> */}
         <Heading />
         <Quiz />
         <QuizAnswer />
@@ -1190,8 +1199,8 @@ function Leg() {
 function DancingGuy({ animate }) {
   const commonTransition = {
     repeat: Infinity,
-    repeatType: "reverse",
-    duration: 0.3,
+    repeatType: "loop",
+    duration: 2.1,
     // repeatDelay: 0.1,
   };
   return (
@@ -1205,8 +1214,11 @@ function DancingGuy({ animate }) {
         style={{ top: 15, left: 60, originX: "center", originY: "bottom" }}
         variants={{
           // beforeSeen: { opacity: 0, rotate: -15 },
-          readyToPlay: { opacity: 1, rotate: -15 },
-          playing: { rotate: [-15, 15], transition: commonTransition },
+          readyToPlay: { opacity: 1, rotate: 0 },
+          playing: {
+            rotate: [0, -25, 0, -25, 0, 25, 0, 25, 0],
+            transition: commonTransition,
+          },
           // afterSeen: { rotate: 0 },
         }}
       >
@@ -1217,8 +1229,12 @@ function DancingGuy({ animate }) {
         style={{ top: 120, left: 80, originX: "center", originY: "top" }}
         variants={{
           // beforeSeen: { opacity: 0, rotate: -5 },
-          readyToPlay: { opacity: 1, rotate: -5 },
-          playing: { rotate: [-5, 5], transition: commonTransition },
+          readyToPlay: { opacity: 1, rotate: 0 },
+          playing: {
+            // y: [0, -30, 0, -30, 0, 30, 0, 30, 0],
+            rotate: [0, -10, 0, -10, 0, 10, 0, 10, 0],
+            transition: commonTransition,
+          },
           // afterSeen: { rotate: 0 },
         }}
       >
@@ -1229,8 +1245,12 @@ function DancingGuy({ animate }) {
         style={{ top: 130, left: 60, originX: "center", originY: "top" }}
         variants={{
           // beforeSeen: { opacity: 0, rotate: 5 },
-          readyToPlay: { opacity: 1, rotate: 5 },
-          playing: { rotate: [5, -5], transition: commonTransition },
+          readyToPlay: { opacity: 1, rotate: 0 },
+          playing: {
+            // y: [0, 30, 0, 30, 0, 30, 0, 30, 0],
+            rotate: [0, 10, 0, 10, 0, -10, 0, -10, 0],
+            transition: commonTransition,
+          },
           // afterSeen: { rotate: 0 },
         }}
       >
@@ -1238,27 +1258,35 @@ function DancingGuy({ animate }) {
       </motion.div>
       <motion.div
         className="absolute text-4xl"
-        style={{ top: 80, left: 30, rotate: -90 }}
+        style={{ top: 80, left: 30 }}
         variants={{
           // beforeSeen: { opacity: 0, y: -10 },
-          readyToPlay: { opacity: 1, y: -10 },
-          playing: { y: [-10, 10], transition: commonTransition },
+          readyToPlay: { opacity: 1, y: 0 },
+          playing: {
+            y: [0, -30, 0, -30, 0, 30, 0, 30, 0],
+            rotate: [0, -25, 0, -25, 0, 25, 0, 25, 0],
+            transition: commonTransition,
+          },
           // afterSeen: { y: 0 },
         }}
       >
-        👊
+        <motion.div style={{ rotate: -90 }}>👊</motion.div>
       </motion.div>
       <motion.div
         className="absolute text-4xl"
-        style={{ top: 90, left: 120, rotate: -90, scaleX: -1 }}
+        style={{ top: 90, left: 120 }}
         variants={{
           // beforeSeen: { opacity: 0, y: 10 },
-          readyToPlay: { opacity: 1, y: 10 },
-          playing: { y: [10, -10], transition: commonTransition },
+          readyToPlay: { opacity: 1, y: 0 },
+          playing: {
+            y: [0, 30, 0, 30, 0, -30, 0, -30, 0],
+            rotate: [0, -25, 0, -25, 0, 25, 0, 25, 0],
+            transition: commonTransition,
+          },
           // afterSeen: { y: 0 },
         }}
       >
-        👊
+        <motion.div style={{ rotate: -90, scaleX: -1 }}>👊</motion.div>
       </motion.div>
     </motion.div>
   );
