@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext, useMemo } from "react";
 import {
   AnimateSharedLayout,
   motion,
@@ -16,6 +16,7 @@ import Logo from "./Logo";
 import { Video } from "./Video";
 import { useLocalStorage } from "./useLocalStorage";
 import { nanoid } from "nanoid";
+import useSound from "use-sound";
 
 function Welcome() {
   return (
@@ -156,11 +157,71 @@ function Page({ children, className = "", fullScreen = false, onPageScroll }) {
   );
 }
 
+function SoundControl({ isSoundOn, onToggleSound }) {
+  return (
+    <motion.div
+      layoutId="sound-control"
+      onClick={() => onToggleSound()}
+      className="cursor-pointer"
+    >
+      {isSoundOn ? "sound on" : "muted"}
+    </motion.div>
+  );
+}
+
+const stopUnique = (sound, fade = false) => {
+  if (sound && sound.playing()) {
+    if (fade) {
+      console.log("fade");
+      sound.fade(1, 0, 2000);
+      setTimeout(() => {
+        sound.stop();
+      }, 2000);
+    } else {
+      sound.stop();
+    }
+  }
+};
+
+const playUnique = (sound, fade = false) => {
+  if (sound && !sound.playing()) {
+    sound.play();
+    if (fade) sound.fade(0, 1, 2000);
+  }
+};
+
+/**
+ * 1. stop by fading out
+ * 2. don't play two instances of the same audio at the same time
+ * 3. provides control for starting and stopping
+ * 4. react to isSoundOn
+ */
+function usePlaySound(url, { autoplay }) {
+  const { isSoundOn } = useSoundControl();
+  const [play, { stop, sound }] = useSound(url, {
+    loop: true,
+    autoplay: autoplay && isSoundOn,
+  });
+  useEffect(() => {
+    if (isSoundOn) {
+      autoplay && playUnique(sound);
+    } else {
+      stopUnique(sound, true);
+    }
+  }, [isSoundOn, sound, autoplay]);
+  return [(fade) => playUnique(sound, fade), (fade) => stopUnique(sound, fade)];
+}
+
 function Heading() {
   // initial, typing, typingComplete, scrolled
   const [animate, setAnimate] = useState("initial");
   const [autoSwitchCarrousel, setAutoSwitchCarrousel] = useState(false);
   const [lightsOut, setLightsOut] = useState(true);
+  const { isSoundOn, toggleSound } = useSoundControl();
+  const [playMusic, stopMusic] = usePlaySound("/bg-music.mp3", {
+    autoplay: false,
+  });
+  let stopMusicTriggered = false;
   return (
     <Page
       className="mx-auto flex flex-col justify-center -mt-16 items-center space-y-8 max-w-xs sm:max-w-xl sm:mt-0"
@@ -169,6 +230,10 @@ function Heading() {
         if (scrollY > 20) {
           // console.log(animate);
           setAnimate("scrolled");
+        }
+        if (scrollY > 100 && !stopMusicTriggered) {
+          stopMusic(true);
+          stopMusicTriggered = true;
         }
       }}
     >
@@ -204,6 +269,7 @@ function Heading() {
       >
         <DanceDemo
           onTypingComplete={() => {
+            playMusic();
             setTimeout(() => {
               setAnimate("typingComplete");
               setLightsOut(false);
@@ -220,6 +286,7 @@ function Heading() {
         <Video src="/images/theme-toggle.mp4" />
         {/* <Video src="/images/smileyinmotion.mp4" /> */}
       </Carrousel>
+      <SoundControl isSoundOn={isSoundOn} onToggleSound={toggleSound} />
       <motion.div
         initial={false}
         animate={animate}
@@ -238,6 +305,10 @@ function Heading() {
 function DanceDemo({ className, onTypingComplete }) {
   const [danceGuyAnimate, setDanceGuyAnimate] = useState("readyToPlay");
   const [borderAnimate, setBorderAnimate] = useState("borderHidden");
+  const { isSoundOn } = useSoundControl();
+  const [_, stopTypingSound] = usePlaySound("/typing-sound.mp3", {
+    autoplay: true,
+  });
   return (
     <motion.div
       className={`${className}`}
@@ -281,6 +352,7 @@ function DanceDemo({ className, onTypingComplete }) {
           onTypingComplete={() => {
             setDanceGuyAnimate("playing");
             setBorderAnimate("borderVisible");
+            stopTypingSound();
             typeof onTypingComplete === "function" && onTypingComplete();
           }}
         />
@@ -1043,18 +1115,32 @@ function Acknowledgement() {
   );
 }
 
+const SoundControlContext = React.createContext({
+  isSoundOn: false,
+  toggleSound: null,
+});
+
+function useSoundControl() {
+  const { isSoundOn, toggleSound } = useContext(SoundControlContext);
+  return { isSoundOn, toggleSound };
+}
+
 function Main() {
+  const [isSoundOn, setIsSoundOn] = useState(false);
+  const toggleSound = () => setIsSoundOn((b) => !b);
   return (
-    <div className="pb-64">
-      <Heading />
-      <Quiz />
-      <QuizAnswer />
-      <CourseIntro />
-      <Pricing />
-      <Content />
-      <Bios />
-      <Acknowledgement />
-    </div>
+    <SoundControlContext.Provider value={{ isSoundOn, toggleSound }}>
+      <div className="pb-64">
+        <Heading />
+        <Quiz />
+        <QuizAnswer />
+        <CourseIntro />
+        <Pricing />
+        <Content />
+        <Bios />
+        <Acknowledgement />
+      </div>
+    </SoundControlContext.Provider>
   );
 }
 

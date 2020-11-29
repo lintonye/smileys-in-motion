@@ -411,7 +411,7 @@ export function CodeTyping({ sequence, onTypingComplete, initialDelay = 0 }) {
   useEffect(() => {
     if (index === codes.length - 1 && typeof onTypingComplete === "function")
       onTypingComplete();
-  }, [index, codes]);
+  }, [index, codes, onTypingComplete]);
   const code = codes[index];
   return (
     <div className="relative">

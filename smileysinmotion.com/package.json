@@ -14,7 +14,8 @@
     "prismjs": "^1.22.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
-    "ua-parser-js": "^0.7.22"
+    "ua-parser-js": "^0.7.22",
+    "use-sound": "^2.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.3",
