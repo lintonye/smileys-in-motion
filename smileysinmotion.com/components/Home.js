@@ -171,7 +171,7 @@ function SoundControl({ isSoundOn, onToggleSound }) {
       onClick={() => onToggleSound()}
       className="cursor-pointer"
     >
-      {isSoundOn ? "sound on" : "muted"}
+      {isSoundOn ? <SpeakerOnIcon /> : <SpeakerOffIcon />}
     </motion.div>
   );
 }
@@ -1193,6 +1193,48 @@ function Leg() {
     <motion.div style={shouldFlip ? { scaleX: -1, rotate: -35 } : {}}>
       🦵
     </motion.div>
+  );
+}
+
+function SpeakerOffIcon(props) {
+  return (
+    <svg
+      width="1.5em"
+      height="1.5em"
+      viewBox="0 0 15 15"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M7.724 1.053A.5.5 0 018 1.5v12a.5.5 0 01-.8.4L3.333 11H1.5A1.5 1.5 0 010 9.5v-4A1.5 1.5 0 011.5 4h1.833L7.2 1.1a.5.5 0 01.524-.047zM7 2.5L3.8 4.9a.5.5 0 01-.3.1h-2a.5.5 0 00-.5.5v4a.5.5 0 00.5.5h2a.5.5 0 01.3.1L7 12.5v-10zm7.854 2.646a.5.5 0 010 .708L13.207 7.5l1.647 1.646a.5.5 0 01-.708.708L12.5 8.207l-1.646 1.647a.5.5 0 01-.708-.708L11.793 7.5l-1.647-1.646a.5.5 0 01.708-.708L12.5 6.793l1.646-1.647a.5.5 0 01.708 0z"
+        fill="currentColor"
+        strokeWidth="0"
+      />
+    </svg>
+  );
+}
+
+function SpeakerOnIcon(props) {
+  return (
+    <svg
+      width="1.5em"
+      height="1.5em"
+      viewBox="0 0 15 15"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M7.47 1.05a.5.5 0 01.28.45v12a.5.5 0 01-.807.395L3.221 11H1.5A1.5 1.5 0 010 9.5v-4A1.5 1.5 0 011.5 4h1.721l3.722-2.895a.5.5 0 01.527-.054zm-.72 1.472L3.7 4.895A.5.5 0 013.393 5H1.5a.5.5 0 00-.5.5v4a.5.5 0 00.5.5h1.893a.5.5 0 01.307.105l3.05 2.373V2.522zm3.528 1.326a.4.4 0 01.555.111 6.407 6.407 0 010 7.081.4.4 0 01-.666-.443 5.607 5.607 0 000-6.194.4.4 0 01.111-.555zm2.4-2.418a.4.4 0 00-.61.518 8.602 8.602 0 010 11.104.4.4 0 00.61.518 9.402 9.402 0 000-12.14z"
+        fill="currentColor"
+        strokeWidth="0"
+      />
+    </svg>
   );
 }
 
