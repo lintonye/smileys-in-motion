@@ -185,7 +185,7 @@ function SoundControl({ isSoundOn, onToggleSound }) {
 const stopUnique = (sound, fade = false) => {
   if (sound && sound.playing()) {
     if (fade) {
-      console.log("fade");
+      // console.log("fade");
       sound.fade(1, 0, 2000);
       setTimeout(() => {
         sound.stop();
@@ -219,7 +219,7 @@ function usePlaySound(url, { autoplay, loop = true }) {
     if (isSoundOn) {
       autoplay && playUnique(sound);
     } else {
-      stopUnique(sound, true);
+      stopUnique(sound, false);
     }
   }, [isSoundOn, sound, autoplay]);
   const [stopRequested, setStopRequested] = useState(false);
@@ -249,7 +249,7 @@ function Heading() {
   const [lightsOut, setLightsOut] = useState(true);
   const { isSoundOn, toggleSound } = useSoundControl();
   const [playMusic, stopMusic] = usePlaySound("/bg-music.mp3", {
-    autoplay: false,
+    autoplay: !lightsOut,
   });
   return (
     <Page
