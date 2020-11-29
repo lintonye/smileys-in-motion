@@ -1,5 +1,12 @@
 import * as React from "react";
-import { useState, useEffect, useRef, useContext, useMemo } from "react";
+import {
+  useState,
+  useEffect,
+  useRef,
+  useContext,
+  useMemo,
+  useCallback,
+} from "react";
 import {
   AnimateSharedLayout,
   motion,
@@ -196,11 +203,11 @@ const playUnique = (sound, fade = false) => {
  * 3. provides control for starting and stopping
  * 4. react to isSoundOn
  */
-function usePlaySound(url, { autoplay }) {
+function usePlaySound(url, { autoplay, loop = true }) {
   const { isSoundOn } = useSoundControl();
-  const [play, { stop, sound }] = useSound(url, {
-    loop: true,
-    autoplay: autoplay && isSoundOn,
+  const [_, { sound }] = useSound(url, {
+    loop,
+    // autoplay: autoplay && isSoundOn,
   });
   useEffect(() => {
     if (isSoundOn) {
@@ -209,7 +216,24 @@ function usePlaySound(url, { autoplay }) {
       stopUnique(sound, true);
     }
   }, [isSoundOn, sound, autoplay]);
-  return [(fade) => playUnique(sound, fade), (fade) => stopUnique(sound, fade)];
+  const [stopRequested, setStopRequested] = useState(false);
+  const play = useCallback(
+    (fade) => {
+      isSoundOn && playUnique(sound, fade);
+      setStopRequested(false);
+    },
+    [sound, isSoundOn]
+  );
+  const stop = useCallback(
+    (fade) => {
+      if (!stopRequested) {
+        isSoundOn && stopUnique(sound, fade);
+        setStopRequested(true);
+      }
+    },
+    [sound, isSoundOn, stopRequested]
+  );
+  return [play, stop];
 }
 
 function Heading() {
@@ -221,7 +245,6 @@ function Heading() {
   const [playMusic, stopMusic] = usePlaySound("/bg-music.mp3", {
     autoplay: false,
   });
-  let stopMusicTriggered = false;
   return (
     <Page
       className="mx-auto flex flex-col justify-center -mt-16 items-center space-y-8 max-w-xs sm:max-w-xl sm:mt-0"
@@ -231,9 +254,8 @@ function Heading() {
           // console.log(animate);
           setAnimate("scrolled");
         }
-        if (scrollY > 100 && !stopMusicTriggered) {
+        if (scrollY > 100) {
           stopMusic(true);
-          stopMusicTriggered = true;
         }
       }}
     >
@@ -268,8 +290,9 @@ function Heading() {
         lightsOut={lightsOut}
       >
         <DanceDemo
+          typingSound={lightsOut}
           onTypingComplete={() => {
-            playMusic();
+            lightsOut && playMusic();
             setTimeout(() => {
               setAnimate("typingComplete");
               setLightsOut(false);
@@ -302,12 +325,12 @@ function Heading() {
   );
 }
 
-function DanceDemo({ className, onTypingComplete }) {
+function DanceDemo({ typingSound, className, onTypingComplete }) {
   const [danceGuyAnimate, setDanceGuyAnimate] = useState("readyToPlay");
   const [borderAnimate, setBorderAnimate] = useState("borderHidden");
   const { isSoundOn } = useSoundControl();
   const [_, stopTypingSound] = usePlaySound("/typing-sound.mp3", {
-    autoplay: true,
+    autoplay: typingSound,
   });
   return (
     <motion.div
