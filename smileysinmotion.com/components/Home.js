@@ -165,10 +165,16 @@ function Page({ children, className = "", fullScreen = false, onPageScroll }) {
 }
 
 function SoundControl({ isSoundOn, onToggleSound }) {
+  const [playOn] = useSound("/switch-on.mp3");
+  const [playOff] = useSound("/switch-off.mp3");
   return (
     <motion.div
       layoutId="sound-control"
-      onClick={() => onToggleSound()}
+      onClick={() => {
+        onToggleSound();
+        if (isSoundOn) playOn();
+        else playOff();
+      }}
       className="cursor-pointer"
     >
       {isSoundOn ? <SpeakerOnIcon /> : <SpeakerOffIcon />}
@@ -598,6 +604,9 @@ function QuizAnswer() {
 
 function Quiz() {
   const [choice, setChoice] = useState(null);
+  const [playSucceed] = useSound("/succeed.mp3");
+  const [playFail] = useSound("/fail.mp3");
+  const answer = "D";
   const options = [
     {
       id: "A",
@@ -644,13 +653,15 @@ function Quiz() {
         {options.map(({ id, title, preview }) => (
           <Option
             id={id}
-            isAnswer={id === "D"}
+            isAnswer={id === answer}
             key={id}
             title={title}
             selected={choice === id}
             selectable={choice === null}
             onSelect={() => {
               setChoice(id);
+              if (id === answer) playSucceed();
+              else playFail();
               fetch(
                 `https://us-central1-together-courses.cloudfunctions.net/quizAnswer?userId=${uid}&questionId=${questionId}&answerId=D`,
                 { method: "POST", body: id }
