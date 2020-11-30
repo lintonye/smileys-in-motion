@@ -214,7 +214,7 @@ const sounds = new Map();
  * 3. provides control for starting and stopping
  * 4. react to isSoundOn
  */
-function usePlaySound(url, { autoplay, loop = true }) {
+function useSoundUnique(url, { autoplay, loop = true }) {
   const { isSoundOn } = useSoundControl();
   const [_, { sound: soundOrigin }] = useSound(url, {
     loop,
@@ -255,7 +255,7 @@ function Heading() {
   const [autoSwitchCarrousel, setAutoSwitchCarrousel] = useState(false);
   const [lightsOut, setLightsOut] = useState(true);
   const { isSoundOn, setSoundOn } = useSoundControl();
-  const [playMusic, stopMusic] = usePlaySound("/bg-music.mp3", {
+  const [playMusic, stopMusic] = useSoundUnique("/bg-music.mp3", {
     autoplay: !lightsOut,
   });
   let stopMusicRequested = false;
@@ -350,7 +350,7 @@ function DanceDemo({ typingSound, className, onTypingComplete }) {
   const [danceGuyAnimate, setDanceGuyAnimate] = useState("readyToPlay");
   const [borderAnimate, setBorderAnimate] = useState("borderHidden");
   const { isSoundOn } = useSoundControl();
-  const [_, stopTypingSound] = usePlaySound("/typing-sound.mp3", {
+  const [_, stopTypingSound] = useSoundUnique("/typing-sound.mp3", {
     autoplay: typingSound,
   });
   return (
@@ -1174,7 +1174,7 @@ function useSoundControl() {
 }
 
 function DancingGuyTest() {
-  const [_, _2] = usePlaySound("/bg-music.mp3", {
+  const [_, _2] = useSoundUnique("/bg-music.mp3", {
     autoplay: true,
   });
   return <DancingGuy animate="playing" />;
