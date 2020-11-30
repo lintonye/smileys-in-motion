@@ -102,6 +102,11 @@
   resolved "https://registry.yarnpkg.com/@emotion/memoize/-/memoize-0.7.4.tgz#19bf0f5af19149111c40d98bb0cf82119f5d9eeb"
   integrity sha512-Ja/Vfqe3HpuzRsG1oBtWTHk2PGZ7GR+2Vz5iYGelAw8dx32K0y7PjVuxK6z1nMpZOqAFsRUPCkK1YjJ56qJlgw==
 
+"@feedback-fish/react@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@feedback-fish/react/-/react-1.2.1.tgz#b4d226f310df936517e9e5e82397806a5df4e2d8"
+  integrity sha512-4YFD2hE93xBIT/Ko0x0l6UB0OyaxJcWKLGrnznsUVoLE5Q9vB8I1LEbMySYyuvbU9ul3yM3FjGkVZhYVPdwEyA==
+
 "@fullhuman/postcss-purgecss@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@fullhuman/postcss-purgecss/-/postcss-purgecss-3.0.0.tgz#e39bf7a7d2a2c664ed151b639785b2efcbca33ff"

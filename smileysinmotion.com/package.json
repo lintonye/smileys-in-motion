@@ -8,15 +8,16 @@
     "start": "next start"
   },
   "dependencies": {
+    "@feedback-fish/react": "^1.2.1",
     "framer-motion": "^2.9.4",
     "nanoid": "^3.1.18",
     "next": "10.0.2",
     "prismjs": "^1.22.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
+    "react-lottie": "^1.2.3",
     "ua-parser-js": "^0.7.22",
-    "use-sound": "^2.0.1",
-    "react-lottie": "^1.2.3"
+    "use-sound": "^2.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.3",

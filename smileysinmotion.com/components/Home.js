@@ -26,6 +26,7 @@ import { nanoid } from "nanoid";
 import useSound from "use-sound";
 import { LottiePlayer } from "./LottiePlayer";
 import * as fireworksJson from "./fireworks.json";
+import { FeedbackFish } from "@feedback-fish/react";
 
 function Welcome() {
   return (
@@ -260,89 +261,93 @@ function Heading() {
   });
   let stopMusicRequested = false;
   return (
-    <Page
-      className="mx-auto flex flex-col justify-center -mt-16 items-center space-y-8 max-w-xs sm:max-w-xl sm:mt-0"
-      fullScreen
-      onPageScroll={({ scrollY }) => {
-        if (scrollY > 20) {
-          // console.log(animate);
-          setAnimate("scrolled");
-        }
-        if (scrollY > 100 && !stopMusicRequested) {
-          stopMusic(true);
-          stopMusicRequested = true;
-          if (isSoundOn) {
-            setTimeout(() => setSoundOn(false), 2000);
+    <>
+      {!lightsOut && <Menu />}
+
+      <Page
+        className="mx-auto flex flex-col justify-center -mt-16 items-center space-y-8 max-w-xs sm:max-w-xl sm:mt-0"
+        fullScreen
+        onPageScroll={({ scrollY }) => {
+          if (scrollY > 20) {
+            // console.log(animate);
+            setAnimate("scrolled");
           }
-        }
-      }}
-    >
-      <motion.h1
-        className="text-2xl text-center font-extrabold sm:text-4xl"
-        initial={false}
-        animate={animate}
-        variants={{ initial: { opacity: 0 }, typingComplete: { opacity: 1 } }}
-      >
-        Build Advanced UI Animations With Framer Motion &amp; React
-      </motion.h1>
-      <motion.div
-        className="text-center mb-6 space-x-3"
-        initial={false}
-        animate={animate}
-        variants={{ initial: { opacity: 0 }, typingComplete: { opacity: 1 } }}
-      >
-        {Array(5)
-          .fill("⭐️")
-          .map((s, index) => (
-            <span key={index}>{s}</span>
-          ))}
-      </motion.div>
-      {/* <div className="relative mx-auto w-4/5">
-        <DanceDemo className="" />
-      </div> */}
-      <Carrousel
-        className="relative mx-auto w-full sm:w-full"
-        frameClassName="aspect-16x9"
-        border
-        autoSwitch={autoSwitchCarrousel}
-        lightsOut={lightsOut}
-      >
-        <DanceDemo
-          typingSound={lightsOut}
-          onTypingComplete={() => {
-            lightsOut && playMusic();
-            setTimeout(() => {
-              setAnimate("typingComplete");
-              setLightsOut(false);
-              setTimeout(() => {
-                setAutoSwitchCarrousel(true);
-              }, 2500);
-            }, 1000);
-          }}
-        />
-        <Video src="/images/drag-reorder.mp4" />
-        <Video src="/images/shared-element.mp4" />
-        <Video src="/images/circular-slider.mp4" />
-        <Video src="/images/mount-unmount.mp4" />
-        <Video src="/images/theme-toggle.mp4" />
-        {/* <Video src="/images/smileyinmotion.mp4" /> */}
-      </Carrousel>
-      <SoundControl
-        isSoundOn={isSoundOn}
-        onToggleSound={() => setSoundOn((on) => !on)}
-      />
-      <motion.div
-        initial={false}
-        animate={animate}
-        variants={{
-          initial: { opacity: 0 },
-          typingComplete: { opacity: 1 },
-          scrolled: { opacity: 0, display: "none" }, //TODO why opacity along doesn't work here???
+          if (scrollY > 100 && !stopMusicRequested) {
+            stopMusic(true);
+            stopMusicRequested = true;
+            if (isSoundOn) {
+              setTimeout(() => setSoundOn(false), 2000);
+            }
+          }
         }}
       >
-        <ScrollIndicator />
-      </motion.div>
-    </Page>
+        <motion.h1
+          className="text-2xl text-center font-extrabold sm:text-4xl"
+          initial={false}
+          animate={animate}
+          variants={{ initial: { opacity: 0 }, typingComplete: { opacity: 1 } }}
+        >
+          Build Advanced UI Animations With Framer Motion &amp; React
+        </motion.h1>
+        <motion.div
+          className="text-center mb-6 space-x-3"
+          initial={false}
+          animate={animate}
+          variants={{ initial: { opacity: 0 }, typingComplete: { opacity: 1 } }}
+        >
+          {Array(5)
+            .fill("⭐️")
+            .map((s, index) => (
+              <span key={index}>{s}</span>
+            ))}
+        </motion.div>
+        {/* <div className="relative mx-auto w-4/5">
+        <DanceDemo className="" />
+      </div> */}
+        <Carrousel
+          className="relative mx-auto w-full sm:w-full"
+          frameClassName="aspect-16x9"
+          border
+          autoSwitch={autoSwitchCarrousel}
+          lightsOut={lightsOut}
+        >
+          <DanceDemo
+            typingSound={lightsOut}
+            onTypingComplete={() => {
+              lightsOut && playMusic();
+              setTimeout(() => {
+                setAnimate("typingComplete");
+                setLightsOut(false);
+                setTimeout(() => {
+                  setAutoSwitchCarrousel(true);
+                }, 2500);
+              }, 1000);
+            }}
+          />
+          <Video src="/images/drag-reorder.mp4" />
+          <Video src="/images/shared-element.mp4" />
+          <Video src="/images/circular-slider.mp4" />
+          <Video src="/images/mount-unmount.mp4" />
+          <Video src="/images/theme-toggle.mp4" />
+          {/* <Video src="/images/smileyinmotion.mp4" /> */}
+        </Carrousel>
+        <SoundControl
+          isSoundOn={isSoundOn}
+          onToggleSound={() => setSoundOn((on) => !on)}
+        />
+        <motion.div
+          initial={false}
+          animate={animate}
+          variants={{
+            initial: { opacity: 0 },
+            typingComplete: { opacity: 1 },
+            scrolled: { opacity: 0, display: "none" }, //TODO why opacity along doesn't work here???
+          }}
+        >
+          <ScrollIndicator />
+        </motion.div>
+      </Page>
+    </>
   );
 }
 
@@ -1374,6 +1379,26 @@ function DancingGuy({ animate }) {
       >
         <motion.div style={{ rotate: -90, scaleX: -1 }}>👊</motion.div>
       </motion.div>
+    </motion.div>
+  );
+}
+
+function Menu() {
+  return (
+    <motion.div
+      className="fixed top-0 left-0 right-0 py-4 px-8 bg-opacity-60 bg-gray-800 cursor-pointer
+    flex justify-end space-x-4 z-10"
+      initial={{ y: -50 }}
+      animate={{ y: 0 }}
+    >
+      <FeedbackFish projectId="4b0018d8aa5257">
+        <motion.div
+          className="text-sm text-gray-300 font-bold"
+          whileHover={{ scale: 1.1 }}
+        >
+          Send feedback
+        </motion.div>
+      </FeedbackFish>
     </motion.div>
   );
 }
