@@ -398,6 +398,9 @@ function Option({
           : "hover:border-red-400"
         : "hover:border-blue-400") + " cursor-pointer"
     : "";
+  const dispatchSelect = () =>
+    selectable && typeof onSelect === "function" && onSelect();
+  const deviceType = useDeviceType();
   return (
     <motion.div
       className={`relative border-2 border-solid border-gray-700 border-opacity-80 rounded-md p-8 flex space-x-4 bg-opacity-30 
@@ -406,7 +409,10 @@ function Option({
       ${selected && !isAnswer && "bg-red-900 border-red-500 "}`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      onTap={() => selectable && typeof onSelect === "function" && onSelect()}
+      onTap={() => {
+        if (deviceType !== "mobile") dispatchSelect();
+        else setHovered(true);
+      }}
     >
       <span className="text-gray-400">{id}.</span>
       <span>{hovered && children ? children : title}</span>
@@ -423,6 +429,10 @@ function Option({
           )}
         </div>
       )}
+      <motion.div
+        className="absolute right-3 rounded-sm mt-2 w-11 h-11 top-4 bg-blue-300 opacity-30 sm:hidden"
+        onTap={dispatchSelect}
+      />
     </motion.div>
   );
 }
@@ -1067,6 +1077,16 @@ function useOS() {
     setOsType(os.name);
   }, []);
   return osType;
+}
+
+function useDeviceType() {
+  const [deviceType, setDeviceType] = useState(null);
+  useEffect(() => {
+    const parser = new UAParser();
+    const device = parser.getDevice();
+    setDeviceType(device.type);
+  }, []);
+  return deviceType;
 }
 
 function Leg() {
