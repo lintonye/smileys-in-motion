@@ -312,22 +312,21 @@ function Fist({ repeatType = null, duration = undefined, className }) {
   );
 }
 
-function Check(props) {
+function Check({ size = 26, strokeWidth = 2 }) {
   return (
     <svg
-      width={26}
-      height={19}
+      width={size}
+      height={(19 / 26) * size}
       viewBox="0 0 26 19"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      {...props}
     >
       <motion.path
         d="M1 8.5L6.5 18l19-17"
-        // stroke="#000"
+        stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth={2}
+        strokeWidth={strokeWidth}
         initial={{ pathLength: 0 }}
         animate={{ pathLength: 1 }}
         transition={{ duration: 0.5 }}
@@ -461,7 +460,7 @@ function QuizAnswer() {
       </p>
 
       <p>Here are a few more examples:</p>
-      <ul className="list-disc list-outside ml-4">
+      <ul className="list-arrow">
         <li>How would I make Motion work with React Router?</li>
         <li>Why is the text distorted during the transition?</li>
         <li>
@@ -748,7 +747,18 @@ function PricingCard({
       >
         {subtitle}
       </div>
-      <ul className="list-outside list-disc ml-4">{children}</ul>
+      <ul className="list-outside list-none">
+        {React.Children.map(children, (c, i) => (
+          <li key={i} className="flex space-x-2 items-baseline">
+            <span
+              className={`${featured ? "text-indigo-400" : "text-blue-400"}`}
+            >
+              <Check size={12} strokeWidth={4} />
+            </span>
+            {c}
+          </li>
+        ))}
+      </ul>
       <div className="space-x-4">
         <span className="line-through">${price}</span>
         <span className="text-4xl">${discountedPrice}</span>
@@ -805,9 +815,9 @@ function Pricing() {
           purchaseLink="https://sso.teachable.com/secure/157508/checkout/2635049/smileys-in-motion?coupon_code=BF2020"
           className="mb-5"
         >
-          <li>24 lessons, 2 hours of HD videos</li>
-          <li>All starter and final code for you to follow along</li>
-          <li>Cheat sheets</li>
+          <div>24 lessons, 2 hours of HD videos</div>
+          <div>All starter and final code for you to follow along</div>
+          <div>Cheat sheets</div>
         </PricingCard>
         <PricingCard
           featured
@@ -818,12 +828,12 @@ function Pricing() {
           footnote="Black Friday deal!"
           purchaseLink="https://sso.teachable.com/secure/157508/checkout/1669960/prototyping-with-react-framer-starship-bundle?coupon_code=BF2020"
         >
-          <li>14 Modules, 50 lessons, 10+ hours of HD videos</li>
-          <li>
+          <div>14 Modules, 50 lessons, 10+ hours of HD videos</div>
+          <div>
             Includes <strong>Smiley In Motion</strong>
-          </li>
-          <li>All starter and final code for you to follow along</li>
-          <li>
+          </div>
+          <div>All starter and final code for you to follow along</div>
+          <div>
             Check out{" "}
             <a
               className="underline"
@@ -831,7 +841,7 @@ function Pricing() {
             >
               course details
             </a>
-          </li>
+          </div>
         </PricingCard>
       </div>
       <Carrousel
