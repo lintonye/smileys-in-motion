@@ -16,6 +16,8 @@ import Logo from "./Logo";
 import { Video } from "./Video";
 import { useLocalStorage } from "./useLocalStorage";
 import { nanoid } from "nanoid";
+import { LottiePlayer } from "./LottiePlayer";
+import * as fireworksJson from "./fireworks.json";
 
 function Welcome() {
   return (
@@ -583,17 +585,6 @@ function Quiz() {
   );
 }
 
-function Confetti() {
-  const bits = "🎊  🍇 🍷 🌈".split(" ");
-  return (
-    <motion.div className="absolute text-lg">
-      {bits.map((b) => (
-        <span>{b}</span>
-      ))}
-    </motion.div>
-  );
-}
-
 function CourseIntroLogo() {
   const [animate, setAnimate] = useState("beforeSeen");
   return (
@@ -635,11 +626,14 @@ function CourseIntroLogo() {
 
 function CourseIntro() {
   const [animate, setAnimate] = useState("beforeSeen");
+  const [playFireworks, setPlayFireworks] = useState(false);
+  // console.log({ fireworksJson });
   return (
     <Page
       className="max-w-xs sm:max-w-lg"
       onPageScroll={({ pageTop, scrollY }) => {
         setAnimate("playing");
+        setTimeout(() => setPlayFireworks(true), 2500);
       }}
     >
       <motion.div
@@ -648,7 +642,7 @@ function CourseIntro() {
         animate={animate}
       >
         <div>
-          <div className="text-center font-semibold mt-32 mb-7 flex text-3xl space-x-6 sm:space-x-11 sm:text-5xl">
+          <div className="text-center relative font-semibold mt-32 mb-7 flex text-3xl space-x-6 sm:space-x-11 sm:text-5xl">
             <CourseIntroLogo />
             <motion.h1
               className="z-10"
@@ -659,8 +653,16 @@ function CourseIntro() {
             >
               Smiley In Motion
             </motion.h1>
+            <div className="-top-32 -left-8 absolute sm:-top-48 sm:-left-16 w-full">
+              <LottiePlayer
+                data={fireworksJson.default}
+                stopped={!playFireworks}
+                loop={false}
+                autoplay={false}
+              />
+            </div>
           </div>
-          {/* <Confetti /> */}
+
           <motion.h2
             className="text-center sm:text-lg"
             variants={{
