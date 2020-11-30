@@ -525,7 +525,7 @@ function Option({
       onMouseLeave={() => setHovered(false)}
       onTap={() => {
         if (deviceType !== "mobile") dispatchSelect();
-        else setHovered(true);
+        // else setHovered(true);
       }}
     >
       <span className="text-gray-400">{id}.</span>
@@ -544,7 +544,7 @@ function Option({
         </div>
       )}
       <motion.div
-        className="absolute right-3 rounded-sm mt-2 w-11 h-11 top-4 bg-blue-300 opacity-30 sm:hidden"
+        className="absolute right-3 rounded-sm mt-2 w-11 h-11 top-4 border-2 border-solid border-gray-700 border-opacity-80 sm:hidden"
         onTap={dispatchSelect}
       />
     </motion.div>
