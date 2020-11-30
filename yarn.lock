@@ -2,6 +2,61 @@
 # yarn lockfile v1
 
 
+"@lottiefiles/lottie-interactivity@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@lottiefiles/lottie-interactivity/-/lottie-interactivity-0.1.3.tgz#0d26f5fca2472b52e4223838efdf5bc50d1a8836"
+  integrity sha512-11GA5anKm7allHVKBFjeenyUYJXjisItf8gxU+v5AEmoo1wfiHNWCAuKyEWL8wNO2DijDJ1uhaYCAsIUxIgl4g==
+  dependencies:
+    core-js "3"
+
+"@lottiefiles/lottie-player@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@lottiefiles/lottie-player/-/lottie-player-0.5.1.tgz#87667f4a03c25f4d43e7987d1c11422273d17cdc"
+  integrity sha512-yAcYc8FVHZ6zIXvWazy1u5nIAjb11DGUNJwzWdu/psOtdCMHZmF1ayZk7jDDCladdG4C3DN2SktbmRzaDeUxcw==
+  dependencies:
+    "@types/pako" "^1.0.1"
+    lit-element "^2.3.1"
+    lottie-web "^5.6.6"
+    pako "^1.0.11"
+    resize-observer-polyfill "^1.5.1"
+
+"@types/pako@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@types/pako/-/pako-1.0.1.tgz#33b237f3c9aff44d0f82fe63acffa4a365ef4a61"
+  integrity sha512-GdZbRSJ3Cv5fiwT6I0SQ3ckeN2PWNqxd26W9Z2fCK1tGrrasGy4puvNFtnddqH9UJFMQYXxEuuB7B8UK+LLwSg==
+
+core-js@3:
+  version "3.8.0"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.8.0.tgz#0fc2d4941cadf80538b030648bb64d230b4da0ce"
+  integrity sha512-W2VYNB0nwQQE7tKS7HzXd7r2y/y2SVJl4ga6oH/dnaLFzM0o2lB2P3zCkWj5Wc/zyMYjtgd5Hmhk0ObkQFZOIA==
+
+lit-element@^2.3.1:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/lit-element/-/lit-element-2.4.0.tgz#b22607a037a8fc08f5a80736dddf7f3f5d401452"
+  integrity sha512-pBGLglxyhq/Prk2H91nA0KByq/hx/wssJBQFiYqXhGDvEnY31PRGYf1RglVzyLeRysu0IHm2K0P196uLLWmwFg==
+  dependencies:
+    lit-html "^1.1.1"
+
+lit-html@^1.1.1:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/lit-html/-/lit-html-1.3.0.tgz#c80f3cc5793a6dea6c07172be90a70ab20e56034"
+  integrity sha512-0Q1bwmaFH9O14vycPHw8C/IeHMk/uSDldVLIefu/kfbTBGIc44KGH6A8p1bDfxUfHdc8q6Ct7kQklWoHgr4t1Q==
+
+lottie-web@^5.6.6:
+  version "5.7.4"
+  resolved "https://registry.yarnpkg.com/lottie-web/-/lottie-web-5.7.4.tgz#3b252148e904a0aa9833879ffb64924c85a0888c"
+  integrity sha512-LxqhXlHnHXOPmu+o2ipFKGv42jZLmn/GiEwXP0YC331fFwa+y96OUV22OF9r4i29uWKDciXiJr8tzy6jL8KygA==
+
+pako@^1.0.11:
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/pako/-/pako-1.0.11.tgz#6c9599d340d54dfd3946380252a35705a6b992bf"
+  integrity sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==
+
+resize-observer-polyfill@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/resize-observer-polyfill/-/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
+  integrity sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg==
+
 ua-parser-js@^0.7.22:
   version "0.7.22"
   resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.22.tgz#960df60a5f911ea8f1c818f3747b99c6e177eae3"
