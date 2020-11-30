@@ -1,5 +1,12 @@
 import * as React from "react";
-import { useState, useEffect, useRef } from "react";
+import {
+  useState,
+  useEffect,
+  useRef,
+  useContext,
+  useMemo,
+  useCallback,
+} from "react";
 import {
   AnimateSharedLayout,
   motion,
@@ -16,6 +23,7 @@ import Logo from "./Logo";
 import { Video } from "./Video";
 import { useLocalStorage } from "./useLocalStorage";
 import { nanoid } from "nanoid";
+import useSound from "use-sound";
 import { LottiePlayer } from "./LottiePlayer";
 import * as fireworksJson from "./fireworks.json";
 
@@ -158,11 +166,99 @@ function Page({ children, className = "", fullScreen = false, onPageScroll }) {
   );
 }
 
+function SoundControl({ isSoundOn, onToggleSound }) {
+  const [playOn] = useSound("/switch-on.mp3");
+  const [playOff] = useSound("/switch-off.mp3");
+  return (
+    <motion.div
+      layoutId="sound-control"
+      onClick={() => {
+        onToggleSound();
+        if (isSoundOn) playOn();
+        else playOff();
+      }}
+      className="cursor-pointer"
+    >
+      {isSoundOn ? <SpeakerOnIcon /> : <SpeakerOffIcon />}
+    </motion.div>
+  );
+}
+
+const stopUnique = (sound, fade = false) => {
+  if (sound && sound.playing()) {
+    if (fade) {
+      sound.fade(1, 0, 2000);
+      setTimeout(() => {
+        sound.stop();
+      }, 2000);
+    } else {
+      sound.stop();
+    }
+  }
+};
+
+const playUnique = (sound, fade = false) => {
+  if (sound && !sound.playing()) {
+    // console.log("playUnique");
+    sound.play();
+    if (fade) sound.fade(0, 1, 2000);
+    else sound.volume(1);
+  }
+};
+
+const sounds = new Map();
+
+/**
+ * 1. stop by fading out
+ * 2. don't play two instances of the same audio at the same time
+ * 3. provides control for starting and stopping
+ * 4. react to isSoundOn
+ */
+function useSoundUnique(url, { autoplay, loop = true }) {
+  const { isSoundOn } = useSoundControl();
+  const [_, { sound: soundOrigin }] = useSound(url, {
+    loop,
+    // autoplay: autoplay && isSoundOn,
+  });
+  // This is a workaround of use-sounds' bug. Sometimes it returns a new sound object for the same URL.
+  let sound = sounds.get(url);
+  if (sound === undefined || sound === null) {
+    sound = soundOrigin;
+    sounds.set(url, sound);
+  }
+  useEffect(() => {
+    // console.log({ autoplay, isSoundOn, sound });
+    if (isSoundOn) {
+      autoplay && playUnique(sound);
+    } else {
+      stopUnique(sound, false);
+    }
+  }, [isSoundOn, sound, autoplay]);
+  const play = useCallback(
+    (fade) => {
+      isSoundOn && playUnique(sound, fade);
+    },
+    [sound, isSoundOn]
+  );
+  const stop = useCallback(
+    (fade) => {
+      isSoundOn && stopUnique(sound, fade);
+    },
+    [sound, isSoundOn]
+  );
+  return [play, stop];
+}
+
 function Heading() {
   // initial, typing, typingComplete, scrolled
   const [animate, setAnimate] = useState("initial");
   const [autoSwitchCarrousel, setAutoSwitchCarrousel] = useState(false);
   const [lightsOut, setLightsOut] = useState(true);
+  const { isSoundOn, setSoundOn } = useSoundControl();
+  const [playMusic, stopMusic] = useSoundUnique("/bg-music.mp3", {
+    autoplay: !lightsOut,
+  });
+  let stopMusicRequested = false;
   return (
     <Page
       className="mx-auto flex flex-col justify-center -mt-16 items-center space-y-8 max-w-xs sm:max-w-xl sm:mt-0"
@@ -171,6 +267,13 @@ function Heading() {
         if (scrollY > 20) {
           // console.log(animate);
           setAnimate("scrolled");
+        }
+        if (scrollY > 100 && !stopMusicRequested) {
+          stopMusic(true);
+          stopMusicRequested = true;
+          if (isSoundOn) {
+            setTimeout(() => setSoundOn(false), 2000);
+          }
         }
       }}
     >
@@ -205,13 +308,15 @@ function Heading() {
         lightsOut={lightsOut}
       >
         <DanceDemo
+          typingSound={lightsOut}
           onTypingComplete={() => {
+            lightsOut && playMusic();
             setTimeout(() => {
               setAnimate("typingComplete");
               setLightsOut(false);
               setTimeout(() => {
                 setAutoSwitchCarrousel(true);
-              }, 1000);
+              }, 2500);
             }, 1000);
           }}
         />
@@ -222,6 +327,10 @@ function Heading() {
         <Video src="/images/theme-toggle.mp4" />
         {/* <Video src="/images/smileyinmotion.mp4" /> */}
       </Carrousel>
+      <SoundControl
+        isSoundOn={isSoundOn}
+        onToggleSound={() => setSoundOn((on) => !on)}
+      />
       <motion.div
         initial={false}
         animate={animate}
@@ -237,9 +346,13 @@ function Heading() {
   );
 }
 
-function DanceDemo({ className, onTypingComplete }) {
+function DanceDemo({ typingSound, className, onTypingComplete }) {
   const [danceGuyAnimate, setDanceGuyAnimate] = useState("readyToPlay");
   const [borderAnimate, setBorderAnimate] = useState("borderHidden");
+  const { isSoundOn } = useSoundControl();
+  const [_, stopTypingSound] = useSoundUnique("/typing-sound.mp3", {
+    autoplay: typingSound,
+  });
   return (
     <motion.div
       className={`${className}`}
@@ -283,6 +396,7 @@ function DanceDemo({ className, onTypingComplete }) {
           onTypingComplete={() => {
             setDanceGuyAnimate("playing");
             setBorderAnimate("borderVisible");
+            stopTypingSound();
             typeof onTypingComplete === "function" && onTypingComplete();
           }}
         />
@@ -515,6 +629,9 @@ function QuizAnswer() {
 
 function Quiz() {
   const [choice, setChoice] = useState(null);
+  const [playSucceed] = useSound("/succeed.mp3");
+  const [playFail] = useSound("/fail.mp3");
+  const answer = "D";
   const options = [
     {
       id: "A",
@@ -560,13 +677,15 @@ function Quiz() {
         {options.map(({ id, title, preview }) => (
           <Option
             id={id}
-            isAnswer={id === "D"}
+            isAnswer={id === answer}
             key={id}
             title={title}
             selected={choice === id}
             selectable={choice === null}
             onSelect={() => {
               setChoice(id);
+              if (id === answer) playSucceed();
+              else playFail();
               fetch(
                 `https://us-central1-together-courses.cloudfunctions.net/quizAnswer?userId=${uid}&questionId=${questionId}&answerId=D`,
                 { method: "POST", body: id }
@@ -1054,18 +1173,40 @@ function Acknowledgement() {
   );
 }
 
+const SoundControlContext = React.createContext({
+  isSoundOn: false,
+  setSoundOn: null,
+});
+
+function useSoundControl() {
+  const { isSoundOn, setSoundOn } = useContext(SoundControlContext);
+  return { isSoundOn, setSoundOn };
+}
+
+function DancingGuyTest() {
+  const [_, _2] = useSoundUnique("/bg-music.mp3", {
+    autoplay: true,
+  });
+  return <DancingGuy animate="playing" />;
+}
+
 function Main() {
+  const [isSoundOn, setSoundOn] = useState(false);
+
   return (
-    <div className="pb-64">
-      <Heading />
-      <Quiz />
-      <QuizAnswer />
-      <CourseIntro />
-      <Pricing />
-      <Content />
-      <Bios />
-      <Acknowledgement />
-    </div>
+    <SoundControlContext.Provider value={{ isSoundOn, setSoundOn }}>
+      <div className="pb-64">
+        {/* <DancingGuyTest /> */}
+        <Heading />
+        <Quiz />
+        <QuizAnswer />
+        <CourseIntro />
+        <Pricing />
+        <Content />
+        <Bios />
+        <Acknowledgement />
+      </div>
+    </SoundControlContext.Provider>
   );
 }
 
@@ -1099,11 +1240,53 @@ function Leg() {
   );
 }
 
+function SpeakerOffIcon(props) {
+  return (
+    <svg
+      width="1.5em"
+      height="1.5em"
+      viewBox="0 0 15 15"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M7.724 1.053A.5.5 0 018 1.5v12a.5.5 0 01-.8.4L3.333 11H1.5A1.5 1.5 0 010 9.5v-4A1.5 1.5 0 011.5 4h1.833L7.2 1.1a.5.5 0 01.524-.047zM7 2.5L3.8 4.9a.5.5 0 01-.3.1h-2a.5.5 0 00-.5.5v4a.5.5 0 00.5.5h2a.5.5 0 01.3.1L7 12.5v-10zm7.854 2.646a.5.5 0 010 .708L13.207 7.5l1.647 1.646a.5.5 0 01-.708.708L12.5 8.207l-1.646 1.647a.5.5 0 01-.708-.708L11.793 7.5l-1.647-1.646a.5.5 0 01.708-.708L12.5 6.793l1.646-1.647a.5.5 0 01.708 0z"
+        fill="currentColor"
+        strokeWidth="0"
+      />
+    </svg>
+  );
+}
+
+function SpeakerOnIcon(props) {
+  return (
+    <svg
+      width="1.5em"
+      height="1.5em"
+      viewBox="0 0 15 15"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M7.47 1.05a.5.5 0 01.28.45v12a.5.5 0 01-.807.395L3.221 11H1.5A1.5 1.5 0 010 9.5v-4A1.5 1.5 0 011.5 4h1.721l3.722-2.895a.5.5 0 01.527-.054zm-.72 1.472L3.7 4.895A.5.5 0 013.393 5H1.5a.5.5 0 00-.5.5v4a.5.5 0 00.5.5h1.893a.5.5 0 01.307.105l3.05 2.373V2.522zm3.528 1.326a.4.4 0 01.555.111 6.407 6.407 0 010 7.081.4.4 0 01-.666-.443 5.607 5.607 0 000-6.194.4.4 0 01.111-.555zm2.4-2.418a.4.4 0 00-.61.518 8.602 8.602 0 010 11.104.4.4 0 00.61.518 9.402 9.402 0 000-12.14z"
+        fill="currentColor"
+        strokeWidth="0"
+      />
+    </svg>
+  );
+}
+
 function DancingGuy({ animate }) {
   const commonTransition = {
     repeat: Infinity,
-    repeatType: "reverse",
-    duration: 0.3,
+    repeatType: "loop",
+    duration: 2.1,
     // repeatDelay: 0.1,
   };
   return (
@@ -1117,8 +1300,11 @@ function DancingGuy({ animate }) {
         style={{ top: 15, left: 60, originX: "center", originY: "bottom" }}
         variants={{
           // beforeSeen: { opacity: 0, rotate: -15 },
-          readyToPlay: { opacity: 1, rotate: -15 },
-          playing: { rotate: [-15, 15], transition: commonTransition },
+          readyToPlay: { opacity: 1, rotate: 0 },
+          playing: {
+            rotate: [0, -25, 0, -25, 0, 25, 0, 25, 0],
+            transition: commonTransition,
+          },
           // afterSeen: { rotate: 0 },
         }}
       >
@@ -1129,8 +1315,12 @@ function DancingGuy({ animate }) {
         style={{ top: 120, left: 80, originX: "center", originY: "top" }}
         variants={{
           // beforeSeen: { opacity: 0, rotate: -5 },
-          readyToPlay: { opacity: 1, rotate: -5 },
-          playing: { rotate: [-5, 5], transition: commonTransition },
+          readyToPlay: { opacity: 1, rotate: 0 },
+          playing: {
+            // y: [0, -30, 0, -30, 0, 30, 0, 30, 0],
+            rotate: [0, -10, 0, -10, 0, 10, 0, 10, 0],
+            transition: commonTransition,
+          },
           // afterSeen: { rotate: 0 },
         }}
       >
@@ -1141,8 +1331,12 @@ function DancingGuy({ animate }) {
         style={{ top: 130, left: 60, originX: "center", originY: "top" }}
         variants={{
           // beforeSeen: { opacity: 0, rotate: 5 },
-          readyToPlay: { opacity: 1, rotate: 5 },
-          playing: { rotate: [5, -5], transition: commonTransition },
+          readyToPlay: { opacity: 1, rotate: 0 },
+          playing: {
+            // y: [0, 30, 0, 30, 0, 30, 0, 30, 0],
+            rotate: [0, 10, 0, 10, 0, -10, 0, -10, 0],
+            transition: commonTransition,
+          },
           // afterSeen: { rotate: 0 },
         }}
       >
@@ -1150,27 +1344,35 @@ function DancingGuy({ animate }) {
       </motion.div>
       <motion.div
         className="absolute text-4xl"
-        style={{ top: 80, left: 30, rotate: -90 }}
+        style={{ top: 80, left: 30 }}
         variants={{
           // beforeSeen: { opacity: 0, y: -10 },
-          readyToPlay: { opacity: 1, y: -10 },
-          playing: { y: [-10, 10], transition: commonTransition },
+          readyToPlay: { opacity: 1, y: 0 },
+          playing: {
+            y: [0, -30, 0, -30, 0, 30, 0, 30, 0],
+            rotate: [0, -25, 0, -25, 0, 25, 0, 25, 0],
+            transition: commonTransition,
+          },
           // afterSeen: { y: 0 },
         }}
       >
-        👊
+        <motion.div style={{ rotate: -90 }}>👊</motion.div>
       </motion.div>
       <motion.div
         className="absolute text-4xl"
-        style={{ top: 90, left: 120, rotate: -90, scaleX: -1 }}
+        style={{ top: 90, left: 120 }}
         variants={{
           // beforeSeen: { opacity: 0, y: 10 },
-          readyToPlay: { opacity: 1, y: 10 },
-          playing: { y: [10, -10], transition: commonTransition },
+          readyToPlay: { opacity: 1, y: 0 },
+          playing: {
+            y: [0, 30, 0, 30, 0, -30, 0, -30, 0],
+            rotate: [0, -25, 0, -25, 0, 25, 0, 25, 0],
+            transition: commonTransition,
+          },
           // afterSeen: { y: 0 },
         }}
       >
-        👊
+        <motion.div style={{ rotate: -90, scaleX: -1 }}>👊</motion.div>
       </motion.div>
     </motion.div>
   );
