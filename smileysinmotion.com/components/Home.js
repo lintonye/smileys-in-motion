@@ -506,16 +506,15 @@ function Quiz() {
   const options = [
     {
       id: "A",
-      title: "quickly scales 4x",
-      preview: <Fist repeatType={null} className="ml-4" />,
-    },
-
-    {
-      id: "B",
       title: "quickly scales 4x, loop",
       preview: <Fist repeatType={"reverse"} className="ml-4" />,
     },
 
+    {
+      id: "B",
+      title: "quickly scales 4x",
+      preview: <Fist repeatType={null} className="ml-4" />,
+    },
     {
       id: "C",
       title: "slowly scales 4x",
