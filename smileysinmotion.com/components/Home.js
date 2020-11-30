@@ -187,7 +187,6 @@ function SoundControl({ isSoundOn, onToggleSound }) {
 const stopUnique = (sound, fade = false) => {
   if (sound && sound.playing()) {
     if (fade) {
-      // console.log("fade");
       sound.fade(1, 0, 2000);
       setTimeout(() => {
         sound.stop();
@@ -200,10 +199,14 @@ const stopUnique = (sound, fade = false) => {
 
 const playUnique = (sound, fade = false) => {
   if (sound && !sound.playing()) {
+    // console.log("playUnique");
     sound.play();
     if (fade) sound.fade(0, 1, 2000);
+    else sound.volume(1);
   }
 };
+
+const sounds = new Map();
 
 /**
  * 1. stop by fading out
@@ -213,33 +216,35 @@ const playUnique = (sound, fade = false) => {
  */
 function usePlaySound(url, { autoplay, loop = true }) {
   const { isSoundOn } = useSoundControl();
-  const [_, { sound }] = useSound(url, {
+  const [_, { sound: soundOrigin }] = useSound(url, {
     loop,
     // autoplay: autoplay && isSoundOn,
   });
+  // This is a workaround of use-sounds' bug. Sometimes it returns a new sound object for the same URL.
+  let sound = sounds.get(url);
+  if (sound === undefined || sound === null) {
+    sound = soundOrigin;
+    sounds.set(url, sound);
+  }
   useEffect(() => {
+    // console.log({ autoplay, isSoundOn, sound });
     if (isSoundOn) {
       autoplay && playUnique(sound);
     } else {
       stopUnique(sound, false);
     }
   }, [isSoundOn, sound, autoplay]);
-  const [stopRequested, setStopRequested] = useState(false);
   const play = useCallback(
     (fade) => {
       isSoundOn && playUnique(sound, fade);
-      setStopRequested(false);
     },
     [sound, isSoundOn]
   );
   const stop = useCallback(
     (fade) => {
-      if (!stopRequested) {
-        isSoundOn && stopUnique(sound, fade);
-        setStopRequested(true);
-      }
+      isSoundOn && stopUnique(sound, fade);
     },
-    [sound, isSoundOn, stopRequested]
+    [sound, isSoundOn]
   );
   return [play, stop];
 }
@@ -249,10 +254,11 @@ function Heading() {
   const [animate, setAnimate] = useState("initial");
   const [autoSwitchCarrousel, setAutoSwitchCarrousel] = useState(false);
   const [lightsOut, setLightsOut] = useState(true);
-  const { isSoundOn, toggleSound } = useSoundControl();
+  const { isSoundOn, setSoundOn } = useSoundControl();
   const [playMusic, stopMusic] = usePlaySound("/bg-music.mp3", {
     autoplay: !lightsOut,
   });
+  let stopMusicRequested = false;
   return (
     <Page
       className="mx-auto flex flex-col justify-center -mt-16 items-center space-y-8 max-w-xs sm:max-w-xl sm:mt-0"
@@ -262,8 +268,12 @@ function Heading() {
           // console.log(animate);
           setAnimate("scrolled");
         }
-        if (scrollY > 100) {
+        if (scrollY > 100 && !stopMusicRequested) {
           stopMusic(true);
+          stopMusicRequested = true;
+          if (isSoundOn) {
+            setTimeout(() => setSoundOn(false), 2000);
+          }
         }
       }}
     >
@@ -317,7 +327,10 @@ function Heading() {
         <Video src="/images/theme-toggle.mp4" />
         {/* <Video src="/images/smileyinmotion.mp4" /> */}
       </Carrousel>
-      <SoundControl isSoundOn={isSoundOn} onToggleSound={toggleSound} />
+      <SoundControl
+        isSoundOn={isSoundOn}
+        onToggleSound={() => setSoundOn((on) => !on)}
+      />
       <motion.div
         initial={false}
         animate={animate}
@@ -1152,12 +1165,12 @@ function Acknowledgement() {
 
 const SoundControlContext = React.createContext({
   isSoundOn: false,
-  toggleSound: null,
+  setSoundOn: null,
 });
 
 function useSoundControl() {
-  const { isSoundOn, toggleSound } = useContext(SoundControlContext);
-  return { isSoundOn, toggleSound };
+  const { isSoundOn, setSoundOn } = useContext(SoundControlContext);
+  return { isSoundOn, setSoundOn };
 }
 
 function DancingGuyTest() {
@@ -1168,11 +1181,10 @@ function DancingGuyTest() {
 }
 
 function Main() {
-  const [isSoundOn, setIsSoundOn] = useState(false);
-  const toggleSound = () => setIsSoundOn((b) => !b);
+  const [isSoundOn, setSoundOn] = useState(false);
 
   return (
-    <SoundControlContext.Provider value={{ isSoundOn, toggleSound }}>
+    <SoundControlContext.Provider value={{ isSoundOn, setSoundOn }}>
       <div className="pb-64">
         {/* <DancingGuyTest /> */}
         <Heading />
