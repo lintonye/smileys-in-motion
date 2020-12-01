@@ -83,7 +83,6 @@ function Demo() {
   const balls = "🏀 🏈 🏐".split(" ");
   const [index, setIndex] = useState(0);
   const ball = balls[index];
-  const [soccerVisible, setSoccerVisible] = useState(true);
   return (
     <div style={{ textAlign: "left" }}>
       {/* AnimatePresence pattern 3 */}
@@ -98,21 +97,7 @@ function Demo() {
           {ball}
         </motion.div>
       </AnimatePresence>
-      <MrSmiley onKick={() => setSoccerVisible(false)} />
-
-      {/* AnimatePresence pattern 1 */}
-      <AnimatePresence>
-        {soccerVisible && (
-          <motion.div
-            style={{ marginLeft: 240 }}
-            initial={{ x: 0 }}
-            exit={{ x: `80vw` }}
-            transition={{ duration: 1 }}
-          >
-            ⚽️
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <MrSmiley />
     </div>
   );
 }
