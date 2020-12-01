@@ -88,7 +88,6 @@ function Demo() {
       {/* AnimatePresence pattern 3 */}
       <AnimatePresence>
         <motion.div
-          key={ball}
           onClick={() => setIndex((i) => (i < balls.length - 1 ? i + 1 : 0))}
           initial={{ x: `-80vw` }}
           animate={{ x: 0 }}
