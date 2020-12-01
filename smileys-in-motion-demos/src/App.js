@@ -4,8 +4,9 @@ import { SVGSmiley } from "./SVGSmiley";
 import { ThemeToggle } from "./ThemeToggle";
 import { EmojiPicker } from "./EmojiPicker";
 import { LayoutExamples } from "./LayoutExamples";
-
 import { MountUnmount } from "./MountUnmount";
+
+import { MoreAnimatePresence } from "./MoreAnimatePresence";
 
 export default function App() {
   return (
@@ -24,7 +25,8 @@ export default function App() {
       {/* <ThemeToggle /> */}
       {/* <EmojiPicker /> */}
       {/* <LayoutExamples /> */}
-      <MountUnmount />
+      {/* <MountUnmount /> */}
+      <MoreAnimatePresence />
     </div>
   );
 }
