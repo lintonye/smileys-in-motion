@@ -83,36 +83,23 @@ function Demo() {
   const balls = "🏀 🏈 🏐".split(" ");
   const [index, setIndex] = useState(0);
   const ball = balls[index];
-  const [soccerVisible, setSoccerVisible] = useState(true);
   return (
     <div style={{ textAlign: "left" }}>
       {/* AnimatePresence pattern 3 */}
-      <AnimatePresence>
+      <AnimatePresence exitBeforeEnter>
         <motion.div
+          // style={{ position: "absolute", marginTop: -160 }}
           key={ball}
           onClick={() => setIndex((i) => (i < balls.length - 1 ? i + 1 : 0))}
           initial={{ x: `-80vw` }}
           animate={{ x: 0 }}
           exit={{ x: "80vw" }}
+          // transition={{ duration: 2 }}
         >
           {ball}
         </motion.div>
       </AnimatePresence>
-      <MrSmiley onKick={() => setSoccerVisible(false)} />
-
-      {/* AnimatePresence pattern 1 */}
-      <AnimatePresence>
-        {soccerVisible && (
-          <motion.div
-            style={{ marginLeft: 240 }}
-            initial={{ x: 0 }}
-            exit={{ x: `80vw` }}
-            transition={{ duration: 1 }}
-          >
-            ⚽️
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <MrSmiley />
     </div>
   );
 }
