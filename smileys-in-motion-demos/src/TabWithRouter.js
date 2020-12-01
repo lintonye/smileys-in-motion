@@ -127,40 +127,6 @@ const tabs = [
   { title: "Bananas", color: "#e2ff22", path: "/bananas", content: "🍌" },
 ];
 
-function TabWithoutRouter() {
-  const [index, setIndex] = useState(0);
-  const prevIndex = useRef(-1);
-  useEffect(() => (prevIndex.current = index));
-  const direction = Math.sign(index - prevIndex.current);
-  const tab = tabs[index];
-  return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        overflow: "hidden",
-        border: "1px solid #888",
-        borderRadius: 8,
-        padding: 16,
-        minWidth: "50%",
-        minHeight: "50%",
-        position: "relative",
-      }}
-    >
-      <Tabs activeIndex={index} onSelect={(i) => setIndex(i)} />
-
-      <AnimatePresence exitBeforeEnter custom={direction}>
-        <div
-          style={{ position: "absolute", top: 80, width: "100%" }}
-          key={tab.path}
-        >
-          <TabContent direction={direction}>{tab.content}</TabContent>
-        </div>
-      </AnimatePresence>
-    </div>
-  );
-}
-
 export function TabWithRouter() {
   const [index, setIndex] = useState(0);
   const prevIndex = useRef(-1);
@@ -186,3 +152,37 @@ export function TabWithRouter() {
     </Router>
   );
 }
+
+// function TabWithoutRouter() {
+//   const [index, setIndex] = useState(0);
+//   const prevIndex = useRef(-1);
+//   useEffect(() => (prevIndex.current = index));
+//   const direction = Math.sign(index - prevIndex.current);
+//   const tab = tabs[index];
+//   return (
+//     <div
+//       style={{
+//         display: "flex",
+//         flexDirection: "column",
+//         overflow: "hidden",
+//         border: "1px solid #888",
+//         borderRadius: 8,
+//         padding: 16,
+//         minWidth: "50%",
+//         minHeight: "50%",
+//         position: "relative",
+//       }}
+//     >
+//       <Tabs activeIndex={index} onSelect={(i) => setIndex(i)} />
+
+//       <AnimatePresence exitBeforeEnter custom={direction}>
+//         <div
+//           style={{ position: "absolute", top: 80, width: "100%" }}
+//           key={tab.path}
+//         >
+//           <TabContent direction={direction}>{tab.content}</TabContent>
+//         </div>
+//       </AnimatePresence>
+//     </div>
+//   );
+// }
