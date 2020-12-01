@@ -10,6 +10,7 @@ import { DragAndLayoutAnimation } from "./DragAndLayoutAnimation";
 import { PanMuscleGuy } from "./PanMuscleGuy";
 import { SharedLayout } from "./SharedLayout";
 import { SharedElementWithRouter } from "./SharedElementWithRouter";
+import { TabWithRouter } from "./TabWithRouter";
 
 export default function App() {
   return (
@@ -33,7 +34,8 @@ export default function App() {
       {/* <DragAndLayoutAnimation /> */}
       {/* <PanMuscleGuy /> */}
       {/* <SharedLayout /> */}
-      <SharedElementWithRouter />
+      {/* <SharedElementWithRouter /> */}
+      <TabWithRouter />
     </div>
   );
 }
