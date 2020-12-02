@@ -11,6 +11,7 @@ import { PanMuscleGuy } from "./PanMuscleGuy";
 import { SharedLayout } from "./SharedLayout";
 import { SharedElementWithRouter } from "./SharedElementWithRouter";
 import { TabWithRouter } from "./TabWithRouter";
+import { BottomSheetDemo } from "./BottomSheetDemo";
 
 export default function App() {
   return (
@@ -35,7 +36,8 @@ export default function App() {
       {/* <PanMuscleGuy /> */}
       {/* <SharedLayout /> */}
       {/* <SharedElementWithRouter /> */}
-      <TabWithRouter />
+      {/* <TabWithRouter /> */}
+      <BottomSheetDemo />
     </div>
   );
 }
