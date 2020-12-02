@@ -14,7 +14,7 @@ import {
 const variants = {
   enter: (direction) => {
     return {
-      x: direction > 0 ? "50vw" : "-50vw",
+      x: direction > 0 ? "100%" : "-100%",
     };
   },
   center: {
@@ -25,7 +25,7 @@ const variants = {
   exit: (direction) => {
     return {
       zIndex: 0,
-      x: direction < 0 ? "50vw" : "-50vw",
+      x: direction < 0 ? "100%" : "-100%",
     };
   },
 };
@@ -74,7 +74,7 @@ function TabContent({ children, direction }) {
         {Array(15)
           .fill(0)
           .map((_, i) => (
-            <div>{children}</div>
+            <div key={i}>{children}</div>
           ))}
       </div>
     </motion.div>
@@ -120,6 +120,7 @@ function TabContents({ direction }) {
 }
 
 const tabs = [
+  { title: "Root", color: "#7b7c76", path: "/", content: "🥔" },
   { title: "Apples", color: "#64ff22", path: "/apples", content: "🍏" },
   { title: "Grapes", color: "#8b65fe", path: "/grapes", content: "🍇" },
   { title: "Bananas", color: "#e2ff22", path: "/bananas", content: "🍌" },
