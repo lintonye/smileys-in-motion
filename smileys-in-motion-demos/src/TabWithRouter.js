@@ -39,6 +39,7 @@ function Tab({ title, color, active, onSelect }) {
     <motion.div onClick={onSelect} style={{ cursor: "pointer" }}>
       <motion.div
         whileHover={{ color: "#fff" }}
+        initial={false}
         animate={{ color: active ? "#fff" : "#999" }}
         style={{ padding: "8px 16px 8px 16px" }}
       >
@@ -48,6 +49,7 @@ function Tab({ title, color, active, onSelect }) {
         <motion.div
           layoutId="indicator"
           style={{ height: 4, width: "100%", borderRadius: 4 }}
+          initial={false}
           animate={{ background: color }}
         />
       )}
@@ -109,7 +111,7 @@ function Tabs({ activeIndex, onSelect }) {
 function TabContents({ direction }) {
   const location = useLocation();
   return (
-    <AnimatePresence exitBeforeEnter={true} custom={direction}>
+    <AnimatePresence exitBeforeEnter={true} custom={direction} initial={false}>
       <Switch key={location.pathname} location={location}>
         {tabs.map(({ path, content }) => (
           <Route exact path={path} key={path}>
@@ -127,28 +129,36 @@ const tabs = [
   { title: "Bananas", color: "#e2ff22", path: "/bananas", content: "🍌" },
 ];
 
-export function TabWithRouter() {
-  const [index, setIndex] = useState(0);
+function TabApp() {
+  const location = useLocation();
+  const currentIndex = tabs.findIndex((tab) => tab.path === location.pathname);
+  const [index, setIndex] = useState(currentIndex);
   const prevIndex = useRef(-1);
   useEffect(() => (prevIndex.current = index));
   const direction = Math.sign(index - prevIndex.current);
   return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        overflow: "hidden",
+        border: "1px solid #888",
+        borderRadius: 8,
+        padding: 16,
+        minWidth: "50%",
+        minHeight: "50%",
+      }}
+    >
+      <Tabs activeIndex={index} onSelect={(i) => setIndex(i)} />
+      <TabContents direction={direction} />
+    </div>
+  );
+}
+
+export function TabWithRouter() {
+  return (
     <Router>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          overflow: "hidden",
-          border: "1px solid #888",
-          borderRadius: 8,
-          padding: 16,
-          minWidth: "50%",
-          minHeight: "50%",
-        }}
-      >
-        <Tabs activeIndex={index} onSelect={(i) => setIndex(i)} />
-        <TabContents direction={direction} />
-      </div>
+      <TabApp />
     </Router>
   );
 }
