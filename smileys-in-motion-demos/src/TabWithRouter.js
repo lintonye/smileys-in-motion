@@ -1,14 +1,10 @@
 import * as React from "react";
 import { motion, AnimateSharedLayout, AnimatePresence } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
-import img16x9 from "./poop-unsplash-640x480.jpg";
-import imgSquare from "./poop-unsplash-480x480.jpg";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link as RRLink,
-  useParams,
   useHistory,
   useLocation,
 } from "react-router-dom";
