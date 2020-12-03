@@ -58,6 +58,9 @@ function BottomSheet({ onClose, snapPoints = [], y, underLayer, children }) {
       />
       {/* Under layer */}
       <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.3 }}
         exit={{ y: "100%" }}
         style={{ position: "absolute", top: screenHeight, left: 0, right: 0 }}
       >
@@ -202,9 +205,6 @@ export function BottomSheetDemo() {
               y={y}
               underLayer={
                 <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.3 }}
                   style={{
                     y: galleryY,
                     marginTop: 150,
