@@ -100,6 +100,17 @@ function BottomSheet({ onClose, snapPoints = [], children }) {
             paddingTop: 20,
           }}
         >
+          <div
+            style={{
+              margin: "auto",
+              marginTop: -12,
+              marginBottom: 12,
+              height: 5,
+              width: 30,
+              background: "#bbb",
+              borderRadius: 4,
+            }}
+          />
           {children}
         </motion.div>
       </motion.div>
