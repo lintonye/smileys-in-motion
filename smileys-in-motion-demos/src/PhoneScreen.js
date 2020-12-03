@@ -29,6 +29,12 @@ function Frame({
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         position: "absolute",
+        /* https://stackoverflow.com/a/44949525 */
+        // .safari-overflow-fix {
+        "-webkit-transform": "translateZ(0)",
+        "-webkit-mask-image":
+          "-webkit-radial-gradient(circle, white 100%, black 100%)",
+        // }
       }}
     >
       {children}
