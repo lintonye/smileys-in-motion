@@ -110,14 +110,21 @@ function BottomSheet({ onClose, snapPoints = [], children }) {
 export function BottomSheetDemo() {
   const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
   return (
-    <div style={{ fontSize: 16 }}>
-      <PhoneScreen background="url(/map-bg.jpg)">
-        <button
-          style={{ marginTop: 50 }}
-          onClick={() => setBottomSheetVisible(true)}
-        >
-          show
-        </button>
+    <motion.div style={{ fontSize: 16 }}>
+      <PhoneScreen background="url(/map-bg.png)">
+        <motion.img
+          src="/map-pin.svg"
+          initial={{ y: "-100vh" }}
+          animate={{ y: 0 }}
+          style={{
+            position: "absolute",
+            top: 220,
+            left: 130,
+          }}
+          onClick={(e) => {
+            setBottomSheetVisible(true);
+          }}
+        />
         <AnimatePresence>
           {bottomSheetVisible && (
             <BottomSheet
@@ -132,6 +139,6 @@ export function BottomSheetDemo() {
           )}
         </AnimatePresence>
       </PhoneScreen>
-    </div>
+    </motion.div>
   );
 }

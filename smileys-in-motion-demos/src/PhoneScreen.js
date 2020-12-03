@@ -15,9 +15,11 @@ function Frame({
   top,
   left,
   overflow,
+  ...props
 }) {
   return (
     <motion.div
+      {...props}
       style={{
         width,
         height,
@@ -55,6 +57,7 @@ export function PhoneScreen(props) {
         center
         background="url(https://cdn.glitch.com/071e5391-90f7-476b-b96c-1f51f7106b0c%2F510px-IPhone_X_vector.svg.png)"
         style={{ backgroundSize: "cover" }}
+        onTap={props.onTap}
       >
         {/* Screen enclosure */}
         <Frame
