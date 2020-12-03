@@ -4,6 +4,7 @@ import {
   useMotionValue,
   animate,
   AnimatePresence,
+  useTransform,
 } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
 import { PhoneScreen } from "./PhoneScreen";
@@ -13,16 +14,21 @@ import useMeasure from "react-use-measure";
 
 const spring = { type: "spring", damping: 16 };
 
-function BottomSheet({ onClose, snapPoints = [], children }) {
+function BottomSheet({ onClose, snapPoints = [], y, underLayer, children }) {
   const [snapIndex, setSnapIndex] = useState(0);
   // const controls = useDragControls();
   const [ref, { height: screenHeight }] = useMeasure();
   const [fullScreen, setFullScreen] = useState(false);
-  console.log({ fullScreen });
   const sheetY = useMotionValue(0);
   useEffect(() => {
     if (screenHeight > 0) sheetY.set(-snapPoints[snapIndex]);
   }, [sheetY, screenHeight]);
+  useEffect(() => {
+    if (y && typeof y.set === "function") {
+      const unsubscribe = sheetY.onChange((sy) => y.set(sy));
+      return unsubscribe;
+    }
+  }, [y, sheetY]);
   return (
     <motion.div
       ref={ref}
@@ -50,6 +56,13 @@ function BottomSheet({ onClose, snapPoints = [], children }) {
         exit={{ opacity: 0 }}
         onTap={() => typeof onClose === "function" && onClose()}
       />
+      {/* Under layer */}
+      <motion.div
+        exit={{ y: "100%" }}
+        style={{ position: "absolute", top: screenHeight, left: 0, right: 0 }}
+      >
+        {underLayer}
+      </motion.div>
       {/* Draggable content */}
       <motion.div
         style={{
@@ -99,15 +112,17 @@ function BottomSheet({ onClose, snapPoints = [], children }) {
             borderRadius: 8,
             display: "flex",
             flexDirection: "column",
+            boxShadow: "2px -2px 8px rgb(0,0,0,.1)",
             paddingTop: 20,
           }}
         >
+          {/* drag handle */}
           <div
             style={{
               margin: "auto",
               marginTop: -12,
               marginBottom: 12,
-              height: 5,
+              height: 3,
               width: 30,
               background: "#bbb",
               borderRadius: 4,
@@ -120,8 +135,49 @@ function BottomSheet({ onClose, snapPoints = [], children }) {
   );
 }
 
+function Gallery() {
+  const photos = [
+    "https://images.unsplash.com/photo-1500042738280-d2cf3121aa44?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjg1ODY2fQ",
+    "https://images.unsplash.com/photo-1529168912995-348197746b79?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjg1ODY2fQ",
+    "https://images.unsplash.com/photo-1445623168371-714eea2f2833?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjg1ODY2fQ",
+    "https://images.unsplash.com/photo-1475066392170-59d55d96fe51?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjg1ODY2fQ",
+    "https://images.unsplash.com/photo-1504731026313-e68ebd5ff02c?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjg1ODY2fQ",
+    "https://images.unsplash.com/photo-1536154010-6ab8a1d741d2?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjg1ODY2fQ",
+    "https://images.unsplash.com/photo-1525945882052-c5c66ba342b3?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjg1ODY2fQ",
+    "https://images.unsplash.com/photo-1542622466-cbbe173c10ca?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjg1ODY2fQ",
+    "https://images.unsplash.com/photo-1510926078773-369698bda778?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjg1ODY2fQ",
+  ];
+  return (
+    <div
+      style={{
+        borderRadius: `5px 5px 0 0`,
+        display: "flex",
+        overflow: "scroll",
+        backgroundColor: "#fff",
+      }}
+    >
+      {photos.map((photo) => (
+        <img
+          src={photo}
+          key={photo}
+          style={{
+            width: 200,
+            height: 180,
+            flexShrink: 0,
+            boxShadow: "inset 0px 0px 10px rgba(0,0,0,0.25)",
+            pointerEvents: "none",
+            marginRight: 2,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
 export function BottomSheetDemo() {
   const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
+  const y = useMotionValue(0);
+  const galleryY = useTransform(y, (y) => (y >= -410 ? y * 1.8 : -410 * 1.8));
   return (
     <motion.div style={{ fontSize: 16 }}>
       <PhoneScreen background="url(/map-bg.png)">
@@ -143,10 +199,25 @@ export function BottomSheetDemo() {
             <BottomSheet
               onClose={() => setBottomSheetVisible(false)}
               snapPoints={[170, 400]}
+              y={y}
+              underLayer={
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.3 }}
+                  style={{
+                    y: galleryY,
+                    marginTop: 150,
+                    width: "100%",
+                  }}
+                >
+                  <Gallery />
+                </motion.div>
+              }
             >
               <img
                 src="/gmap-bottom-sheet.png"
-                style={{ width: "100%", pointerEvents: "none" }}
+                style={{ width: "100%", pointerEvents: "none", zIndex: 1 }}
               />
             </BottomSheet>
           )}
