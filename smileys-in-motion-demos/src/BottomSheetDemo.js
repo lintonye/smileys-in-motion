@@ -11,6 +11,8 @@ import useMeasure from "react-use-measure";
 
 /* eslint-disable jsx-a11y/accessible-emoji */
 
+const spring = { type: "spring", damping: 16 };
+
 function BottomSheet({ onClose, snapPoints = [], children }) {
   const [snapIndex, setSnapIndex] = useState(0);
   // const controls = useDragControls();
@@ -55,7 +57,6 @@ function BottomSheet({ onClose, snapPoints = [], children }) {
           top: 0,
           left: 0,
           right: 0,
-          // height: snapPoints[snapIndex],
           y: sheetY,
         }}
         drag="y"
@@ -75,7 +76,8 @@ function BottomSheet({ onClose, snapPoints = [], children }) {
                   sheetY,
                   snapPointY < half
                     ? screenHeight - snPoints[i]
-                    : screenHeight - snPoints[i + 1]
+                    : screenHeight - snPoints[i + 1],
+                  spring
                 );
               setFullScreen(i === snPoints.length - 2 && snapPointY > half);
               break;
@@ -87,6 +89,7 @@ function BottomSheet({ onClose, snapPoints = [], children }) {
           initial={{ y: "100%" }}
           animate={{ y: 0 }}
           exit={{ y: "100%" }}
+          transition={spring}
           style={{
             background: "#fff",
             // position: "absolute",
