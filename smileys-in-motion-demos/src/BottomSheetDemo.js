@@ -21,7 +21,7 @@ function BottomSheet({ onClose, snapPoints = [], children }) {
   console.log({ fullScreen });
   const sheetY = useMotionValue(0);
   useEffect(() => {
-    if (screenHeight > 0) sheetY.set(screenHeight - snapPoints[snapIndex]);
+    if (screenHeight > 0) sheetY.set(-snapPoints[snapIndex]);
   }, [sheetY, screenHeight]);
   return (
     <motion.div
@@ -54,16 +54,17 @@ function BottomSheet({ onClose, snapPoints = [], children }) {
       <motion.div
         style={{
           position: "absolute",
-          top: 0,
+          top: screenHeight,
           left: 0,
           right: 0,
           y: sheetY,
         }}
         drag="y"
-        dragConstraints={{ top: 0 }}
+        dragConstraints={{ top: -screenHeight }}
         dragElastic={false}
         onDragEnd={(_, info) => {
-          const snapPointY = screenHeight - sheetY.get();
+          const snapPointY = -sheetY.get();
+          console.log({ snapPointY });
           const snPoints = [0, ...snapPoints, screenHeight];
 
           for (let i = 0; i < snPoints.length - 1; i++) {
@@ -74,9 +75,7 @@ function BottomSheet({ onClose, snapPoints = [], children }) {
               else
                 animate(
                   sheetY,
-                  snapPointY < half
-                    ? screenHeight - snPoints[i]
-                    : screenHeight - snPoints[i + 1],
+                  snapPointY < half ? -snPoints[i] : -snPoints[i + 1],
                   spring
                 );
               setFullScreen(i === snPoints.length - 2 && snapPointY > half);
