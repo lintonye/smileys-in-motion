@@ -1,22 +1,39 @@
 import * as React from "react";
-import { motion, useMotionValue, animate } from "framer-motion";
+import {
+  motion,
+  useMotionValue,
+  animate,
+  AnimatePresence,
+} from "framer-motion";
 import { useState, useRef, useEffect } from "react";
+import { PhoneScreen } from "./PhoneScreen";
+import useMeasure from "react-use-measure";
 
 /* eslint-disable jsx-a11y/accessible-emoji */
 
-function BottomSheet({ onClose }) {
-  const sheetY = useMotionValue(0);
+function BottomSheet({ onClose, snapPoints = [], children }) {
+  const [snapIndex, setSnapIndex] = useState(0);
   // const controls = useDragControls();
+  const [ref, { height: screenHeight }] = useMeasure();
+  const [fullScreen, setFullScreen] = useState(false);
+  console.log({ fullScreen });
+  const sheetY = useMotionValue(0);
+  useEffect(() => {
+    if (screenHeight > 0) sheetY.set(screenHeight - snapPoints[snapIndex]);
+  }, [sheetY, screenHeight]);
   return (
     <motion.div
+      ref={ref}
       style={{
         position: "absolute",
         top: 0,
         bottom: 0,
         left: 0,
         right: 0,
+        overflow: fullScreen ? "scroll" : "hidden",
       }}
     >
+      {/* Backdrop */}
       <motion.div
         style={{
           position: "absolute",
@@ -29,26 +46,40 @@ function BottomSheet({ onClose }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
+        onTap={() => typeof onClose === "function" && onClose()}
       />
+      {/* Draggable content */}
       <motion.div
         style={{
           position: "absolute",
-          bottom: 0,
+          top: 0,
           left: 0,
           right: 0,
-          height: 300,
+          // height: snapPoints[snapIndex],
           y: sheetY,
         }}
         drag="y"
-        // dragControls={controls}
-        dragConstraints={{ top: 0, bottom: 200 }}
-        // dragPropagation={true}
+        dragConstraints={{ top: 0 }}
         dragElastic={false}
         onDragEnd={(_, info) => {
-          if (sheetY.get() < 80) {
-            animate(sheetY, 0, { type: "spring" });
-          } else {
-            onClose();
+          const snapPointY = screenHeight - sheetY.get();
+          const snPoints = [0, ...snapPoints, screenHeight];
+
+          for (let i = 0; i < snPoints.length - 1; i++) {
+            if (snPoints[i] <= snapPointY && snapPointY <= snPoints[i + 1]) {
+              const half = (snPoints[i] + snPoints[i + 1]) / 2;
+              if (i === 0 && snapPointY < half)
+                typeof onClose === "function" && onClose();
+              else
+                animate(
+                  sheetY,
+                  snapPointY < half
+                    ? screenHeight - snPoints[i]
+                    : screenHeight - snPoints[i + 1]
+                );
+              setFullScreen(i === snPoints.length - 2 && snapPointY > half);
+              break;
+            }
           }
         }}
       >
@@ -58,42 +89,18 @@ function BottomSheet({ onClose }) {
           exit={{ y: "100%" }}
           style={{
             background: "#fff",
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            top: 0,
+            // position: "absolute",
+            // bottom: 0,
+            // left: 0,
+            // right: 0,
+            // top: 0,
             borderRadius: 8,
             display: "flex",
             flexDirection: "column",
+            paddingTop: 20,
           }}
         >
-          <h2>This is a bottom sheet (drag down to dismiss) </h2>
-          {/* <button onClick={onClose} style={{ alignSelf: "center" }}>
-            Close
-          </button> */}
-          <motion.div
-            id="scrollingContainer"
-            style={{
-              overflow: "scroll",
-              flex: 1,
-              WebkitOverflowScrolling: "touch",
-            }}
-            // onPan={(event, info) => {
-            //   const element = document.getElementById("scrollingContainer");
-            //   // console.log("pan", element.scrollTop, info.offset.y);
-            //   if (element.scrollTop <= 0 && info.offset.y > 10) {
-            //     controls.start(event, { snapToCursor: false });
-            //     // onClose();
-            //   }
-            // }}
-          >
-            {Array(20)
-              .fill(0)
-              .map((_, idx) => (
-                <div key={idx}>Line{idx}</div>
-              ))}
-          </motion.div>
+          {children}
         </motion.div>
       </motion.div>
     </motion.div>
@@ -101,5 +108,30 @@ function BottomSheet({ onClose }) {
 }
 
 export function BottomSheetDemo() {
-  return <BottomSheet />;
+  const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
+  return (
+    <div style={{ fontSize: 16 }}>
+      <PhoneScreen background="url(/map-bg.jpg)">
+        <button
+          style={{ marginTop: 50 }}
+          onClick={() => setBottomSheetVisible(true)}
+        >
+          show
+        </button>
+        <AnimatePresence>
+          {bottomSheetVisible && (
+            <BottomSheet
+              onClose={() => setBottomSheetVisible(false)}
+              snapPoints={[170, 400]}
+            >
+              <img
+                src="/gmap-bottom-sheet.png"
+                style={{ width: "100%", pointerEvents: "none" }}
+              />
+            </BottomSheet>
+          )}
+        </AnimatePresence>
+      </PhoneScreen>
+    </div>
+  );
 }
