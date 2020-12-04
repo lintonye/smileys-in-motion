@@ -65,7 +65,7 @@ function ScrollIndicator({ title = "Scroll" }) {
   );
 }
 
-function useInitialBoundingBox() {
+function useBoundingBox() {
   const ref = useRef();
   const [box, setBox] = useState({});
   useEffect(() => {
@@ -103,7 +103,7 @@ function useViewportDimension() {
 }
 
 function Page({ children, className = "", fullScreen = false, onPageScroll }) {
-  const [ref, { top, height }] = useInitialBoundingBox();
+  const [ref, { top, height }] = useBoundingBox();
   const { height: vh } = useViewportDimension();
   const { scrollY } = useViewportScroll();
   // This is to prevent the case when top/height is briefly undefined but used to set up filter/opacity
