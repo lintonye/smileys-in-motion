@@ -11,39 +11,12 @@ import {
 
 /* eslint-disable jsx-a11y/accessible-emoji */
 
-const variants = {
-  enter: (direction) => {
-    return {
-      x: direction > 0 ? "100%" : "-100%",
-    };
-  },
-  center: {
-    zIndex: 1,
-    x: 0,
-    opacity: 1,
-  },
-  exit: (direction) => {
-    return {
-      zIndex: 0,
-      x: direction < 0 ? "100%" : "-100%",
-    };
-  },
-};
-
 function Tab({ title, color, active, onSelect }) {
   return (
     <motion.div onClick={onSelect} style={{ cursor: "pointer" }}>
-      <motion.div
-        whileHover={{ color: "#fff" }}
-        initial={false}
-        animate={{ color: active ? "#fff" : "#999" }}
-        style={{ padding: "8px 16px 8px 16px" }}
-      >
-        {title}
-      </motion.div>
+      <motion.div style={{ padding: "8px 16px 8px 16px" }}>{title}</motion.div>
       {active && (
         <motion.div
-          layoutId="indicator"
           style={{ height: 4, width: "100%", borderRadius: 4 }}
           initial={false}
           animate={{ background: color }}
@@ -55,16 +28,7 @@ function Tab({ title, color, active, onSelect }) {
 
 function TabContent({ children, direction }) {
   return (
-    <motion.div
-      initial="enter"
-      animate="center"
-      exit="exit"
-      variants={variants}
-      style={{ fontSize: 120 }}
-      custom={direction}
-      // transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      transition={{ duration: 0.2 }}
-    >
+    <motion.div style={{ fontSize: 120 }}>
       <div
         style={{
           display: "grid",
@@ -84,38 +48,33 @@ function TabContent({ children, direction }) {
 function Tabs({ activeIndex, onSelect }) {
   const history = useHistory();
   return (
-    <AnimateSharedLayout>
-      <div style={{ display: "flex", fontSize: 25, color: "#eee" }}>
-        {tabs.map((tab, i) => (
-          <Tab
-            {...tab}
-            key={tab.title}
-            onSelect={() => {
-              onSelect(i);
-              history &&
-                typeof history.push === "function" &&
-                history.push(tab.path);
-            }}
-            active={activeIndex === i}
-          />
-        ))}
-      </div>
-    </AnimateSharedLayout>
+    <div style={{ display: "flex", fontSize: 25, color: "#eee" }}>
+      {tabs.map((tab, i) => (
+        <Tab
+          {...tab}
+          key={tab.title}
+          onSelect={() => {
+            onSelect(i);
+            history &&
+              typeof history.push === "function" &&
+              history.push(tab.path);
+          }}
+          active={activeIndex === i}
+        />
+      ))}
+    </div>
   );
 }
 
 function TabContents({ direction }) {
-  const location = useLocation();
   return (
-    <AnimatePresence exitBeforeEnter={true} custom={direction} initial={false}>
-      <Switch key={location.pathname} location={location}>
-        {tabs.map(({ path, content }) => (
-          <Route exact path={path} key={path}>
-            <TabContent direction={direction}>{content}</TabContent>
-          </Route>
-        ))}
-      </Switch>
-    </AnimatePresence>
+    <Switch>
+      {tabs.map(({ path, content }) => (
+        <Route exact path={path} key={path}>
+          <TabContent>{content}</TabContent>
+        </Route>
+      ))}
+    </Switch>
   );
 }
 
