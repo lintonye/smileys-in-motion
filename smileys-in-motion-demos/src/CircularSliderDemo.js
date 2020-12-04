@@ -24,47 +24,8 @@ function CircularSlider({ initialValue, onChange }) {
   const arcRadius = arcHeight - arcStrokeWidth;
   const [containerBBox, ref] = useInitialViewportBBox();
 
-  const knobAngle = useMotionValue(initialValue * Math.PI);
-  const knobAnglePortion = useTransform(knobAngle, (a) => a / Math.PI);
-
-  // Knob coordinates
-  const knobX = useTransform(
-    knobAngle,
-    (a) => arcWidth / 2 - Math.cos(a) * arcRadius
-  );
-  const knobY = useTransform(knobAngle, (a) => -Math.sin(a) * arcRadius);
-
-  const updateKnobAngle = (point) => {
-    const { left, top } = containerBBox;
-    const x = point.x - (left + arcWidth / 2);
-    // const angle = clamp(Math.PI - Math.atan2(y, x), 0, Math.PI);
-    /**
-     * NOTE: the commented line above causes the angle being set to PI when moving below the X axis. The correct way is to limit y to quadrat 1 and 2 (the line below).
-     */
-    const y = Math.max(top + arcHeight - point.y, 0);
-    const angle = Math.PI - Math.atan2(y, x);
-    knobAngle.set(angle);
-  };
-
-  // Dispatch onChange
-  useEffect(() => {
-    const unsub = knobAnglePortion.onChange(
-      (p) => typeof onChange === "function" && onChange(p)
-    );
-    return unsub;
-  }, [knobAnglePortion, onChange]);
-
   return (
-    <motion.div
-      style={{ position: "relative" }}
-      ref={ref}
-      onPan={(e, info) => {
-        updateKnobAngle(info.point);
-      }}
-      onTap={(e, info) => {
-        updateKnobAngle(info.point);
-      }}
-    >
+    <motion.div style={{ position: "relative" }} ref={ref}>
       {/* Knob */}
       <motion.div
         style={{
@@ -76,11 +37,7 @@ function CircularSlider({ initialValue, onChange }) {
           background: "#4876e0",
           borderRadius: "50%",
           boxShadow: "2px 2px 8px rgba(0,0,0,.4)",
-          x: knobX,
-          y: knobY,
         }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 1.2 }}
       />
       {/* Arc */}
       <svg
@@ -100,7 +57,6 @@ function CircularSlider({ initialValue, onChange }) {
           d="M5,405 C5,184.086 184.086,5 405,5 C625.914,5 805,184.086 805,405"
           stroke="#4876e0"
           strokeWidth={arcStrokeWidth}
-          style={{ pathLength: knobAnglePortion }}
         />
       </svg>
     </motion.div>
