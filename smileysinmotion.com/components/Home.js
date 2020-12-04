@@ -326,6 +326,7 @@ function Heading() {
           />
           <Video src="/images/drag-reorder.mp4" />
           <Video src="/images/shared-element.mp4" />
+          <Video src="/images/parallax.mp4" />
           <Video src="/images/circular-slider.mp4" />
           <Video src="/images/mount-unmount.mp4" />
           <Video src="/images/theme-toggle.mp4" />
