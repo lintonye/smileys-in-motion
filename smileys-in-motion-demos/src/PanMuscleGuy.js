@@ -32,7 +32,7 @@ const clamp = (v, min, max) => Math.min(max, Math.max(v, min));
 
 export function PanMuscleGuy() {
   const rotateArm = useMotionValue(0);
-  const [leftArmBoundingBox, leftArmRef] = useInitialViewportBBox();
+  const [leftArmRef, leftArmBoundingBox] = useBoundingBox();
   function getAngleToBottomRight(info) {
     const { bottom, right } = leftArmBoundingBox;
     const x = right - info.point.x;
