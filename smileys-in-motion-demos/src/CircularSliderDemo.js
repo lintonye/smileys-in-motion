@@ -1,16 +1,31 @@
 import * as React from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 /* eslint-disable jsx-a11y/accessible-emoji */
 
-function useInitialViewportBBox() {
-  const ref = React.useRef();
-  const [bbox, setBbox] = React.useState(0);
-  React.useEffect(() => {
-    setBbox(ref.current.getBoundingClientRect());
+function useBoundingBox() {
+  const ref = useRef();
+  const [box, setBox] = useState({});
+  useEffect(() => {
+    const updateBox = () => {
+      if (ref.current) {
+        const b = ref.current.getBoundingClientRect();
+        setBox(
+          DOMRectReadOnly.fromRect({
+            x: b.left + window.scrollX,
+            y: b.top + window.scrollY,
+            width: b.width,
+            height: b.height,
+          })
+        );
+      }
+    };
+    updateBox();
+    window.addEventListener("resize", updateBox);
+    return () => window.removeEventListener("resize", updateBox);
   }, [ref]);
-  return [bbox, ref];
+  return [ref, box];
 }
 
 const clamp = (v, min, max) => Math.min(max, Math.max(v, min));
@@ -22,7 +37,7 @@ function CircularSlider({ initialValue, onChange }) {
   const arcStrokeWidth = 4;
   const arcHeight = arcWidth / 2;
   const arcRadius = arcHeight - arcStrokeWidth;
-  const [containerBBox, ref] = useInitialViewportBBox();
+  const [ref, containerBBox] = useBoundingBox();
 
   return (
     <motion.div style={{ position: "relative" }} ref={ref}>
