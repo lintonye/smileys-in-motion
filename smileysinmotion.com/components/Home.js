@@ -1046,6 +1046,8 @@ const content = {
     "7. Animate layout changes",
     "8. Animate mount/unmount transitions",
     "9. AnimatePresence, key and layout",
+    "9.1 AnimatePresence patterns",
+    "9.2 Understand AnimatePresence",
     "10. Understand initial, style, and animate",
     "11. Drag gesture",
     "12. Drag & MotionValue",
@@ -1057,16 +1059,20 @@ const content = {
     "18. Animate custom components",
   ],
   "Real-world Examples": [
-    "r1. Drag to reorder (coming soon)",
-    "r2. Circular slider (coming soon)",
-    "r3. Tabs (AnimatePresence and React Router 5) (coming soon)",
+    {
+      title: "r1. Drag to reorder",
+      preview:
+        "https://school.learnreact.design/courses/1217265/lectures/27567426",
+    },
+    "r2. Circular slider",
+    "r3. Tabs (AnimatePresence and React Router 5)",
     "r4. Shared element transition (with React Router 5) (coming soon)",
     "r5. Bottom sheet (coming soon)",
     "r6. smileyinmotion.com (coming soon)",
   ],
   "Cheat sheets": [
     "All starter and final code",
-    "Cheat sheet: pitfalls & solutions (coming soon)",
+    "Cheat sheet: pitfalls & solutions",
   ],
 };
 
