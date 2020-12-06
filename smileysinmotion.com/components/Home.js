@@ -948,9 +948,9 @@ function Pricing() {
           title="Smiley In Motion"
           subtitle="For designers and developers experienced in React"
           price={99}
-          discountedPrice={59}
-          footnote="Black Friday deal!"
-          purchaseLink="https://sso.teachable.com/secure/157508/checkout/2635049/smileys-in-motion?coupon_code=BF2020"
+          discountedPrice={69}
+          footnote="Limited time offer!"
+          purchaseLink="https://sso.teachable.com/secure/157508/checkout/2635049/smileys-in-motion?coupon_code=launch"
           className="mb-5"
         >
           <div>24 lessons, 2 hours of HD videos</div>
@@ -962,9 +962,9 @@ function Pricing() {
           title="React + Framer Starship bundle"
           subtitle="Learn from the start. No JS experience required"
           price={299}
-          discountedPrice={199}
-          footnote="Black Friday deal!"
-          purchaseLink="https://sso.teachable.com/secure/157508/checkout/1669960/prototyping-with-react-framer-starship-bundle?coupon_code=BF2020"
+          discountedPrice={219}
+          footnote="Limited time offer!"
+          purchaseLink="https://sso.teachable.com/secure/157508/checkout/1669960/prototyping-with-react-framer-starship-bundle?coupon_code=LAUNCH"
         >
           <div>14 Modules, 50 lessons, 10+ hours of HD videos</div>
           <div>
