@@ -1,10 +1,12 @@
 import * as React from "react";
 import Prism from "prismjs";
 import { useEffect, useState } from "react";
+// https://github.com/PrismJS/prism/issues/1116#issuecomment-291921678
+import PrismJsx from "prismjs/components/prism-jsx.min";
 
 import { motion, useAnimation } from "framer-motion";
 
-export function Code({ children, inline, lang = "html", highlight = true }) {
+export function Code({ children, inline, lang = "jsx", highlight = true }) {
   useEffect(() => {
     if (highlight) {
       Prism.highlightAll();
