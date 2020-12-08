@@ -36,6 +36,7 @@ export function Carrousel({
   frameClassName,
   border = false,
   autoSwitch = true,
+  switchInterval = 4000,
   lightsOut = false,
 }) {
   const [index, setIndex] = useState(0);
@@ -49,7 +50,7 @@ export function Carrousel({
         setIndex((i) => (i < items.length - 1 ? i + 1 : 0));
       }
       switchOnce();
-      const interval = setInterval(switchOnce, 4000);
+      const interval = setInterval(switchOnce, switchInterval);
       return () => clearInterval(interval);
     }
   }, [autoSwitch]);

@@ -985,8 +985,17 @@ function Pricing() {
       <Carrousel
         className="max-w-2xl mx-auto"
         frameClassName="pb-80 sm:pb-64"
-        autoSwitch={false}
+        switchInterval={10000}
       >
+        <Quote
+          photo="/images/shuo-hsiu.jpg"
+          name="Shuo-hsiu Hsu"
+          company="Airbus"
+          title="UX/UI Designer"
+        >
+          Linton's online courses provide a live resource to upgrade UX/UI
+          designer's prototyping skill to the next level.
+        </Quote>
         <Quote
           photo="/images/kristof.webp"
           name="Kristóf Poduszló"
