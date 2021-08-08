@@ -1037,17 +1037,17 @@ const content = {
     {
       title: "1. Framer Motion mental model",
       preview:
-        "https://school.learnreact.design/courses/1217265/lectures/27255965",
+        "https://learnreactdesign.teachable.com/courses/1217265/lectures/27255965",
     },
     {
       title: "2. Animate any HTML or SVG tag",
       preview:
-        "https://school.learnreact.design/courses/1217265/lectures/27255961",
+        "https://learnreactdesign.teachable.com/courses/1217265/lectures/27255961",
     },
     {
       title: "3. Keyframes and animation value types",
       preview:
-        "https://school.learnreact.design/courses/1217265/lectures/27255960",
+        "https://learnreactdesign.teachable.com/courses/1217265/lectures/27255960",
     },
     "4. Spy on animations with MotionValue",
     "5. Orchestrate animations in a React tree",
@@ -1071,7 +1071,7 @@ const content = {
     {
       title: "r1. Drag to reorder",
       preview:
-        "https://school.learnreact.design/courses/1217265/lectures/27567426",
+        "https://learnreactdesign.teachable.com/courses/1217265/lectures/27567426",
     },
     "r2. Circular slider",
     "r3. Tabs (AnimatePresence and React Router 5)",
