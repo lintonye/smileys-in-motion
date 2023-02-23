@@ -813,7 +813,7 @@ function CourseIntro() {
         </div>
         <div className="text-center text-gray-400">
           <span className="text-4xl text-white font-extralight">2</span> hours
-          of <span className="text-4xl text-white font-extralight">24</span>{" "}
+          of <span className="text-4xl text-white font-extralight">21</span>{" "}
           bite-sized HD videos
         </div>
         <motion.div className="space-y-16">
@@ -943,21 +943,21 @@ function Pricing() {
   return (
     <Page className="max-w-xs space-y-8 mt-16 sm:max-w-2xl sm:space-y-16 sm:mt-32">
       <h1 className="text-4xl text-center font-semibold">Get The Course</h1>
-      <div className="flex flex-col sm:-space-x-3 sm:items-end sm:flex-row">
+      <div className="flex flex-col items-center">
         <PricingCard
           title="Smiley In Motion"
           subtitle="For designers and developers experienced in React"
           price={99}
-          discountedPrice={69}
+          discountedPrice={49}
           footnote="Limited time offer!"
-          purchaseLink="https://sso.teachable.com/secure/157508/checkout/2635049/smileys-in-motion?coupon_code=launch"
+          purchaseLink="https://learnreactdesign.teachable.com/purchase?product_id=4619271"
           className="mb-5"
         >
-          <div>24 lessons, 2 hours of HD videos</div>
+          <div>21 lessons, 2 hours of HD videos</div>
           <div>All starter and final code for you to follow along</div>
           <div>Cheat sheets</div>
         </PricingCard>
-        <PricingCard
+        {/* <PricingCard
           featured
           title="React + Framer Starship bundle"
           subtitle="Learn from the start. No JS experience required"
@@ -980,7 +980,7 @@ function Pricing() {
               course details
             </a>
           </div>
-        </PricingCard>
+        </PricingCard> */}
       </div>
       <Carrousel
         className="max-w-2xl mx-auto"
@@ -1075,9 +1075,9 @@ const content = {
     },
     "r2. Circular slider",
     "r3. Tabs (AnimatePresence and React Router 5)",
-    "r4. Shared element transition (with React Router 5) (coming soon)",
-    "r5. Bottom sheet (coming soon)",
-    "r6. smileyinmotion.com (coming soon)",
+    // "r4. Shared element transition (with React Router 5) (coming soon)",
+    // "r5. Bottom sheet (coming soon)",
+    // "r6. smileyinmotion.com (coming soon)",
   ],
   "Cheat sheets": [
     "All starter and final code",
